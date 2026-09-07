@@ -38,13 +38,13 @@ export interface TechRig {
 
 export const PERSONAL_INFO = {
   name: "FERY DWI RAMADHI",
-  role: "Rockstar Fullstack Developer & Lead Guitarist",
+  role: "Fullstack Developer & Web Engineer",
   headline: "FERY DWI RAMADHI",
-  tagline: "Harmonisasi Antara Logika Kode & Distorsi Nada",
+  tagline: "Membangun Solusi Digital Berkualitas Tinggi & Berkinerja Optimal",
   bioParagraphs: [
-    "Halo! Saya Fery Dwi Ramadhi, seorang Fullstack Developer dan gitaris band di Indonesia. Bagi saya, memprogram arsitektur perangkat lunak dan menggubah riff gitar memiliki prinsip dasar yang sama: keduanya memerlukan kestabilan tempo, struktur yang kokoh, dan keberanian bereksplorasi.",
-    "Perjalanan rekayasa teknologi saya bermula dari rasa ingin tahu tentang cara kerja web modern. Layaknya menyetem senar gitar hingga nada yang paling bersih, saya mengasah kapabilitas mulai dari antarmuka pengguna yang responsif hingga arsitektur backend yang tahan beban tinggi.",
-    "Fokus saya saat ini adalah merancang produk digital yang berkinerja tinggi, berkarakter kuat, dan memberikan solusi yang elegan bagi pengguna.",
+    "Halo! Saya Fery Dwi Ramadhi, seorang Fullstack Developer yang berdomisili di Indonesia. Saya berfokus pada perancangan dan pengembangan aplikasi web modern, arsitektur sistem perangkat lunak yang andal, serta antarmuka pengguna yang responsif.",
+    "Pengalaman rekayasa saya mencakup pengembangan frontend interaktif berbasis React dan Next.js, hingga pembangunan layanan backend, RESTful API, dan optimasi basis data relasional. Setiap sistem dirancang dengan fokus pada skalabilitas, keamanan, dan kemudahan pemeliharaan.",
+    "Komitmen saya adalah menghadirkan produk digital yang efisien, berkinerja tinggi, dan memberikan dampak positif serta solusi nyata bagi kebutuhan pengguna dan organisasi.",
   ],
   contacts: {
     email: "ferydwir27@gmail.com",
@@ -59,88 +59,88 @@ export const PERSONAL_INFO = {
 
 export const TECH_RIGS: TechRig[] = [
   {
-    category: "Lead Frontend",
-    role: "User Experience & Visual Stage",
+    category: "Frontend Engineering",
+    role: "Antarmuka Pengguna & Interaktivitas Web",
     items: ["React & Next.js", "TypeScript", "Tailwind CSS", "HTML5 & CSS3"],
   },
   {
-    category: "Heavy Backend",
-    role: "Data Pipelines & Server Architecture",
+    category: "Backend Architecture",
+    role: "API RESTful, Layanan Server & Basis Data",
     items: ["Node.js & Express", "PHP & Laravel", "MySQL & PostgreSQL", "RESTful APIs"],
   },
   {
-    category: "Mobile Division",
-    role: "Cross-Platform Touring Apps",
+    category: "Mobile Application",
+    role: "Pengembangan Aplikasi Lintas Platform",
     items: ["Flutter & Dart", "Firebase", "Responsive Design", "PWA"],
   },
   {
-    category: "Rig & Gear (Tools)",
-    role: "Studio Equipment & Deployments",
+    category: "Tools & Workflow",
+    role: "Version Control, Editor & Deployment",
     items: ["Git & GitHub", "VS Code", "Figma", "Vercel Deployments"],
   },
 ];
 
 export const SKILLS_SETLIST: Skill[] = [
-  { track: "01", name: "Tailwind CSS", category: "FAST VISUALS", level: 5, proficiency: 95, bpm: 155, featured: true },
-  { track: "02", name: "React.js", category: "REACTIVE UI", level: 5, proficiency: 90, bpm: 140, featured: true },
-  { track: "03", name: "Next.js", category: "FULLSTACK ENGINE", level: 4, proficiency: 88, bpm: 145, featured: true },
-  { track: "04", name: "Node.js", category: "ASYNC RUNTIME", level: 4, proficiency: 86, bpm: 138, featured: true },
-  { track: "05", name: "Express.js", category: "REST APIS", level: 4, proficiency: 85, bpm: 135 },
-  { track: "06", name: "TypeScript", category: "STRICT TYPES", level: 4, proficiency: 82, bpm: 130 },
-  { track: "07", name: "MySQL", category: "RELATIONAL DB", level: 4, proficiency: 82, bpm: 132 },
-  { track: "08", name: "PHP & Laravel", category: "MVC CORE", level: 3, proficiency: 80, bpm: 125 },
-  { track: "09", name: "Flutter & Dart", category: "MOBILE TOURING", level: 3, proficiency: 78, bpm: 120 },
-  { track: "10", name: "PostgreSQL", category: "ACID ENGINE", level: 3, proficiency: 74, bpm: 118 },
+  { track: "01", name: "Tailwind CSS", category: "CSS Framework", level: 5, proficiency: 95, bpm: 95, featured: true },
+  { track: "02", name: "React.js", category: "Frontend Library", level: 5, proficiency: 90, bpm: 90, featured: true },
+  { track: "03", name: "Next.js", category: "Fullstack Framework", level: 4, proficiency: 88, bpm: 88, featured: true },
+  { track: "04", name: "Node.js", category: "JavaScript Runtime", level: 4, proficiency: 86, bpm: 86, featured: true },
+  { track: "05", name: "Express.js", category: "Backend Framework", level: 4, proficiency: 85, bpm: 85 },
+  { track: "06", name: "TypeScript", category: "Typed Programming", level: 4, proficiency: 82, bpm: 82 },
+  { track: "07", name: "MySQL", category: "Relational Database", level: 4, proficiency: 82, bpm: 82 },
+  { track: "08", name: "PHP & Laravel", category: "Backend MVC Framework", level: 3, proficiency: 80, bpm: 80 },
+  { track: "09", name: "Flutter & Dart", category: "Cross-Platform Mobile", level: 3, proficiency: 78, bpm: 78 },
+  { track: "10", name: "PostgreSQL", category: "Relational Database", level: 3, proficiency: 74, bpm: 74 },
 ];
 
 export const PROJECTS: Project[] = [
   {
     title: "Portfolio Profile",
-    catalogNo: "LP-001 // STUDIO MASTER RELEASE",
+    catalogNo: "PROYEK UTAMA // WEB PORTOFOLIO",
     year: "2026",
     description:
-      "Portofolio panggung digital rockstar dengan arsitektur modern Next.js 16, visualisasi 3D Three.js, dan interaktivitas tingkat tinggi untuk audiens web.",
+      "Website portofolio interaktif berbasis Next.js 16, visualisasi 3D Three.js, dan animasi modern untuk menampilkan profil profesional serta karya digital.",
     image: "/portofolio.png",
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "Three.js", "GSAP"],
     githubUrl: "https://github.com/ferydwi-stack/Portfolio-Profile",
-    rpm: "33 ⅓ RPM",
-    side: "SIDE A - TITLE TRACK",
+    rpm: "Web App",
+    side: "FULLSTACK APPLICATION",
   },
   {
     title: "Sistem Kasir Warung",
-    catalogNo: "EP-002 // COMMERCIAL POS SYSTEM",
+    catalogNo: "SISTEM INFORMASI // POINT OF SALE",
     year: "2025",
     description:
-      "Sistem Point of Sale (POS) handal untuk operasional toko kelontong, dilengkapi manajemen inventaris barang, rekonsiliasi kasir kas riil, dan pelaporan rugi-laba.",
+      "Sistem Point of Sale (POS) untuk operasional toko kelontong, mencakup manajemen inventaris barang, pencatatan transaksi kasir real-time, dan pelaporan keuangan.",
     image: "/kasir.png",
     tags: ["Laravel", "MySQL", "Tailwind CSS", "PHP"],
     githubUrl: "https://github.com/ferydwi-stack/sistem-kasir-warung",
-    rpm: "45 RPM",
-    side: "SIDE A - BUSINESS GROOVE",
+    rpm: "Web App",
+    side: "COMMERCIAL POS SYSTEM",
   },
   {
     title: "Aplikasi Presensi Guru",
-    catalogNo: "SG-003 // MOBILE TOUR SINGLE",
+    catalogNo: "APLIKASI MOBILE // SISTEM PRESENSI",
     year: "2025",
     description:
-      "Aplikasi mobile lintas platform bagi instansi pendidikan untuk melacak absensi pendidik secara akurat berbasis radius GPS dan validasi wajah.",
+      "Aplikasi mobile lintas platform bagi instansi pendidikan untuk melacak absensi pendidik secara akurat berbasis radius geolokasi GPS dan validasi wajah.",
     image: "/absen.jpg",
     tags: ["Flutter", "Dart", "Firebase", "Geolocation"],
     githubUrl: "https://github.com/ferydwi-stack/kelompok-Citra-Garden",
-    rpm: "45 RPM",
-    side: "SIDE B - GEO ANTHEM",
+    rpm: "Mobile App",
+    side: "MOBILE ATTENDANCE SYSTEM",
   },
   {
     title: "SahabatBK",
-    catalogNo: "EP-004 // ACOUSTIC COUNSELING",
+    catalogNo: "APLIKASI KONSELING // PLATFORM EDUKASI",
     year: "2024",
     description:
       "Platform bimbingan konseling digital untuk mendampingi siswa mengatasi kendala akademik maupun psikososial melalui konseling privat dan materi panduan.",
     image: "/sahabatbk.jpg",
     tags: ["Flutter", "Dart", "Firebase", "Cross-Platform"],
     githubUrl: "https://github.com/ferydwi-stack/SahabatBK-by-vitamin",
-    rpm: "33 ⅓ RPM",
-    side: "SIDE B - SUPPORT RIFF",
+    rpm: "Mobile App",
+    side: "COUNSELING PLATFORM",
   },
 ];
 

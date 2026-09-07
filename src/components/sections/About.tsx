@@ -33,7 +33,7 @@ export function About() {
     >
       {/* Background Section Ambient Watermark */}
       <div className="absolute left-4 top-1/3 -translate-y-1/2 font-[family-name:var(--font-bebas)] text-[18vw] font-black text-white/[0.02] pointer-events-none select-none">
-        BACKSTAGE
+        PROFIL
       </div>
 
       {/* Asymmetric Diagonal Split Container */}
@@ -43,7 +43,7 @@ export function About() {
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3 py-1 rounded border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
               <Flame className="w-4 h-4 text-red-500" />
-              <span>{"//"} FRONTMAN DOSSIER &amp; PHILOSOPHY</span>
+              <span>{"//"} PROFIL PROFESIONAL &amp; PENDEKATAN REKAYASA</span>
             </div>
 
             <h2 className="headline-section text-3xl sm:text-5xl lg:text-6xl font-normal uppercase text-white leading-[1.05] tracking-wide">
@@ -63,9 +63,9 @@ export function About() {
             <div className="text-xs font-mono uppercase tracking-wider text-red-400 font-bold border-b border-zinc-800 pb-2 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Cpu className="w-4 h-4 text-red-500" />
-                <span>{"//"} STUDIO ARSENAL &amp; TECH RIGS</span>
+                <span>{"//"} STACK TEKNOLOGI &amp; ALAT PENGEMBANGAN</span>
               </div>
-              <span className="text-zinc-500 text-[10px]">ALL CHANNELS ACTIVE</span>
+              <span className="text-zinc-500 text-[10px]">KOMPETENSI TERVERIFIKASI</span>
             </div>
 
             <div ref={rigsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -102,10 +102,10 @@ export function About() {
             <button
               onClick={() => scrollTo("#certificates", { duration: 1.2 })}
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#14101e] border border-red-500/50 hover:bg-red-600 hover:text-white text-xs font-mono uppercase tracking-widest font-bold text-red-400 transition-all shadow-lg group cursor-pointer"
-              data-cursor-text="CREDS"
+              data-cursor-text="SERTIFIKASI"
             >
               <Award className="w-4 h-4" />
-              <span>LIHAT BACKSTAGE PASS &amp; SERTIFIKAT RESMI</span>
+              <span>LIHAT SERTIFIKASI &amp; LISENSI RESMI</span>
               <span className="group-hover:translate-x-1.5 transition-transform">→</span>
             </button>
           </div>
@@ -120,9 +120,9 @@ export function About() {
             {/* Gaffer Tape Strip */}
             <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-32 h-7 bg-zinc-600/90 border border-zinc-500/50 rounded-xs transform rotate-2 shadow-md opacity-90 z-30" />
 
-            {/* VIP Pass Stamp */}
+            {/* Verification Stamp */}
             <div className="absolute top-6 right-6 z-30 px-3 py-1 bg-red-600 border border-red-400 text-white font-mono text-[10px] font-black uppercase tracking-widest rounded-xs transform rotate-12 shadow-lg">
-              ALL ACCESS PASS
+              TERVERIFIKASI
             </div>
 
             {/* Photo Image */}
@@ -145,10 +145,10 @@ export function About() {
                   {PERSONAL_INFO.name}
                 </p>
                 <p className="text-xs text-red-400 font-bold">
-                  DEVELOPER &amp; LEAD GUITARIST
+                  {PERSONAL_INFO.role}
                 </p>
               </div>
-              <span className="text-[10px] font-mono text-zinc-500">STAGE READY</span>
+              <span className="text-[10px] font-mono text-zinc-500">INDONESIA</span>
             </div>
           </div>
         </div>

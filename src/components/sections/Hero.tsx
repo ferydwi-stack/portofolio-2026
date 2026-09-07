@@ -43,19 +43,19 @@ export function Hero() {
       <div className="relative z-20 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-zinc-400 border-b border-zinc-800/80 pb-4">
         <div className="flex items-center gap-2 text-red-500 font-bold">
           <Flame className="w-4 h-4 text-red-500 animate-pulse" />
-          <span>STAGE SOUNDCHECK LIVE // TOUR 2026</span>
+          <span>PORTOFOLIO PENGEMBANG WEB // TAHUN 2026</span>
         </div>
         <div className="hidden sm:flex items-center gap-4 text-zinc-400">
           <button
             onClick={handleHeroStrum}
-            className="flex items-center gap-1.5 px-3 py-1 rounded bg-red-950/80 border border-red-800 text-red-400 hover:bg-red-600 hover:text-white transition-all cursor-pointer shadow-sm"
-            data-cursor-text="CHORD"
+            className="flex items-center gap-1.5 px-3 py-1 rounded bg-red-950/80 border border-red-800 text-red-400 hover:bg-red-600 hover:text-white transition-all cursor-pointer shadow-sm text-xs font-mono"
+            data-cursor-text="SUARA"
           >
             <Zap className="w-3 h-3" />
-            <span>TEST RIFF (E5)</span>
+            <span>AKORD GITAR</span>
           </button>
           <span>&bull;</span>
-          <span>120W TUBE TONE</span>
+          <span>REKAYASA WEB MODERN</span>
         </div>
       </div>
 
@@ -95,7 +95,7 @@ export function Hero() {
         {/* Backdrop Sub-Badge */}
         <div className="mt-4 flex items-center gap-3">
           <span className="px-3 py-1 rounded bg-red-600/90 text-white font-mono text-xs uppercase font-black tracking-widest shadow-[0_0_20px_rgba(255,42,59,0.6)]">
-            HEADLINER
+            FULLSTACK DEVELOPER
           </span>
           <span className="text-xs sm:text-sm font-mono text-zinc-400 uppercase tracking-widest">
             {PERSONAL_INFO.role}
@@ -106,8 +106,8 @@ export function Hero() {
       {/* Interactive 6-String Guitar Fretboard Bar */}
       <div className="relative z-20 my-4 p-3 rounded-2xl bg-[#100d17]/80 border border-zinc-800/80 backdrop-blur-md">
         <div className="flex items-center justify-between text-[10px] font-mono text-zinc-500 mb-1 px-1">
-          <span>INTERACTIVE SOUNDCHECK FRETS (STRUM WITH CURSOR)</span>
-          <span className="text-red-400 font-bold">TUNING: E A D G B E</span>
+          <span>FITUR INTERAKTIF: ARAHKAN KURSOR PADA SENAR UNTUK MEMETIK NADA</span>
+          <span className="text-red-400 font-bold">NADA SENAR: E A D G B E</span>
         </div>
         <div className="space-y-0.5">
           {["E2 (82Hz)", "A2 (110Hz)", "D3 (147Hz)", "G3 (196Hz)", "B3 (247Hz)", "E4 (330Hz)"].map((label, idx) => (
@@ -125,20 +125,20 @@ export function Hero() {
       <div className="relative z-20 flex flex-col sm:flex-row items-end justify-between gap-8 pt-6 border-t border-zinc-800/80">
         <div className="max-w-md space-y-2 text-left">
           <p className="text-xs font-mono text-red-400 font-bold uppercase tracking-wider">
-            {"//"} LIVE PERFORMANCE OVERVIEW
+            {"//"} RINGKASAN PROFESIONAL
           </p>
           <p className="text-sm sm:text-base text-zinc-300 font-sans leading-relaxed">
-            Menghidupkan arsitektur fullstack modern dengan ketelitian ritme gitar rock. Performa tinggi, tata panggung visual imersif, dan kode yang tangguh.
+            Mengembangkan aplikasi web modern dan sistem perangkat lunak yang berkinerja tinggi, responsif, serta berarsitektur kokoh dan terstruktur rapi.
           </p>
         </div>
 
         <div className="flex flex-col items-end gap-5">
           <div ref={subheadingRef} className="text-right">
             <span className="text-xs font-mono text-zinc-500 uppercase tracking-widest block">
-              AVAILABLE FOR 2026 WORLD TOURS &amp; CONTRACTS
+              TERSEDIA UNTUK PEKERJAAN KONTRAK &amp; FULL-TIME
             </span>
             <span className="text-sm font-mono font-bold text-white tracking-wider">
-              REMOTE // FULL-TIME // CONTRACT
+              REMOTE // HYBRID // FULL-TIME
             </span>
           </div>
 
@@ -149,18 +149,18 @@ export function Hero() {
                 scrollTo("#projects", { duration: 1.2 });
               }}
               className="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black transition-all shadow-[0_0_25px_rgba(255,42,59,0.5)] flex items-center gap-2 group cursor-pointer active:scale-95"
-              data-cursor-text="DISC"
+              data-cursor-text="PROYEK"
             >
-              <span>EXPLORE ALBUMS</span>
+              <span>LIHAT PORTOFOLIO PROYEK</span>
               <ArrowDownRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />
             </button>
 
             <button
               onClick={() => scrollTo("#contact", { duration: 1.4 })}
               className="px-6 py-3.5 rounded-xl bg-[#14101e] border border-zinc-700 hover:border-red-500 text-white font-mono text-xs uppercase tracking-widest font-bold transition-all cursor-pointer"
-              data-cursor-text="CHAT"
+              data-cursor-text="KONTAK"
             >
-              STAGE DISPATCH
+              HUBUNGI SAYA
             </button>
           </div>
         </div>
@@ -171,11 +171,11 @@ export function Hero() {
         ref={pickIndicatorRef}
         onClick={() => scrollTo("#about", { duration: 1.2 })}
         className="absolute bottom-4 right-4 hidden md:flex flex-col items-center gap-1 cursor-pointer group z-30"
-        title="Scroll Down to Backstage Bio"
-        data-cursor-text="SCROLL"
+        title="Gulir ke Bawah ke Bagian Profil"
+        data-cursor-text="GULIR"
       >
         <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest group-hover:text-red-400 transition-colors">
-          Keep scrolling
+          Gulir ke bawah
         </span>
         <svg
           className="w-5 h-6 text-red-500 group-hover:text-red-400 transition-colors filter drop-shadow-[0_0_6px_rgba(255,42,59,0.6)]"

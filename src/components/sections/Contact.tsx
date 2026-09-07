@@ -46,28 +46,28 @@ export function Contact() {
     >
       {/* Background Section Ambient Watermark */}
       <div className="absolute left-6 bottom-12 font-[family-name:var(--font-bebas)] text-[18vw] font-black text-white/[0.02] pointer-events-none select-none">
-        DISPATCH
+        KONTAK
       </div>
 
       {/* Asymmetric Split: Open Left for 3D Stage Lights, Shifted Right Form Console */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
-        {/* Left Side: Dramatic Headline & Direct Channels */}
+        {/* Left Side: Headline & Direct Channels */}
         <div ref={contentRef} className="lg:col-span-6 space-y-8">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-500/50 bg-[#140f1a]/90 text-red-400 text-xs font-mono uppercase tracking-widest backdrop-blur-md shadow-[0_0_20px_rgba(255,42,59,0.3)]">
               <Radio className="w-3.5 h-3.5 animate-pulse" />
-              <span>DIRECT STAGE DISPATCH</span>
+              <span>SALURAN KOMUNIKASI RESMI</span>
             </div>
 
-            <h2 className="text-5xl sm:text-7xl lg:text-8xl font-black uppercase text-white font-[family-name:var(--font-anton)] leading-[0.92]">
-              Ready To Rock? <br />
+            <h2 className="headline-section text-5xl sm:text-7xl lg:text-8xl font-normal uppercase text-white leading-[0.95]">
+              Siap Berkolaborasi? <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-red-600">
-                Book The Tour
+                Mari Terhubung
               </span>
             </h2>
 
             <p className="text-base sm:text-lg text-zinc-300 font-sans leading-relaxed max-w-xl">
-              Pintu panggung terbuka untuk tawaran kolaborasi proyek perangkat lunak baru, rekrutmen tim, maupun diskusi seputar arsitektur sistem dan musik rock.
+              Terbuka untuk tawaran proyek pengembangan perangkat lunak, kolaborasi tim teknik, maupun konsultasi arsitektur web modern.
             </p>
           </div>
 
@@ -76,14 +76,14 @@ export function Contact() {
             <a
               href={`mailto:${PERSONAL_INFO.contacts.email}`}
               className="flex items-center gap-4 p-4 rounded-2xl bg-[#120f1a]/90 border border-zinc-800 hover:border-red-500 group transition-all backdrop-blur-md shadow-xl"
-              data-cursor-text="MAIL"
+              data-cursor-text="EMAIL"
             >
               <div className="w-12 h-12 rounded-xl bg-red-950/80 border border-red-800 flex items-center justify-center text-red-400 group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all">
                 <Mail className="w-5 h-5" />
               </div>
               <div>
                 <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block">
-                  ELECTRONIC MAIL
+                  EMAIL RESMI
                 </span>
                 <span className="text-sm sm:text-base font-mono font-bold text-white group-hover:text-red-400 transition-colors">
                   {PERSONAL_INFO.contacts.email}
@@ -103,7 +103,7 @@ export function Contact() {
               </div>
               <div>
                 <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block">
-                  WHATSAPP HOTLINE
+                  WHATSAPP CHAT
                 </span>
                 <span className="text-sm sm:text-base font-mono font-bold text-white group-hover:text-emerald-400 transition-colors">
                   {PERSONAL_INFO.contacts.whatsapp}
@@ -116,14 +116,14 @@ export function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-4 p-4 rounded-2xl bg-[#120f1a]/90 border border-zinc-800 hover:border-blue-500 group transition-all backdrop-blur-md shadow-xl"
-              data-cursor-text="LINK"
+              data-cursor-text="LINKEDIN"
             >
               <div className="w-12 h-12 rounded-xl bg-blue-950/80 border border-blue-800 flex items-center justify-center text-blue-400 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all">
                 <Linkedin className="w-5 h-5" />
               </div>
               <div>
                 <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block">
-                  LINKEDIN NETWORK
+                  PROFIL LINKEDIN
                 </span>
                 <span className="text-sm sm:text-base font-mono font-bold text-white group-hover:text-blue-400 transition-colors">
                   {PERSONAL_INFO.contacts.linkedin}
@@ -142,14 +142,14 @@ export function Contact() {
             <div className="border-b border-zinc-800 pb-4 flex items-center justify-between font-mono">
               <div>
                 <h3 className="text-xl font-bold uppercase text-white tracking-wide">
-                  TRANSMIT STAGE RIDER
+                  KIRIM PESAN &amp; KONSULTASI
                 </h3>
                 <p className="text-xs text-zinc-500">
-                  Input detail kebutuhan proyek atau kolaborasi Anda.
+                  Isi formulir di bawah untuk memulai diskusi proyek Anda.
                 </p>
               </div>
               <span className="text-xs text-red-400 font-bold bg-red-950/60 px-2.5 py-1 rounded border border-red-900">
-                LIVE DISPATCH
+                FORMULIR KONTAK
               </span>
             </div>
 
@@ -199,7 +199,7 @@ export function Contact() {
                 htmlFor="contact-subject"
                 className="text-xs font-mono uppercase tracking-wider text-zinc-400 block"
               >
-                SUBJEK RIDER *
+                SUBJEK PESAN *
               </label>
               <input
                 type="text"
@@ -218,7 +218,7 @@ export function Contact() {
                 htmlFor="contact-message"
                 className="text-xs font-mono uppercase tracking-wider text-zinc-400 block"
               >
-                PESAN RIDER DETAIL *
+                DETAIL PESAN ATAU KEBUTUHAN PROYEK *
               </label>
               <textarea
                 id="contact-message"
@@ -227,7 +227,7 @@ export function Contact() {
                 value={formState.message}
                 onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                 className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-red-500 text-white font-sans text-base placeholder:text-zinc-600 resize-none transition-colors"
-                placeholder="Tuliskan spesifikasi proyek, deadline, atau pertanyaan Anda..."
+                placeholder="Tuliskan spesifikasi sistem, ruang lingkup proyek, target waktu, atau pertanyaan teknis Anda..."
               />
             </div>
 
@@ -236,18 +236,18 @@ export function Contact() {
                 type="submit"
                 disabled={isSubmitting || isSubmitted}
                 className="relative w-full py-4 bg-red-600 hover:bg-red-500 text-white rounded-xl font-mono text-xs uppercase tracking-widest font-black transition-all flex items-center justify-center gap-2 group disabled:opacity-75 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(255,42,59,0.5)] cursor-pointer overflow-hidden"
-                data-cursor-text="TRANSMIT"
+                data-cursor-text="KIRIM"
               >
                 {isSubmitting ? (
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : isSubmitted ? (
                   <>
                     <CheckCircle2 className="w-4 h-4 text-emerald-300" />
-                    <span className="text-emerald-200">PASS CONFIRMED // MESSAGE SENT BACKSTAGE</span>
+                    <span className="text-emerald-200">PESAN BERHASIL TERKIRIM // TERIMA KASIH</span>
                   </>
                 ) : (
                   <>
-                    <span>SEND IT BACKSTAGE</span>
+                    <span>KIRIM PESAN SEKARANG</span>
                     <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </>
                 )}

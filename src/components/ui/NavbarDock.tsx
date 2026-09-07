@@ -10,12 +10,12 @@ import { BandLogo } from "@/components/ui/BandLogo";
 import { useScrollStore } from "@/store/useScrollStore";
 
 const NAV_ITEMS = [
-  { id: "hero", label: "Opening", icon: Home },
-  { id: "about", label: "The Artist", icon: User },
-  { id: "skills", label: "Setlist", icon: Flame },
-  { id: "projects", label: "Discography", icon: Disc3 },
-  { id: "certificates", label: "Backstage Passes", icon: Award },
-  { id: "contact", label: "Meet & Greet", icon: Send },
+  { id: "hero", label: "Beranda", icon: Home },
+  { id: "about", label: "Tentang Saya", icon: User },
+  { id: "skills", label: "Keahlian", icon: Flame },
+  { id: "projects", label: "Proyek", icon: Disc3 },
+  { id: "certificates", label: "Sertifikasi", icon: Award },
+  { id: "contact", label: "Kontak", icon: Send },
 ];
 
 export function NavbarDock() {
@@ -71,7 +71,7 @@ export function NavbarDock() {
             FERY DWI RAMADHI
           </span>
           <span className="text-[9px] font-mono text-red-400 font-bold tracking-wider">
-            ROCKSTAR DEV // 2026
+            FULLSTACK DEVELOPER // 2026
           </span>
         </div>
       </header>

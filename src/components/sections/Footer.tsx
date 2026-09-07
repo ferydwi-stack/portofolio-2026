@@ -52,11 +52,11 @@ export function Footer() {
         <BandLogo size={120} />
       </div>
 
-      {/* Vibrating Full-Width Guitar String Top Line */}
+      {/* Top Line */}
       <div className="relative w-full h-4 mb-8 flex items-center justify-center pointer-events-none" aria-hidden="true">
         <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/60 to-transparent animate-pulse" />
         <div className="relative z-10 px-3 py-0.5 rounded-full bg-[#0d0a14] border border-zinc-800 text-[8px] font-mono text-zinc-500 uppercase tracking-widest">
-          &bull; CURTAIN CALL &bull;
+          &bull; PENUTUP &bull;
         </div>
       </div>
 
@@ -70,7 +70,7 @@ export function Footer() {
             </span>
           </div>
           <p className="text-[10px] text-zinc-500">
-            &copy; 2026 STAGE PRODUCTION. ALL RIGHTS RESERVED &bull; BUILT WITH NEXT.JS 16 &amp; THREE.JS
+            &copy; 2026 FERY DWI RAMADHI. SELURUH HAK CIPTA DILINDUNGI &bull; FULLSTACK DEVELOPER
           </p>
         </div>
 
@@ -94,14 +94,14 @@ export function Footer() {
           })}
         </div>
 
-        {/* Back to Top Stage Button */}
+        {/* Back to Top Button */}
         <div>
           <button
             onClick={() => scrollTo("#hero", { duration: 1.5 })}
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/90 border border-zinc-800 hover:border-red-500 text-zinc-300 hover:text-white text-xs tracking-wider transition-colors cursor-pointer"
-            data-cursor-text="TOP"
+            data-cursor-text="ATAS"
           >
-            <span>STAGE TOP</span>
+            <span>KEMBALI KE ATAS</span>
             <ArrowUp className="w-3.5 h-3.5 text-red-500" />
           </button>
         </div>

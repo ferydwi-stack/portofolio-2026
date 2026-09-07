@@ -87,7 +87,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className="relative z-10 p-6 sm:p-8 flex items-center justify-between font-mono text-xs border-b border-zinc-800/80">
         <div className="flex items-center gap-3">
           <span className="px-2.5 py-1 rounded bg-red-600 text-white font-black tracking-wider">
-            RELEASE 0{index + 1}
+            PROYEK 0{index + 1}
           </span>
           <span className="text-zinc-300 font-bold hidden sm:inline">
             {project.catalogNo}
@@ -101,29 +101,27 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
       </div>
 
-      {/* Bottom Content Console */}
-      <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8 right-6 sm:right-8 z-20 space-y-4 max-w-2xl">
+      {/* Main Content Area */}
+      <div className="relative z-10 p-6 sm:p-10 flex flex-col justify-end h-[calc(100%-75px)] space-y-4 max-w-2xl">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-[10px] font-mono text-red-400 font-bold uppercase tracking-wider">
-            <Disc3 className="w-3.5 h-3.5 text-red-500 animate-spin-slow" />
-            <span>{project.side}</span>
-          </div>
-
-          <h3 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase text-white group-hover:text-red-400 transition-colors font-[family-name:var(--font-anton)] tracking-tight leading-none">
+          <span className="text-[10px] font-mono text-red-400 font-bold uppercase tracking-widest">
+            {project.side}
+          </span>
+          <h3 className="headline-section text-2xl sm:text-4xl lg:text-5xl font-normal uppercase tracking-wide text-white drop-shadow-md">
             {project.title}
           </h3>
         </div>
 
-        <p className="text-xs sm:text-sm text-zinc-300 font-sans leading-relaxed line-clamp-3">
+        <p className="text-xs sm:text-sm text-zinc-300 font-sans line-clamp-3 leading-relaxed">
           {project.description}
         </p>
 
-        {/* Tech Stack Tags */}
-        <div className="flex flex-wrap gap-1.5 pt-1">
+        {/* Tech Stack Pills */}
+        <div className="flex flex-wrap gap-2 pt-2">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-1 text-[10px] font-mono font-bold text-red-300 bg-red-950/60 border border-red-900/60 rounded-md backdrop-blur-xs"
+              className="text-[10px] font-mono text-zinc-300 bg-[#161220]/90 px-3 py-1 rounded-md border border-zinc-700/80 shadow-sm"
             >
               {tag}
             </span>
@@ -137,10 +135,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black rounded-xl transition-all shadow-[0_0_20px_rgba(255,42,59,0.5)] cursor-pointer active:scale-95"
-            data-cursor-text="CODE"
+            data-cursor-text="KODE"
           >
             <Github className="w-4 h-4" />
-            <span>SOURCE REPO</span>
+            <span>KODE SUMBER</span>
           </a>
 
           <a
@@ -148,9 +146,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs font-mono text-zinc-300 hover:text-red-400 flex items-center gap-1.5 transition-colors cursor-pointer"
-            data-cursor-text="OPEN"
+            data-cursor-text="DEMO"
           >
-            <span>LIVE PREVIEW</span>
+            <span>LIHAT DEMO</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
 
@@ -162,10 +160,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 ? "bg-red-600 text-white border-red-500 animate-pulse shadow-[0_0_15px_rgba(255,42,59,0.5)]"
                 : "bg-black/60 text-zinc-400 hover:text-white border-zinc-700 hover:border-red-500"
             }`}
-            data-cursor-text="RIFF"
+            data-cursor-text="SUARA"
           >
             {isPlayingRiff ? <Pause className="w-3.5 h-3.5 text-white" /> : <Play className="w-3.5 h-3.5 text-red-400" />}
-            <span className="text-[10px] font-bold">SAMPLE RIFF</span>
+            <span className="text-[10px] font-bold">PETIK RIFF</span>
           </button>
         </div>
       </div>
@@ -195,21 +193,21 @@ export function Projects() {
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3 py-1 rounded border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
             <Radio className="w-3.5 h-3.5 animate-pulse" />
-            <span>ORIGINAL MASTER DISCS &amp; ALBUMS</span>
+            <span>PORTOFOLIO SISTEM &amp; APLIKASI</span>
           </div>
-          <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-anton)]">
-            Discography Releases
+          <h2 className="headline-section text-3xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-wider text-white leading-none">
+            Portofolio Proyek Terpilih
           </h2>
-          <p className="text-xs sm:text-sm font-mono text-zinc-400">
+          <p className="text-xs sm:text-sm font-sans text-zinc-400">
             {prefersReducedMotion
-              ? "Daftar album dan rilisan aplikasi perangkat lunak."
-              : "Scroll vertikal menggeser album selebar layar penuh satu demi satu."}
+              ? "Koleksi proyek perangkat lunak dan aplikasi web yang telah dibangun."
+              : "Geser horizontal untuk menjelajahi rincian sistem dan implementasi teknologi."}
           </p>
         </div>
 
         <div className="text-xs font-mono text-zinc-500 flex items-center gap-2">
-          <span className="text-red-400 font-bold bg-red-950/60 px-3 py-1 rounded border border-red-900/60">
-            {PROJECTS.length} ALBUMS IN REPERTOIRE
+          <span className="text-red-400 font-bold bg-red-950/60 px-3 py-1 rounded border border-red-900/60 tracking-wider">
+            {PROJECTS.length} PROYEK UTAMA
           </span>
         </div>
       </div>

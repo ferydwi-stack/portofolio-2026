@@ -84,7 +84,7 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
         className="w-1/2 h-full bg-[#070609] border-r border-red-900/60 shadow-[20px_0_50px_rgba(0,0,0,0.9)] flex items-center justify-end pr-8"
       >
         <div className="text-right font-mono text-zinc-700 text-xs tracking-widest uppercase">
-          STAGE LEFT // 2026
+          PORTOFOLIO // 2026
         </div>
       </div>
 
@@ -94,7 +94,7 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
         className="w-1/2 h-full bg-[#070609] border-l border-red-900/60 shadow-[-20px_0_50px_rgba(0,0,0,0.9)] flex items-center justify-start pl-8"
       >
         <div className="text-left font-mono text-zinc-700 text-xs tracking-widest uppercase">
-          STAGE RIGHT // SOUNDCHECK
+          FULLSTACK DEVELOPER
         </div>
       </div>
 
@@ -108,7 +108,7 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
         </div>
 
         <div className="px-6 py-1.5 rounded-full border border-red-500/80 bg-red-950/80 text-red-400 font-mono text-xs uppercase tracking-widest shadow-[0_0_25px_rgba(255,42,59,0.5)] mb-3">
-          &bull; SOUNDCHECK IN PROGRESS &bull;
+          &bull; MEMUAT PORTOFOLIO &bull;
         </div>
 
         <h1 className="headline-hero text-4xl sm:text-6xl lg:text-7xl font-normal uppercase text-white tracking-wider">
@@ -116,7 +116,7 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
         </h1>
 
         <p className="font-mono text-xs text-zinc-400 tracking-widest mt-2 mb-4">
-          FULLSTACK ARCHITECTURE &bull; GUITAR DISTORTION
+          REKAYASA WEB &bull; ARSITEKTUR PERANGKAT LUNAK
         </p>
 
         <div className="opacity-40">

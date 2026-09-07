@@ -14,32 +14,32 @@ export default function Home() {
       {/* Curtain Intro on First Page Load */}
       <CurtainIntro />
 
-      {/* 1. Hero Section (Out-of-center 14vw headline overlapping 3D character) */}
+      {/* 1. Hero Section */}
       <Hero />
 
-      <DiagonalDivider direction="tilt-right" fretNumber={3} label="STAGE BOUNDARY &bull; BIO DOSSIER" />
+      <DiagonalDivider direction="tilt-right" fretNumber={3} label="PROFIL &bull; TENTANG SAYA" />
 
-      {/* 2. About Section (Diagonal split layout with -8deg tilted photo) */}
+      {/* 2. About Section */}
       <About />
 
-      <DiagonalDivider direction="tilt-left" fretNumber={5} label="SOUNDCHECK &bull; SETLIST ANTHEMS" />
+      <DiagonalDivider direction="tilt-left" fretNumber={5} label="KEAHLIAN &bull; TEKNOLOGI" />
 
-      {/* 3. Skills Section (Pinned horizontal setlist with non-uniform cards) */}
+      {/* 3. Skills Section */}
       <Skills />
 
-      <DiagonalDivider direction="tilt-right" fretNumber={7} label="DISCOGRAPHY &bull; MASTER PRESSINGS" />
+      <DiagonalDivider direction="tilt-right" fretNumber={7} label="PORTOFOLIO &bull; PROYEK PILIHAN" />
 
-      {/* 4. Projects Section (Pinned full-bleed 90vw gallery with 3D vinyl records) */}
+      {/* 4. Projects Section */}
       <Projects />
 
-      <DiagonalDivider direction="tilt-left" fretNumber={9} label="CREDENTIALS &bull; BACKSTAGE WALL" />
+      <DiagonalDivider direction="tilt-left" fretNumber={9} label="SERTIFIKASI &bull; LISENSI RESMI" />
 
-      {/* 5. Certificates Section (Chaotic wall collage with seeded angles & hover physics) */}
+      {/* 5. Certificates Section */}
       <Certificates />
 
-      <DiagonalDivider direction="tilt-right" fretNumber={12} label="STAGE TRANSMISSION &bull; RIDER DISPATCH" />
+      <DiagonalDivider direction="tilt-right" fretNumber={12} label="KONTAK &bull; KONSULTASI" />
 
-      {/* 6. Contact Section (Asymmetric stage lights on left, form on right) */}
+      {/* 6. Contact Section */}
       <Contact />
 
       {/* 7. Footer Section (Slender with vibrating guitar string divider) */}

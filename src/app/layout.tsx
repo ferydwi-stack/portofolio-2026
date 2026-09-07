@@ -35,13 +35,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fery Dwi Ramadhi | Rockstar Fullstack Developer & Lead Guitarist",
+  title: "Fery Dwi Ramadhi | Fullstack Developer & Software Engineer",
   description:
-    "Live Stage Portfolio of Fery Dwi Ramadhi — Rockstar Fullstack Developer and Guitarist crafting high-performance digital experiences with heavy rock distortion.",
+    "Portofolio profesional Fery Dwi Ramadhi — Fullstack Developer & Software Engineer yang berfokus pada arsitektur web modern, performa tinggi, dan solusi digital terintegrasi.",
   openGraph: {
-    title: "Fery Dwi Ramadhi | Rockstar Fullstack Developer & Lead Guitarist",
+    title: "Fery Dwi Ramadhi | Fullstack Developer & Software Engineer",
     description:
-      "Fullstack Developer × Guitarist. High-performance code, heavy riffs, and concert stage visuals.",
+      "Fullstack Developer & Software Engineer. Mengembangkan aplikasi web interaktif, performa optimal, dan sistem digital terukur.",
     type: "website",
   },
 };

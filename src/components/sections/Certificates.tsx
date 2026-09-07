@@ -54,21 +54,21 @@ export function Certificates() {
     >
       {/* Background Section Ambient Watermark */}
       <div className="absolute right-4 top-1/4 -translate-y-1/2 font-[family-name:var(--font-bebas)] text-[16vw] font-black text-white/[0.02] pointer-events-none select-none">
-        PASSES
+        SERTIFIKASI
       </div>
 
       <div className="relative z-10">
         {/* Section Header */}
         <div className="mb-14 space-y-3 max-w-2xl">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3 py-1 rounded border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
-            <Ticket className="w-3.5 h-3.5" />
-            <span>BACKSTAGE PASSES &amp; LAMINATES WALL</span>
+            <Award className="w-3.5 h-3.5" />
+            <span>SERTIFIKASI &amp; KREDENSIAL RESMI</span>
           </div>
-          <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-anton)]">
-            Sticker Wall &amp; Credentials
+          <h2 className="headline-section text-4xl sm:text-6xl font-normal uppercase tracking-wider text-white">
+            Sertifikasi &amp; Lisensi
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base font-sans leading-relaxed">
-            Kolase laminates pass tur dan stiker sertifikasi resmi yang ditempel acak di dinding ruang backstage panggung. Arahkan kursor untuk mengangkat pass.
+            Daftar sertifikat kompetensi, lisensi teknis, dan pencapaian profesional terverifikasi dalam rekayasa perangkat lunak dan teknologi web.
           </p>
         </div>
 
@@ -135,7 +135,7 @@ export function Certificates() {
                 {cert.type === "external" && (
                   <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded bg-red-950/90 border border-red-700/80 text-[8px] font-mono text-red-300">
                     <Sparkles className="w-2.5 h-2.5 text-amber-400" />
-                    OFFICIAL
+                    TERVERIFIKASI
                   </div>
                 )}
 
@@ -165,7 +165,7 @@ export function Certificates() {
                 <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px]">
                   <span className="text-zinc-500 uppercase">{cert.issuer}</span>
                   <span className="text-red-400 font-bold flex items-center gap-1">
-                    INSPECT ↵
+                    DETAIL ↵
                   </span>
                 </div>
               </motion.div>
@@ -233,7 +233,7 @@ export function Certificates() {
 
               <div className="mt-4 flex items-center justify-between text-xs font-mono text-zinc-400">
                 <span>{selectedCert.description}</span>
-                <span className="text-red-400 font-bold">VERIFIED AUTHENTIC</span>
+                <span className="text-red-400 font-bold">KREDENSIAL TERVERIFIKASI</span>
               </div>
             </motion.div>
           </motion.div>
