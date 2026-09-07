@@ -45,10 +45,11 @@ export function useHeroTimeline({
         defaults: { ease: "power3.out" },
       });
 
+      const words = headline.children;
       tl.fromTo(
-        headline,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, clearProps: "transform" }
+        words.length > 0 ? words : headline,
+        { y: 35, opacity: 0, scale: 0.96 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.8, stagger: 0.14, ease: "back.out(1.3)", clearProps: "transform" }
       );
 
       if (subheadingRef.current) {

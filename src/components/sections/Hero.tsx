@@ -6,7 +6,7 @@ import { PERSONAL_INFO } from "@/lib/data/portfolioData";
 import { useHeroTimeline } from "@/animations/useHeroTimeline";
 import { useLenis } from "@/hooks/useLenis";
 import { InteractiveGuitarString } from "@/components/ui/InteractiveGuitarString";
-import { playGuitarChord } from "@/lib/sound/guitarSynth";
+import { playGuitarChord, playStringPluck } from "@/lib/sound/guitarSynth";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -58,28 +58,93 @@ export function Hero() {
 
       {/* Responsive Headline (Left-aligned, wrapping cleanly on mobile and tablets) */}
       <div className="relative z-10 my-auto py-6 sm:py-8 w-full pl-1 sm:pl-4 lg:pl-10">
-        {/* Stage Shadow & Contrast Gradient behind Headline */}
+        {/* Stage Shadow & Ambient Glow behind Headline */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent pointer-events-none -z-10 rounded-3xl" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none -z-10" />
+        <div className="absolute -inset-x-8 -inset-y-10 bg-gradient-to-r from-red-600/15 via-red-500/10 to-transparent rounded-full blur-3xl pointer-events-none animate-hero-aura -z-10" />
 
         <h1
           ref={headlineRef}
           className="headline-hero text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] font-normal uppercase tracking-wider select-none drop-shadow-2xl flex flex-wrap items-baseline gap-x-3 sm:gap-x-5 gap-y-1"
           aria-label={PERSONAL_INFO.name}
         >
-          <span className="text-[#f5f5f0] drop-shadow-md">FERY</span>
-          <span className="text-[#f5f5f0] drop-shadow-md">DWI</span>
-          <span className="text-red-500 hover:text-white transition-colors duration-300 drop-shadow-md">RAMADHI</span>
+          {/* FERY */}
+          <span
+            className="inline-flex items-center cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95 title-animated-shimmer"
+            onClick={() => playStringPluck(0)}
+            data-cursor-text="PETIK"
+          >
+            {"FERY".split("").map((char, cIdx) => (
+              <span
+                key={cIdx}
+                className="inline-block transition-transform duration-150 hover:-translate-y-2 hover:text-red-400 select-none"
+                onMouseEnter={() => playStringPluck(cIdx % 6)}
+              >
+                {char}
+              </span>
+            ))}
+          </span>
+
+          {/* DWI */}
+          <span
+            className="inline-flex items-center cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95 title-animated-shimmer"
+            onClick={() => playStringPluck(2)}
+            data-cursor-text="PETIK"
+          >
+            {"DWI".split("").map((char, cIdx) => (
+              <span
+                key={cIdx}
+                className="inline-block transition-transform duration-150 hover:-translate-y-2 hover:text-red-400 select-none"
+                onMouseEnter={() => playStringPluck((cIdx + 2) % 6)}
+              >
+                {char}
+              </span>
+            ))}
+          </span>
+
+          {/* RAMADHI with electric concert glow */}
+          <span
+            className="inline-flex items-center cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95 title-ramadhi-glow"
+            onClick={() => playStringPluck(4)}
+            data-cursor-text="DISTORSI"
+          >
+            {"RAMADHI".split("").map((char, cIdx) => (
+              <span
+                key={cIdx}
+                className="inline-block transition-transform duration-150 hover:-translate-y-2 hover:text-white select-none"
+                onMouseEnter={() => playStringPluck((cIdx + 3) % 6)}
+              >
+                {char}
+              </span>
+            ))}
+          </span>
         </h1>
 
-        {/* Backdrop Sub-Badge */}
-        <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
-          <span className="px-2.5 sm:px-3 py-1 rounded bg-red-600/90 text-white font-mono text-[10px] sm:text-xs uppercase font-black tracking-widest shadow-[0_0_20px_rgba(255,42,59,0.6)]">
-            FULLSTACK DEVELOPER
-          </span>
-          <span className="text-[11px] sm:text-sm font-mono text-zinc-400 uppercase tracking-widest">
-            {PERSONAL_INFO.role}
-          </span>
+        {/* Dynamic Interactive Badges */}
+        <div className="mt-3 sm:mt-5 flex flex-wrap items-center gap-2 sm:gap-3">
+          {/* Live EQ Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-red-950/80 border border-red-500/60 shadow-[0_0_20px_rgba(255,42,59,0.5)]">
+            <div className="flex items-center gap-0.5 h-3">
+              <span className="w-0.5 bg-red-400 rounded-full eq-bar-1" />
+              <span className="w-0.5 bg-white rounded-full eq-bar-3" />
+              <span className="w-0.5 bg-red-300 rounded-full eq-bar-2" />
+              <span className="w-0.5 bg-white rounded-full eq-bar-5" />
+            </div>
+            <span className="font-mono text-[10px] sm:text-xs uppercase font-black tracking-widest text-white">
+              FULLSTACK DEVELOPER
+            </span>
+          </div>
+
+          {/* Live Status Subtitle */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#100d17]/80 border border-zinc-800">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500" />
+            </span>
+            <span className="text-[11px] sm:text-xs font-mono text-zinc-300 uppercase tracking-widest">
+              {PERSONAL_INFO.role}
+            </span>
+          </div>
         </div>
       </div>
 

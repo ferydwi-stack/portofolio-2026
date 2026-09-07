@@ -190,3 +190,60 @@ html {
   animation: guitar-string-vibrate 0.25s ease-in-out infinite;
 }
 
+/* Hero Title Dynamic Light Sweep & Shimmer */
+@keyframes title-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.title-animated-shimmer {
+  background: linear-gradient(
+    90deg,
+    #eaeaea 0%,
+    #ffffff 25%,
+    #ff4b5c 50%,
+    #ffffff 75%,
+    #eaeaea 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: title-shimmer 4.5s ease-in-out infinite;
+}
+
+.title-ramadhi-glow {
+  background: linear-gradient(
+    90deg,
+    #ff1f35 0%,
+    #ff6070 30%,
+    #ffffff 50%,
+    #ff6070 70%,
+    #e11d2e 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: title-shimmer 3.2s ease-in-out infinite 0.4s;
+  filter: drop-shadow(0 0 22px rgba(255, 42, 59, 0.7));
+}
+
+@keyframes hero-aura-pulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.08);
+  }
+}
+
+.animate-hero-aura {
+  animation: hero-aura-pulse 4s ease-in-out infinite;
+}
+
+
