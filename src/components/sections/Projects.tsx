@@ -1,17 +1,19 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { Github, ExternalLink, Disc3, Radio } from "lucide-react";
+import { Github, ExternalLink, Disc3, Radio, Play, Pause } from "lucide-react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { PROJECTS, Project } from "@/lib/data/portfolioData";
 import { VinylRecord } from "@/components/three/VinylRecord";
 import { useProjectsTimeline } from "@/animations/useProjectsTimeline";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { playGuitarChord } from "@/lib/sound/guitarSynth";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [isPlayingRiff, setIsPlayingRiff] = useState(false);
 
   // Mouse tilt tracking with framer-motion
   const mouseX = useMotionValue(0);
@@ -34,6 +36,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     mouseY.set(0);
   };
 
+  const handlePlayRiff = () => {
+    setIsPlayingRiff(true);
+    const chords = [82.41, 110.0, 98.0, 123.47];
+    playGuitarChord(chords[index % chords.length]);
+    setTimeout(() => {
+      setIsPlayingRiff(false);
+    }, 1200);
+  };
+
   return (
     <motion.div
       ref={cardRef}
@@ -46,8 +57,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       }}
       className="flex-none w-[88vw] sm:w-[84vw] max-w-[1100px] h-[520px] sm:h-[580px] rounded-3xl bg-[#0f0c18]/95 border-2 border-zinc-800 hover:border-red-500/80 shadow-[0_25px_60px_rgba(0,0,0,0.95)] backdrop-blur-2xl relative transition-colors duration-300 group overflow-hidden"
     >
-      {/* Spinning 3D Vinyl Record Overlapping Card Top-Right */}
-      <div className="absolute -top-6 right-8 sm:right-12 z-30 pointer-events-none filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)]">
+      {/* 3D Vinyl Record Sliding Out on Hover */}
+      <div className="absolute -top-6 right-8 sm:right-12 z-30 pointer-events-none filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)] transform group-hover:translate-x-6 group-hover:-translate-y-2 transition-transform duration-500">
         <VinylRecord albumIndex={index} />
       </div>
 
@@ -82,7 +93,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
       </div>
 
-      {/* Bottom Content Console (absolute bottom-8 left-8) */}
+      {/* Bottom Content Console */}
       <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8 right-6 sm:right-8 z-20 space-y-4 max-w-2xl">
         <div className="space-y-1">
           <div className="flex items-center gap-2 text-[10px] font-mono text-red-400 font-bold uppercase tracking-wider">
@@ -111,13 +122,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           ))}
         </div>
 
-        {/* Action Links */}
-        <div className="pt-3 border-t border-zinc-800/80 flex items-center gap-4">
+        {/* Action Links & Preview Soundboard */}
+        <div className="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center gap-4">
           <a
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black rounded-xl transition-all shadow-[0_0_20px_rgba(255,42,59,0.5)] cursor-pointer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black rounded-xl transition-all shadow-[0_0_20px_rgba(255,42,59,0.5)] cursor-pointer active:scale-95"
             data-cursor-text="CODE"
           >
             <Github className="w-4 h-4" />
@@ -134,6 +145,20 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             <span>LIVE PREVIEW</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
+
+          {/* Interactive Riff Preview Button */}
+          <button
+            onClick={handlePlayRiff}
+            className={`ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono transition-all cursor-pointer ${
+              isPlayingRiff
+                ? "bg-red-600 text-white border-red-500 animate-pulse shadow-[0_0_15px_rgba(255,42,59,0.5)]"
+                : "bg-black/60 text-zinc-400 hover:text-white border-zinc-700 hover:border-red-500"
+            }`}
+            data-cursor-text="RIFF"
+          >
+            {isPlayingRiff ? <Pause className="w-3.5 h-3.5 text-white" /> : <Play className="w-3.5 h-3.5 text-red-400" />}
+            <span className="text-[10px] font-bold">SAMPLE RIFF</span>
+          </button>
         </div>
       </div>
     </motion.div>

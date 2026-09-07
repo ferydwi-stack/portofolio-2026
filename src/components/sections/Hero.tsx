@@ -1,10 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import { ArrowDownRight, Flame } from "lucide-react";
+import { ArrowDownRight, Flame, Zap } from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/data/portfolioData";
 import { useHeroTimeline } from "@/animations/useHeroTimeline";
 import { useLenis } from "@/hooks/useLenis";
+import { InteractiveGuitarString } from "@/components/ui/InteractiveGuitarString";
+import { playGuitarChord } from "@/lib/sound/guitarSynth";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,14 +26,18 @@ export function Hero() {
     pickIndicatorRef,
   });
 
-  const headline = PERSONAL_INFO.name; // "FERY DWI RAMADHI"
+  const headline = PERSONAL_INFO.name;
   const chars = headline.split("");
+
+  const handleHeroStrum = () => {
+    playGuitarChord(82.41);
+  };
 
   return (
     <section
       ref={containerRef}
       id="hero"
-      className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden px-6 sm:px-12 lg:px-24 pt-28 pb-16 select-none"
+      className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden px-6 sm:px-12 lg:px-24 pt-28 pb-12 select-none"
     >
       {/* Top Meta Line */}
       <div className="relative z-20 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-zinc-400 border-b border-zinc-800/80 pb-4">
@@ -39,10 +45,17 @@ export function Hero() {
           <Flame className="w-4 h-4 text-red-500 animate-pulse" />
           <span>STAGE SOUNDCHECK LIVE // TOUR 2026</span>
         </div>
-        <div className="hidden sm:flex items-center gap-4 text-zinc-500">
-          <span>AMPLIFIER: 120W TUBE DISTORTION</span>
+        <div className="hidden sm:flex items-center gap-4 text-zinc-400">
+          <button
+            onClick={handleHeroStrum}
+            className="flex items-center gap-1.5 px-3 py-1 rounded bg-red-950/80 border border-red-800 text-red-400 hover:bg-red-600 hover:text-white transition-all cursor-pointer shadow-sm"
+            data-cursor-text="CHORD"
+          >
+            <Zap className="w-3 h-3" />
+            <span>TEST RIFF (E5)</span>
+          </button>
           <span>&bull;</span>
-          <span>BPM: 145</span>
+          <span>120W TUBE TONE</span>
         </div>
       </div>
 
@@ -53,7 +66,6 @@ export function Hero() {
           aria-label={headline}
         >
           {chars.map((char, index) => {
-            // Characters around index 7-10 ("DWI R") are layered behind or in front
             const isOverlapBehind = index >= 6 && index <= 9;
             return (
               <span
@@ -85,8 +97,26 @@ export function Hero() {
         </div>
       </div>
 
+      {/* Interactive 6-String Guitar Fretboard Bar */}
+      <div className="relative z-20 my-4 p-3 rounded-2xl bg-[#100d17]/80 border border-zinc-800/80 backdrop-blur-md">
+        <div className="flex items-center justify-between text-[10px] font-mono text-zinc-500 mb-1 px-1">
+          <span>INTERACTIVE SOUNDCHECK FRETS (STRUM WITH CURSOR)</span>
+          <span className="text-red-400 font-bold">TUNING: E A D G B E</span>
+        </div>
+        <div className="space-y-0.5">
+          {["E2 (82Hz)", "A2 (110Hz)", "D3 (147Hz)", "G3 (196Hz)", "B3 (247Hz)", "E4 (330Hz)"].map((label, idx) => (
+            <InteractiveGuitarString
+              key={idx}
+              stringIndex={idx}
+              label={label}
+              gauge={3.2 - idx * 0.4}
+            />
+          ))}
+        </div>
+      </div>
+
       {/* Asymmetric Subheading & CTA (Far Bottom-Right Aligned) */}
-      <div className="relative z-20 flex flex-col sm:flex-row items-end justify-between gap-8 pt-8 border-t border-zinc-800/80">
+      <div className="relative z-20 flex flex-col sm:flex-row items-end justify-between gap-8 pt-6 border-t border-zinc-800/80">
         <div className="max-w-md space-y-2 text-left">
           <p className="text-xs font-mono text-red-400 font-bold uppercase tracking-wider">
             {"//"} LIVE PERFORMANCE OVERVIEW
@@ -108,8 +138,11 @@ export function Hero() {
 
           <div ref={ctaRef} className="flex items-center gap-4">
             <button
-              onClick={() => scrollTo("#projects", { duration: 1.2 })}
-              className="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black transition-all shadow-[0_0_25px_rgba(255,42,59,0.5)] flex items-center gap-2 group cursor-pointer"
+              onClick={() => {
+                handleHeroStrum();
+                scrollTo("#projects", { duration: 1.2 });
+              }}
+              className="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black transition-all shadow-[0_0_25px_rgba(255,42,59,0.5)] flex items-center gap-2 group cursor-pointer active:scale-95"
               data-cursor-text="DISC"
             >
               <span>EXPLORE ALBUMS</span>
@@ -131,7 +164,7 @@ export function Hero() {
       <div
         ref={pickIndicatorRef}
         onClick={() => scrollTo("#about", { duration: 1.2 })}
-        className="absolute bottom-6 right-6 hidden md:flex flex-col items-center gap-1 cursor-pointer group z-30"
+        className="absolute bottom-4 right-4 hidden md:flex flex-col items-center gap-1 cursor-pointer group z-30"
         title="Scroll Down to Backstage Bio"
         data-cursor-text="SCROLL"
       >

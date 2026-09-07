@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CERTIFICATES, Certificate } from "@/lib/data/portfolioData";
 import { useCertificatesTimeline } from "@/animations/useCertificatesTimeline";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { playStringPluck, playStompClick } from "@/lib/sound/guitarSynth";
 
 // Deterministic pseudo-random numbers based on index (avoids SSR hydration mismatches)
 function getSeededRandom(seed: number) {
@@ -104,7 +105,10 @@ export function Certificates() {
             return (
               <motion.div
                 key={cert.id}
-                onHoverStart={() => setHoveredIndex(index)}
+                onHoverStart={() => {
+                  setHoveredIndex(index);
+                  playStringPluck(index % 6);
+                }}
                 onHoverEnd={() => setHoveredIndex(null)}
                 style={{
                   rotate: prefersReducedMotion ? 0 : transform.rotation,
@@ -123,7 +127,10 @@ export function Certificates() {
                         transition: { type: "spring", stiffness: 350, damping: 22 },
                       }
                 }
-                onClick={() => setSelectedCert(cert)}
+                onClick={() => {
+                  playStompClick();
+                  setSelectedCert(cert);
+                }}
                 className={`p-5 rounded-2xl bg-[#13101b]/95 border-2 transition-colors cursor-pointer relative overflow-hidden backdrop-blur-md shadow-2xl flex flex-col justify-between ${
                   cert.type === "external"
                     ? "border-red-500/70 hover:border-red-400"

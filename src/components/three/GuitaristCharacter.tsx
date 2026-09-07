@@ -93,6 +93,10 @@ export function GuitaristCharacter({ scrollProgress = 0 }: GuitaristProps) {
 
   return (
     <group ref={groupRef} position={[0.6, -1.8, 0]}>
+      {/* Dynamic Backstage Rim Light Halo */}
+      <pointLight position={[0, 2.0, -0.6]} intensity={3.5} color="#ff1f35" distance={5} />
+      <pointLight position={[0.2, 1.5, 0.6]} intensity={1.2} color="#fef08a" distance={3} />
+
       {/* --- LEGS & BOOTS --- */}
       {/* Left Leg & Doc Marten boot */}
       <mesh position={[-0.32, 0.7, 0.05]} material={materials.clothing}>

@@ -1,140 +1,319 @@
 "use client";
 
-import { useRef } from "react";
-import { Flame, Radio } from "lucide-react";
+import { useState } from "react";
+import { Flame, Disc, Zap, Volume2 } from "lucide-react";
 import { SKILLS_SETLIST } from "@/lib/data/portfolioData";
-import { useSkillsTimeline } from "@/animations/useSkillsTimeline";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { playGuitarChord, playStompClick } from "@/lib/sound/guitarSynth";
+
+interface PedalTheme {
+  pedalType: string;
+  bodyColor: string;
+  accentColor: string;
+  ledColor: string;
+  knobs: string[];
+}
+
+const PEDAL_THEMES: Record<string, PedalTheme> = {
+  "Tailwind CSS": {
+    pedalType: "TURBO DISTORTION",
+    bodyColor: "from-red-900/90 to-black",
+    accentColor: "border-red-500/70",
+    ledColor: "bg-red-500 shadow-[0_0_12px_#ff2a3b]",
+    knobs: ["SPEED", "TONE", "LEVEL"],
+  },
+  "React.js": {
+    pedalType: "TUBE OVERDRIVE",
+    bodyColor: "from-cyan-950/90 to-black",
+    accentColor: "border-cyan-500/70",
+    ledColor: "bg-cyan-400 shadow-[0_0_12px_#22d3ee]",
+    knobs: ["DRIVE", "REACT", "LEVEL"],
+  },
+  "Next.js": {
+    pedalType: "STACK PREAMP",
+    bodyColor: "from-amber-950/90 to-black",
+    accentColor: "border-amber-500/70",
+    ledColor: "bg-amber-400 shadow-[0_0_12px_#fbbf24]",
+    knobs: ["SSR GAIN", "OPTIMIZE", "OUTPUT"],
+  },
+  "Node.js": {
+    pedalType: "SUSTAIN FUZZ",
+    bodyColor: "from-emerald-950/90 to-black",
+    accentColor: "border-emerald-500/70",
+    ledColor: "bg-emerald-400 shadow-[0_0_12px_#34d399]",
+    knobs: ["SUSTAIN", "EVENT", "VOLUME"],
+  },
+  "Express.js": {
+    pedalType: "TIME DELAY",
+    bodyColor: "from-purple-950/90 to-black",
+    accentColor: "border-purple-500/70",
+    ledColor: "bg-purple-400 shadow-[0_0_12px_#c084fc]",
+    knobs: ["ROUTING", "FEEDBACK", "MIX"],
+  },
+  "TypeScript": {
+    pedalType: "STRICT COMPRESSOR",
+    bodyColor: "from-blue-950/90 to-black",
+    accentColor: "border-blue-500/70",
+    ledColor: "bg-blue-400 shadow-[0_0_12px_#60a5fa]",
+    knobs: ["TYPES", "ATTACK", "STRICT"],
+  },
+  "MySQL": {
+    pedalType: "PARAMETRIC EQ",
+    bodyColor: "from-orange-950/90 to-black",
+    accentColor: "border-orange-500/70",
+    ledColor: "bg-orange-400 shadow-[0_0_12px_#fb923c]",
+    knobs: ["INDEX", "QUERY", "GAIN"],
+  },
+  "PHP & Laravel": {
+    pedalType: "VINTAGE CHORUS",
+    bodyColor: "from-rose-950/90 to-black",
+    accentColor: "border-rose-500/70",
+    ledColor: "bg-rose-400 shadow-[0_0_12px_#fb7185]",
+    knobs: ["DEPTH", "MVC", "RATE"],
+  },
+  "Flutter & Dart": {
+    pedalType: "WHAMMY SHIFTER",
+    bodyColor: "from-indigo-950/90 to-black",
+    accentColor: "border-indigo-500/70",
+    ledColor: "bg-indigo-400 shadow-[0_0_12px_#818cf8]",
+    knobs: ["PITCH", "DART", "RANGE"],
+  },
+  "PostgreSQL": {
+    pedalType: "BASS PREAMP",
+    bodyColor: "from-teal-950/90 to-black",
+    accentColor: "border-teal-500/70",
+    ledColor: "bg-teal-400 shadow-[0_0_12px_#2dd4bf]",
+    knobs: ["ACID", "TRANSACT", "DRIVE"],
+  },
+};
 
 export function Skills() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const [activePedals, setActivePedals] = useState<Record<string, boolean>>({
+    "Tailwind CSS": true,
+    "React.js": true,
+    "Next.js": true,
+    "Node.js": true,
+    "TypeScript": true,
+  });
 
-  // Connect custom GSAP horizontal pin timeline
-  useSkillsTimeline({ sectionRef, trackRef });
+  const [activePreset, setActivePreset] = useState<"ALL" | "FRONTEND" | "BACKEND" | "MOBILE">("ALL");
+
+  const togglePedal = (name: string, rootFreq: number) => {
+    playStompClick();
+    const nextState = !activePedals[name];
+    setActivePedals((prev) => ({ ...prev, [name]: nextState }));
+    if (nextState) {
+      playGuitarChord(rootFreq);
+    }
+  };
+
+  const handleTestAllChords = () => {
+    playGuitarChord(82.41);
+  };
+
+  const filteredSkills = SKILLS_SETLIST.filter((skill) => {
+    if (activePreset === "ALL") return true;
+    if (activePreset === "FRONTEND") {
+      return ["Tailwind CSS", "React.js", "TypeScript"].includes(skill.name);
+    }
+    if (activePreset === "BACKEND") {
+      return ["Next.js", "Node.js", "Express.js", "MySQL", "PHP & Laravel", "PostgreSQL"].includes(skill.name);
+    }
+    if (activePreset === "MOBILE") {
+      return ["Flutter & Dart"].includes(skill.name);
+    }
+    return true;
+  });
 
   return (
     <section
-      ref={sectionRef}
       id="skills"
-      className={`relative w-full flex flex-col justify-center overflow-hidden px-6 sm:px-12 lg:px-24 select-none ${
-        prefersReducedMotion ? "py-24" : "min-h-screen"
-      }`}
-      data-cursor-drag="true"
+      className="relative min-h-screen py-24 px-6 sm:px-12 lg:px-24 overflow-hidden select-none"
     >
-      {/* Header Sticky Bar */}
-      <div className="pt-6 pb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 z-20">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3 py-1 rounded border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
-            <Radio className="w-3.5 h-3.5 animate-pulse" />
-            <span>STAGE SOUNDCHECK SETLIST</span>
+      {/* Background Stage Watermark */}
+      <div className="absolute left-6 top-1/3 -translate-y-1/2 font-[family-name:var(--font-bebas)] text-[16vw] font-black text-white/[0.02] pointer-events-none select-none">
+        PEDALBOARD
+      </div>
+
+      {/* Header & Master Amp Console */}
+      <div className="relative z-10 mb-12 space-y-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3.5 py-1.5 rounded-full border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.3)]">
+              <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400 animate-pulse" />
+              <span>CUSTOM GUITAR PEDALBOARD &bull; EFFECTS RIG</span>
+            </div>
+            <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase text-white font-[family-name:var(--font-bebas)] tracking-wider leading-none">
+              Stage Soundboard &amp; Stompbox Arsenal
+            </h2>
+            <p className="max-w-2xl text-sm sm:text-base font-sans text-zinc-300 leading-relaxed">
+              Setiap keahlian direkayasa sebagai modul pedal efek gitar panggung. Injak footswitch untuk mengaktifkan modul dan dengarkan harmonisasi frekuensinya.
+            </p>
           </div>
-          <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-bebas)]">
-            Live Tour Setlist
-          </h2>
-          <p className="text-xs sm:text-sm font-mono text-zinc-400">
-            {prefersReducedMotion
-              ? "Daftar instrumen teknologi dan keahlian teknis."
-              : "Scroll vertikal menggeser urutan setlist lagu teknis secara horizontal."}
-          </p>
+
+          {/* Master Channel Controls */}
+          <div className="p-4 rounded-2xl bg-[#110e19]/95 border-2 border-zinc-800 backdrop-blur-xl shadow-2xl flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-2 pr-4 border-r border-zinc-800">
+              <Volume2 className="w-4 h-4 text-red-500" />
+              <div className="text-left font-mono">
+                <span className="text-[10px] text-zinc-500 uppercase tracking-wider block">STAGE MASTER</span>
+                <span className="text-xs font-black text-white">120W TUBE RIG</span>
+              </div>
+            </div>
+
+            {/* Test Riff Stomp Button */}
+            <button
+              onClick={handleTestAllChords}
+              className="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black transition-all shadow-[0_0_20px_rgba(255,42,59,0.5)] flex items-center gap-2 cursor-pointer active:scale-95"
+              data-cursor-text="SHRED"
+            >
+              <Flame className="w-3.5 h-3.5" />
+              <span>STOMP POWER CHORD</span>
+            </button>
+          </div>
         </div>
 
-        <div className="text-xs font-mono text-zinc-500 flex items-center gap-2">
-          <span className="text-red-400 font-bold bg-red-950/60 px-3 py-1 rounded border border-red-900/60">
-            {SKILLS_SETLIST.length} TRACKS LOADED
+        {/* Channel Preset Filter Pills */}
+        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-zinc-800/80 font-mono text-xs">
+          <span className="text-zinc-500 text-[10px] uppercase tracking-wider mr-2">CHANNELS:</span>
+          {(["ALL", "FRONTEND", "BACKEND", "MOBILE"] as const).map((preset) => (
+            <button
+              key={preset}
+              onClick={() => setActivePreset(preset)}
+              className={`px-3.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                activePreset === preset
+                  ? "bg-red-600 text-white border-red-500 font-bold shadow-[0_0_15px_rgba(255,42,59,0.4)]"
+                  : "bg-[#14101e] text-zinc-400 border-zinc-800 hover:border-zinc-600 hover:text-white"
+              }`}
+            >
+              {preset}
+            </button>
+          ))}
+          <span className="ml-auto text-zinc-500 text-[11px] hidden sm:inline">
+            CLICK FOOTSWITCH TO TOGGLE EFFECT
           </span>
         </div>
       </div>
 
-      {/* Setlist Track: Horizontal on desktop, vertical fallback on reduced-motion */}
-      <div className="relative w-full overflow-visible py-4 z-10">
-        <div
-          ref={trackRef}
-          className={`${
-            prefersReducedMotion
-              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-              : "flex items-end gap-6 sm:gap-8 will-change-transform"
-          }`}
-        >
-          {SKILLS_SETLIST.map((item) => {
-            // Non-uniform sizes: mapped from level 1-5
-            const isHeadliner = item.level >= 5;
-            const isMedium = item.level === 4;
+      {/* Realistic Pedalboard Chassis Grid */}
+      <div className="relative z-10 p-6 sm:p-10 rounded-3xl bg-[#09070d]/90 border-2 border-zinc-800 shadow-[0_30px_70px_rgba(0,0,0,0.9)] backdrop-blur-2xl">
+        {/* Pedalboard Flight Case Rail Decals */}
+        <div className="absolute top-3 left-6 right-6 h-1 bg-zinc-800/60 rounded-full" />
+        <div className="absolute bottom-3 left-6 right-6 h-1 bg-zinc-800/60 rounded-full" />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 sm:gap-7">
+          {filteredSkills.map((skill, index) => {
+            const theme = PEDAL_THEMES[skill.name] || {
+              pedalType: "OVERDRIVE",
+              bodyColor: "from-zinc-900 to-black",
+              accentColor: "border-zinc-700",
+              ledColor: "bg-red-500",
+              knobs: ["GAIN", "TONE", "LEVEL"],
+            };
+
+            const isOn = activePedals[skill.name] ?? true;
+            const rootFreq = 82.41 * Math.pow(1.059463, index * 2); // Varied musical chords
 
             return (
               <div
-                key={item.name}
-                className={`relative rounded-3xl bg-[#110e19]/95 border-2 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.8)] backdrop-blur-xl group cursor-pointer flex flex-col justify-between overflow-hidden ${
-                  prefersReducedMotion ? "w-full min-h-[300px] p-6" : "flex-none"
-                } ${
-                  isHeadliner
-                    ? "w-[330px] sm:w-[390px] h-[390px] sm:h-[430px] p-7 sm:p-9 border-red-500/80 hover:border-red-400 shadow-[0_0_35px_rgba(255,42,59,0.3)]"
-                    : isMedium
-                    ? "w-[280px] sm:w-[330px] h-[340px] sm:h-[370px] p-6 sm:p-7 border-zinc-700/80 hover:border-red-500/60"
-                    : "w-[250px] sm:w-[290px] h-[310px] sm:h-[340px] p-5 sm:p-6 border-zinc-800 hover:border-zinc-600"
-                }`}
+                key={skill.name}
+                className={`relative rounded-2xl bg-gradient-to-b ${theme.bodyColor} border-2 ${
+                  isOn ? theme.accentColor : "border-zinc-800 opacity-70"
+                } p-5 flex flex-col justify-between h-[390px] shadow-2xl transition-all duration-300 group`}
               >
-                {/* Giant Transparent Background Track Number */}
-                <div className="absolute right-2 bottom-0 font-[family-name:var(--font-bebas)] text-[110px] sm:text-[140px] font-black text-white/5 pointer-events-none select-none leading-none -mb-4">
-                  {item.track}
-                </div>
-
-                {/* Top Setlist Meta */}
-                <div className="relative z-10 flex items-center justify-between font-mono text-xs border-b border-zinc-800 pb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-red-500 font-black text-sm">
-                      #{item.track}
-                    </span>
-                    <span className="text-[10px] text-zinc-400 font-bold tracking-wider">
-                      {item.category}
-                    </span>
+                {/* Top Jack Sockets (Visual 1/4" audio input/output) */}
+                <div className="flex justify-between items-center -mt-7 -mx-1 mb-2">
+                  <div className="w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-600 shadow-inner flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 rounded-full bg-black" />
                   </div>
-                  {isHeadliner && (
-                    <span className="px-2.5 py-0.5 rounded bg-red-600 text-white text-[9px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-md">
-                      <Flame className="w-2.5 h-2.5" />
-                      HEADLINER
-                    </span>
-                  )}
-                </div>
-
-                {/* Main Song / Skill Title */}
-                <div className="relative z-10 my-auto space-y-2">
-                  <h3
-                    className={`font-black uppercase text-white group-hover:text-red-400 transition-colors font-[family-name:var(--font-bebas)] tracking-wide leading-none ${
-                      isHeadliner
-                        ? "text-4xl sm:text-5xl"
-                        : isMedium
-                        ? "text-3xl sm:text-4xl"
-                        : "text-2xl sm:text-3xl"
-                    }`}
-                  >
-                    {item.name}
-                  </h3>
-                  <div className="flex items-center gap-3 text-xs font-mono text-zinc-400">
-                    <span>TEMPO: {item.bpm} BPM</span>
-                    <span>&bull;</span>
-                    <span className="text-red-400 font-bold">LEVEL {item.level}/5</span>
+                  <div className="w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-600 shadow-inner flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 rounded-full bg-black" />
                   </div>
                 </div>
 
-                {/* Level VU Meter Bar */}
-                <div className="relative z-10 space-y-2 pt-3 border-t border-zinc-800/80 font-mono">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-zinc-500 text-[10px] uppercase tracking-wider">
-                      PROFICIENCY
+                {/* Stompbox Head: Jewel LED Light + Pedal Name */}
+                <div>
+                  <div className="flex items-center justify-between font-mono">
+                    <span className="text-[9px] font-black tracking-widest text-zinc-400 uppercase">
+                      NO. 0{skill.track}
                     </span>
-                    <span className="text-red-400 font-bold text-sm">
-                      {item.proficiency}%
-                    </span>
+                    {/* Glowing LED Jewel Light */}
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[8px] text-zinc-500 font-bold">{isOn ? "ACTIVE" : "BYPASS"}</span>
+                      <div
+                        className={`w-3 h-3 rounded-full border border-white/40 transition-all duration-300 ${
+                          isOn ? theme.ledColor : "bg-zinc-800"
+                        }`}
+                      />
+                    </div>
                   </div>
 
-                  <div className="h-2.5 w-full bg-black/80 rounded-full overflow-hidden p-0.5 border border-zinc-800 flex gap-0.5">
+                  <div className="mt-3 text-center">
+                    <h3 className="text-xl sm:text-2xl font-black uppercase text-white font-[family-name:var(--font-bebas)] tracking-wide group-hover:text-red-400 transition-colors">
+                      {skill.name}
+                    </h3>
+                    <p className="text-[9px] font-mono font-bold text-red-400 tracking-wider">
+                      {theme.pedalType}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Rotary Knobs Section */}
+                <div className="py-3 px-2 rounded-xl bg-black/50 border border-zinc-800/80 grid grid-cols-3 gap-2 text-center">
+                  {theme.knobs.map((knobLabel, kIdx) => {
+                    const knobAngles = [25, 65, 45];
+                    const angle = knobAngles[kIdx % knobAngles.length];
+                    return (
+                      <div key={knobLabel} className="flex flex-col items-center">
+                        {/* Chrome Knurled Dial */}
+                        <div className="w-8 h-8 rounded-full bg-zinc-800 border-2 border-zinc-600 shadow-lg relative flex items-center justify-center group-hover:rotate-12 transition-transform">
+                          {/* Dial Marker Indicator */}
+                          <div
+                            className="absolute top-1 w-0.5 h-2 bg-white rounded-full"
+                            style={{ transform: `rotate(${angle}deg)` }}
+                          />
+                        </div>
+                        <span className="text-[8px] font-mono text-zinc-400 mt-1 uppercase font-bold">
+                          {knobLabel}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* VU Meter Proficiency Display */}
+                <div className="space-y-1 font-mono">
+                  <div className="flex justify-between items-center text-[10px]">
+                    <span className="text-zinc-500">GAIN / LEVEL</span>
+                    <span className="text-red-400 font-bold">{skill.proficiency}%</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-black rounded-full overflow-hidden p-0.5 border border-zinc-800 flex gap-0.5">
                     <div
-                      className="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-red-500 rounded-full shadow-[0_0_10px_rgba(255,42,59,0.5)] transition-all duration-500"
-                      style={{ width: `${item.proficiency}%` }}
+                      className={`h-full rounded-full transition-all duration-500 ${
+                        isOn
+                          ? "bg-gradient-to-r from-emerald-500 via-amber-400 to-red-500"
+                          : "bg-zinc-800"
+                      }`}
+                      style={{ width: isOn ? `${skill.proficiency}%` : "0%" }}
                     />
                   </div>
+                </div>
+
+                {/* Stomp Footswitch Section (Clickable) */}
+                <div className="pt-2 border-t border-zinc-800/80 flex flex-col items-center">
+                  <button
+                    onClick={() => togglePedal(skill.name, rootFreq)}
+                    className="w-14 h-14 rounded-full bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-600 border-4 border-zinc-800 shadow-[0_4px_10px_rgba(0,0,0,0.8)] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center cursor-pointer group/switch"
+                    aria-label={`Stomp pedal ${skill.name}`}
+                    data-cursor-text="STOMP"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-zinc-700 border-2 border-zinc-500 flex items-center justify-center shadow-inner">
+                      <Disc className="w-4 h-4 text-zinc-300 animate-spin-slow" />
+                    </div>
+                  </button>
+
+                  <span className="text-[8px] font-mono text-zinc-500 uppercase tracking-widest mt-1.5">
+                    FOOTSWITCH
+                  </span>
                 </div>
               </div>
             );
