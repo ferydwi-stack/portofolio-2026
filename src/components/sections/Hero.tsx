@@ -66,7 +66,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none -z-10" />
 
         <h1
-          className="text-[clamp(3.5rem,14vw,13rem)] leading-[0.84] font-black uppercase text-white font-[family-name:var(--font-anton)] tracking-tight whitespace-nowrap overflow-visible select-none drop-shadow-2xl"
+          className="text-[clamp(3.5rem,11.5vw,10.5rem)] leading-[0.88] font-black uppercase text-white font-[family-name:var(--font-bebas)] tracking-wider whitespace-nowrap overflow-visible select-none drop-shadow-2xl"
           aria-label={headline}
         >
           {chars.map((char, index) => {
@@ -79,15 +79,12 @@ export function Hero() {
                   headlineCharsRef.current[index] = el;
                 }}
                 className={`inline-block transition-colors hover:text-red-500 duration-300 ${
-                  char === " " ? "mr-[2.5vw]" : ""
+                  char === " " ? "mr-[2vw]" : ""
                 } ${
                   isOverlapBehind
                     ? "relative z-0 opacity-80 text-zinc-300"
                     : "relative z-20 text-[#f5f5f0] drop-shadow-md"
                 }`}
-                style={{
-                  willChange: "transform, opacity, filter",
-                }}
               >
                 {char}
               </span>

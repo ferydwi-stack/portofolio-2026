@@ -71,7 +71,7 @@ function SceneController() {
       <ParticleField />
 
       {/* Centerpiece 3D Emo Guitarist Character Silhouette Artwork */}
-      <group position={[0.2, 0.4, 0]}>
+      <group position={[0, 0, 0]}>
         <Suspense fallback={null}>
           <GuitaristCharacter />
         </Suspense>

@@ -7,12 +7,12 @@ export interface CameraKeyframe {
 }
 
 export const CAMERA_KEYFRAMES: CameraKeyframe[] = [
-  { at: 0.0, pos: [0, 1.4, 5.8], rot: [0, 0, 0] }, // Hero dolly-in start
-  { at: 0.15, pos: [0, 1.3, 4.5], rot: [0, 0, 0] }, // Hero settled
-  { at: 0.35, pos: [-2.2, 1.0, 4.2], rot: [0, 0.28, 0] }, // About pull-back-diagonal (positions guitarist cleanly on right)
-  { at: 0.55, pos: [0, 2.0, 7.8], rot: [0, 0, 0] }, // Skills wide shot
-  { at: 0.75, pos: [1.5, 1.0, 3.5], rot: [0, -0.2, 0] }, // Projects/Certs
-  { at: 1.0, pos: [0, 1.2, 3.0], rot: [0, 0, 0] }, // Contact close-up
+  { at: 0.0, pos: [0, 0.1, 5.0], rot: [0, 0, 0] }, // Hero: camera captures whole guitarist next to headline
+  { at: 0.15, pos: [0, 0.1, 4.4], rot: [0, 0, 0] }, // Hero settled
+  { at: 0.35, pos: [-2.0, 0.1, 4.2], rot: [0, 0.25, 0] }, // About: camera pans left, shifting guitarist cleanly to right
+  { at: 0.55, pos: [0, 0.8, 7.5], rot: [0, 0, 0] }, // Skills: wide concert shot
+  { at: 0.75, pos: [1.6, 0.1, 3.8], rot: [0, -0.2, 0] }, // Projects/Certs: angled side view
+  { at: 1.0, pos: [0, 0.1, 3.0], rot: [0, 0, 0] }, // Contact: close-up stage lights
 ];
 
 export function mapScrollToCameraKeyframes(progress: number) {

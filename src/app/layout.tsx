@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Bebas_Neue, Anton, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
@@ -7,6 +7,13 @@ import { GlobalStageLayer } from "@/components/providers/GlobalStageLayer";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { NavbarDock } from "@/components/ui/NavbarDock";
 import { SkipToContent } from "@/components/ui/SkipToContent";
+
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-bebas",
+  display: "swap",
+});
 
 const anton = Anton({
   weight: "400",
@@ -47,7 +54,7 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning className="dark">
       <body
-        className={`${anton.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased bg-[#0a0a0c] text-[#f5f5f0] min-h-screen relative selection:bg-red-600 selection:text-white overflow-x-hidden`}
+        className={`${bebasNeue.variable} ${anton.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased bg-[#0a0a0c] text-[#f5f5f0] min-h-screen relative selection:bg-red-600 selection:text-white overflow-x-hidden`}
       >
         {/* Skip Link for Accessibility */}
         <SkipToContent />

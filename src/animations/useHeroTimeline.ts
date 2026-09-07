@@ -42,50 +42,44 @@ export function useHeroTimeline({
     }
 
     const ctx = gsap.context(() => {
-      // 1. Entrance timeline
-      const enterTl = gsap.timeline({ delay: 0.2 });
-
+      // 1. Entrance timeline - use clearProps so text is never stuck at opacity 0
       if (chars.length > 0) {
-        enterTl.fromTo(
-          chars,
-          {
-            y: 80,
-            opacity: 0,
-            filter: "blur(12px)",
-          },
-          {
-            y: 0,
-            opacity: 1,
-            filter: "blur(0px)",
-            stagger: 0.02,
-            duration: 1.1,
-            ease: "power4.out",
-          }
-        );
+        gsap.from(chars, {
+          y: 40,
+          opacity: 0,
+          stagger: 0.02,
+          duration: 0.9,
+          ease: "power3.out",
+          clearProps: "all",
+        });
       }
 
       if (subheadingRef.current) {
-        enterTl.fromTo(
-          subheadingRef.current,
-          { x: 50, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
-          "-=0.6"
-        );
+        gsap.from(subheadingRef.current, {
+          x: 40,
+          opacity: 0,
+          duration: 0.8,
+          delay: 0.3,
+          ease: "power3.out",
+          clearProps: "all",
+        });
       }
 
       if (ctaRef.current) {
-        enterTl.fromTo(
-          ctaRef.current,
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.5)" },
-          "-=0.4"
-        );
+        gsap.from(ctaRef.current, {
+          y: 25,
+          opacity: 0,
+          duration: 0.6,
+          delay: 0.4,
+          ease: "back.out(1.5)",
+          clearProps: "all",
+        });
       }
 
       // Infinite Pick Bounce Indicator
       if (pickIndicatorRef.current) {
         gsap.to(pickIndicatorRef.current, {
-          y: 12,
+          y: 10,
           repeat: -1,
           yoyo: true,
           duration: 0.9,
@@ -93,17 +87,17 @@ export function useHeroTimeline({
         });
       }
 
-      // 2. Scroll-driven Exit Animation (headline slides smoothly left on scroll down as a coherent unit)
+      // 2. Scroll-driven Exit Animation (gentle slide left on scroll)
       if (chars.length > 0) {
         gsap.to(chars, {
-          xPercent: -25,
-          opacity: 0.2,
+          xPercent: -20,
+          opacity: 0.35,
           ease: "none",
           scrollTrigger: {
             trigger: container,
             start: "top top",
             end: "bottom top",
-            scrub: 0.8,
+            scrub: 1,
           },
         });
       }
