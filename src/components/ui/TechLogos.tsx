@@ -29,6 +29,9 @@ const TECH_ONLINE_LOGOS: Record<string, string> = {
   figma: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
   html: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
   css: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
+  go: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg",
+  golang: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg",
+  python: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
 };
 
 export function TechLogo({ name, className = "", size = 24 }: TechLogoProps) {
@@ -101,6 +104,15 @@ export function getTechBrandColor(name: string): { glow: string; border: string;
   }
   if (normalized.includes("postgres")) {
     return { glow: "rgba(51, 103, 145, 0.45)", border: "border-[#336791]/40", bg: "bg-[#336791]/10", text: "text-[#336791]" };
+  }
+  if (normalized.includes("go") || normalized.includes("golang")) {
+    return { glow: "rgba(0, 173, 216, 0.45)", border: "border-[#00ADD8]/40", bg: "bg-[#00ADD8]/10", text: "text-[#00ADD8]" };
+  }
+  if (normalized.includes("python")) {
+    return { glow: "rgba(55, 118, 171, 0.45)", border: "border-[#3776AB]/40", bg: "bg-[#3776AB]/10", text: "text-[#3776AB]" };
+  }
+  if (normalized.includes("firebase")) {
+    return { glow: "rgba(255, 202, 40, 0.45)", border: "border-[#FFCA28]/40", bg: "bg-[#FFCA28]/10", text: "text-[#FFCA28]" };
   }
   return { glow: "rgba(255, 42, 59, 0.4)", border: "border-red-500/40", bg: "bg-red-500/10", text: "text-red-500" };
 }
