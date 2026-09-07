@@ -43,17 +43,17 @@ export function useAboutTimeline({
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
-          start: "top 70%",
-          toggleActions: "play none none none",
+          start: "top 75%",
+          once: true,
         },
       });
 
-      // Photo frame slides in with heavy momentum from right
+      // Photo frame slides in with momentum from left
       if (photoRef.current) {
         tl.fromTo(
           photoRef.current,
-          { x: 350, opacity: 0, rotate: 18 },
-          { x: 0, opacity: 1, rotate: -8, duration: 1.2, ease: "power3.out" }
+          { x: -180, opacity: 0, rotate: -10 },
+          { x: 0, opacity: 1, rotate: -4, duration: 1.0, ease: "power3.out", clearProps: "all" }
         );
       }
 
