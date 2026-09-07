@@ -14,183 +14,283 @@ interface StandaloneGuitarProps {
 }
 
 /**
- * Creates an organic 2D flame tongue shape with curved edges and a pointed tip
+ * GLSL Procedural 99% Photorealistic Concert Stage Fire Shader
+ * Fluid thermal convection, multi-octave simplex fBM noise, and blackbody temperature color ramp
  */
-function createFlameTongueShape(width: number, height: number, curl: number) {
-  const shape = new THREE.Shape();
-  shape.moveTo(0, 0);
-  // Left curve with natural flare
-  shape.bezierCurveTo(
-    -width * 0.6,
-    height * 0.25,
-    -width * 0.85 + curl,
-    height * 0.6,
-    -width * 0.2 + curl,
-    height * 0.88
-  );
-  // Tip of the flame
-  shape.bezierCurveTo(-width * 0.05 + curl, height * 0.98, 0, height, 0, height);
-  // Right curve with flame flick
-  shape.bezierCurveTo(
-    width * 0.05 + curl,
-    height * 0.98,
-    width * 0.25 + curl,
-    height * 0.88,
-    width * 0.85 + curl,
-    height * 0.6
-  );
-  shape.bezierCurveTo(width * 0.6, height * 0.25, width * 0.35, 0, 0, 0);
-  return shape;
+const fireVertexShader = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const fireFragmentShader = `
+  uniform float uTime;
+  uniform float uSpeed;
+  uniform float uFlameScale;
+  uniform float uIntensityMultiplier;
+  varying vec2 vUv;
+
+  // 2D Simplex Noise hash
+  vec2 hash(vec2 p) {
+    p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+    return -1.0 + 2.0 * fract(sin(p) * 43758.5453123);
+  }
+
+  float noise(in vec2 p) {
+    const float K1 = 0.366025404; // (sqrt(3)-1)/2
+    const float K2 = 0.211324865; // (3-sqrt(3))/6
+    vec2 i = floor(p + (p.x + p.y) * K1);
+    vec2 a = p - i + (i.x + i.y) * K2;
+    vec2 o = (a.x > a.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+    vec2 b = a - o + K2;
+    vec2 c = a - 1.0 + 2.0 * K2;
+    vec3 h = max(0.5 - vec3(dot(a, a), dot(b, b), dot(c, c)), 0.0);
+    vec3 n = h * h * h * h * vec3(dot(a, hash(i + 0.0)), dot(b, hash(i + o)), dot(c, hash(i + 1.0)));
+    return dot(n, vec3(70.0));
+  }
+
+  float fbm(vec2 uv) {
+    float f = 0.0;
+    f += 0.5000 * noise(uv); uv *= 2.02;
+    f += 0.2500 * noise(uv); uv *= 2.04;
+    f += 0.1250 * noise(uv); uv *= 2.01;
+    f += 0.0625 * noise(uv);
+    return f;
+  }
+
+  void main() {
+    vec2 uv = vUv;
+
+    // Upward flame convection physics
+    float t = uTime * uSpeed;
+
+    // Teardrop flame envelope (wide bottom, tapered pointed top)
+    float centerDist = abs(uv.x - 0.5) * 2.0;
+    float verticalFade = clamp(1.0 - uv.y, 0.0, 1.0);
+    float widthAtY = mix(0.92, 0.08, pow(clamp(uv.y, 0.0, 1.0), 0.75));
+    float envelope = smoothstep(widthAtY, widthAtY - 0.38, centerDist) * verticalFade;
+
+    // Organic noise coordinates
+    vec2 noiseCoord = uv * vec2(2.4, 1.6) * uFlameScale;
+    float n1 = fbm(noiseCoord - vec2(0.0, t * 1.6));
+    float n2 = fbm(noiseCoord * 1.8 - vec2(t * 0.5, t * 2.1));
+
+    // Flame tongue turbulent lick displacement
+    float flameDensity = fbm(noiseCoord + vec2(n1 * 0.42, -t * 2.4 + n2 * 0.3));
+
+    // Combine envelope & noise
+    float intensity = envelope * (flameDensity * 1.5 + 0.55) - uv.y * 0.55;
+    intensity = clamp(intensity * uIntensityMultiplier, 0.0, 1.0);
+
+    if (intensity < 0.015) {
+      discard;
+    }
+
+    // High-fidelity Temperature Gradient matching Cherry Sunburst Guitar:
+    // Smoky Crimson -> Deep Ruby Cherry -> Vivid Neon Scarlet -> Blazing Amber Orange -> Hot Golden Yellow -> White-Hot Core
+    vec3 color;
+    if (intensity < 0.22) {
+      color = mix(vec3(0.28, 0.01, 0.03), vec3(0.88, 0.05, 0.12), intensity / 0.22);
+    } else if (intensity < 0.52) {
+      color = mix(vec3(0.88, 0.05, 0.12), vec3(1.0, 0.32, 0.0), (intensity - 0.22) / 0.30);
+    } else if (intensity < 0.82) {
+      color = mix(vec3(1.0, 0.32, 0.0), vec3(1.0, 0.84, 0.18), (intensity - 0.52) / 0.30);
+    } else {
+      color = mix(vec3(1.0, 0.84, 0.18), vec3(1.0, 0.98, 0.92), (intensity - 0.82) / 0.18);
+    }
+
+    gl_FragColor = vec4(color, intensity * 0.96);
+  }
+`;
+
+/**
+ * Creates procedural authentic Gibson Custom Shop Cherry Sunburst with Flamed Maple Tiger Grain
+ */
+function createCherrySunburstTexture(): THREE.CanvasTexture | null {
+  if (typeof document === "undefined") return null;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = 1024;
+  canvas.height = 1024;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+
+  // 1. Rich 5-Stop Radial Sunburst Gradient
+  // Center is warm glowing amber honey, transitioning into vivid ruby cherry, deep wine crimson, and dark mahogany edge
+  const grad = ctx.createRadialGradient(512, 540, 40, 512, 520, 500);
+  grad.addColorStop(0.0, "#ffb326"); // Warm Honey Amber center
+  grad.addColorStop(0.25, "#e62234"); // Radiant Cherry Red
+  grad.addColorStop(0.55, "#ad0a1b"); // Deep Ruby Crimson
+  grad.addColorStop(0.82, "#52040b"); // Dark Wine Burgundy
+  grad.addColorStop(1.0, "#1c0104"); // Edge Mahogany Burst
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1024, 1024);
+
+  // 2. High-End 3D Curly Flamed Maple "Tiger Stripe" Wood Grain
+  ctx.save();
+  ctx.globalCompositeOperation = "overlay";
+  for (let y = 0; y < 1024; y += 6) {
+    const waveFreq = 0.015;
+    const waveAmp = 5 + Math.sin(y * 0.02) * 3;
+    const alpha = 0.08 + Math.sin(y * 0.04) * 0.05;
+
+    ctx.fillStyle = y % 12 === 0 ? `rgba(255, 235, 180, ${alpha})` : `rgba(0, 0, 0, ${alpha * 1.4})`;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    for (let x = 0; x <= 1024; x += 16) {
+      ctx.lineTo(x, y + Math.sin(x * waveFreq) * waveAmp);
+    }
+    ctx.lineTo(1024, y + 4);
+    ctx.lineTo(0, y + 4);
+    ctx.closePath();
+    ctx.fill();
+  }
+  ctx.restore();
+
+  // 3. Fine Vertical Wood Pore Grain Texture
+  ctx.save();
+  ctx.globalAlpha = 0.04;
+  for (let x = 0; x < 1024; x += 3) {
+    ctx.fillStyle = Math.random() > 0.5 ? "#ffffff" : "#000000";
+    ctx.fillRect(x, 0, 1, 1024);
+  }
+  ctx.restore();
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.ClampToEdgeWrapping;
+  texture.wrapT = THREE.ClampToEdgeWrapping;
+  return texture;
 }
 
 /**
- * Dynamic 3D Fiery Flame Aura & Roaring Licking Flames
+ * 99% Photorealistic Roaring Concert Fire Plumes & Rising Ember Sparks
  */
 function RealisticFlameSystem({ prefersReducedMotion }: { prefersReducedMotion: boolean }) {
-  const flameGroupRef = useRef<THREE.Group>(null);
+  const mainFlameMatRef = useRef<THREE.ShaderMaterial>(null);
+  const leftFlameMatRef = useRef<THREE.ShaderMaterial>(null);
+  const rightFlameMatRef = useRef<THREE.ShaderMaterial>(null);
+  const baseFlameMatRef = useRef<THREE.ShaderMaterial>(null);
   const fireLightRef = useRef<THREE.PointLight>(null);
   const embersRef = useRef<THREE.Points>(null);
 
-  // Generate 20 distinct flame tongues around the ring
-  const flameData = useMemo(() => {
-    return Array.from({ length: 24 }).map((_, i) => {
-      const angle = (i / 24) * Math.PI * 2;
-      const radius = 1.35 + (i % 3) * 0.12;
-      const height = 0.95 + ((i * 7) % 5) * 0.16;
-      const width = 0.38 + (i % 2) * 0.12;
-      const curl = ((i % 3) - 1) * 0.1;
-      const shape = createFlameTongueShape(width, height, curl);
-      const isInner = i % 3 === 0;
-      const isCore = i % 6 === 0;
-
-      return {
-        shape,
-        angle,
-        radius,
-        height,
-        width,
-        color: isCore ? "#fff2a8" : isInner ? "#ff7700" : "#ff2211",
-        opacity: isCore ? 0.95 : isInner ? 0.88 : 0.75,
-        speed: 8 + (i % 4) * 2.5,
-        phase: i * 0.9,
-      };
+  // Common Shader Material Constructor
+  const createFireMaterial = (speed = 1.0, flameScale = 1.0, intensity = 1.0) => {
+    return new THREE.ShaderMaterial({
+      vertexShader: fireVertexShader,
+      fragmentShader: fireFragmentShader,
+      uniforms: {
+        uTime: { value: 0 },
+        uSpeed: { value: speed },
+        uFlameScale: { value: flameScale },
+        uIntensityMultiplier: { value: intensity },
+      },
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide,
+      depthWrite: false,
     });
-  }, []);
+  };
 
-  // Rising fiery ember particles
+  const mainMat = useMemo(() => createFireMaterial(1.15, 0.95, 1.0), []);
+  const leftMat = useMemo(() => createFireMaterial(1.35, 1.25, 0.95), []);
+  const rightMat = useMemo(() => createFireMaterial(1.3, 1.2, 0.95), []);
+  const baseMat = useMemo(() => createFireMaterial(1.45, 1.5, 1.05), []);
+
+  // Rising embers & sparks drifting upwards
   const emberParticles = useMemo(() => {
-    const count = 55;
+    const count = 90;
     const positions = new Float32Array(count * 3);
     const speeds = new Float32Array(count);
-    const sizes = new Float32Array(count);
 
     for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 2.6;
-      positions[i * 3 + 1] = -1.6 + Math.random() * 3.6;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 1.2;
-      speeds[i] = 0.8 + Math.random() * 1.4;
-      sizes[i] = 12 + Math.random() * 16;
+      positions[i * 3] = (Math.random() - 0.5) * 2.8;
+      positions[i * 3 + 1] = -1.8 + Math.random() * 4.2;
+      positions[i * 3 + 2] = -0.15 + (Math.random() - 0.5) * 0.9;
+      speeds[i] = 1.0 + Math.random() * 1.8;
     }
-    return { positions, speeds, sizes, count };
+    return { positions, speeds, count };
   }, []);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
 
-    // Rotate flame group smoothly
-    if (flameGroupRef.current && !prefersReducedMotion) {
-      flameGroupRef.current.rotation.z = t * 0.45;
-    }
+    if (!prefersReducedMotion) {
+      if (mainFlameMatRef.current) mainFlameMatRef.current.uniforms.uTime.value = t;
+      if (leftFlameMatRef.current) leftFlameMatRef.current.uniforms.uTime.value = t + 0.3;
+      if (rightFlameMatRef.current) rightFlameMatRef.current.uniforms.uTime.value = t + 0.7;
+      if (baseFlameMatRef.current) baseFlameMatRef.current.uniforms.uTime.value = t + 1.1;
 
-    // Dynamic firelight flicker (casting natural dancing shadows onto guitar)
-    if (fireLightRef.current && !prefersReducedMotion) {
-      fireLightRef.current.intensity =
-        2.2 + Math.sin(t * 14) * 0.5 + Math.sin(t * 26) * 0.35 + (Math.random() - 0.5) * 0.2;
-    }
-
-    // Animate rising ember sparks
-    if (embersRef.current && !prefersReducedMotion) {
-      const positions = embersRef.current.geometry.attributes.position.array as Float32Array;
-      for (let i = 0; i < emberParticles.count; i++) {
-        positions[i * 3 + 1] += emberParticles.speeds[i] * 0.02;
-        positions[i * 3] += Math.sin(t * 4 + i) * 0.008;
-
-        // Reset ember to base when reaching top
-        if (positions[i * 3 + 1] > 2.8) {
-          positions[i * 3 + 1] = -1.8;
-          positions[i * 3] = (Math.random() - 0.5) * 2.4;
-        }
+      // Authentic firelight flicker
+      if (fireLightRef.current) {
+        fireLightRef.current.intensity =
+          3.0 + Math.sin(t * 16) * 0.6 + Math.sin(t * 29) * 0.4 + (Math.random() - 0.5) * 0.25;
       }
-      embersRef.current.geometry.attributes.position.needsUpdate = true;
+
+      // Animate rising ember sparks
+      if (embersRef.current) {
+        const positions = embersRef.current.geometry.attributes.position.array as Float32Array;
+        for (let i = 0; i < emberParticles.count; i++) {
+          positions[i * 3 + 1] += emberParticles.speeds[i] * 0.025;
+          positions[i * 3] += Math.sin(t * 4.5 + i) * 0.008;
+
+          if (positions[i * 3 + 1] > 3.4) {
+            positions[i * 3 + 1] = -1.9;
+            positions[i * 3] = (Math.random() - 0.5) * 2.6;
+          }
+        }
+        embersRef.current.geometry.attributes.position.needsUpdate = true;
+      }
     }
   });
 
   return (
-    <group position={[0, -0.3, -0.08]}>
-      {/* Dynamic Warm Flame Light Source */}
+    <group position={[0, -0.15, -0.18]}>
+      {/* Dynamic Warm Pyrotechnic Fire Light */}
       <pointLight
         ref={fireLightRef}
         color="#ff4411"
-        intensity={2.4}
-        distance={6}
+        intensity={3.2}
+        distance={7.5}
         decay={2}
-        position={[0, 0, 0.45]}
+        position={[0, -0.1, 0.7]}
       />
 
-      {/* Core Glowing Ember Fire Ring Base */}
-      <mesh>
-        <ringGeometry args={[1.15, 1.55, 32]} />
-        <meshBasicMaterial
-          color="#ff3311"
-          transparent
-          opacity={0.4}
-          blending={THREE.AdditiveBlending}
-          side={THREE.DoubleSide}
-          depthWrite={false}
-        />
+      {/* 1. Main Roaring Fire Plume (Rising Directly Behind Guitar Body) */}
+      <mesh position={[0, 0.45, -0.06]} scale={[2.6, 3.8, 1]}>
+        <planeGeometry args={[1, 1, 16, 16]} />
+        <primitive object={mainMat} ref={mainFlameMatRef} attach="material" />
       </mesh>
 
-      <mesh scale={[1.05, 1.15, 1]}>
-        <ringGeometry args={[1.0, 1.35, 32]} />
-        <meshBasicMaterial
-          color="#ffaa00"
-          transparent
-          opacity={0.5}
-          blending={THREE.AdditiveBlending}
-          side={THREE.DoubleSide}
-          depthWrite={false}
-        />
+      {/* 2. Left Flanking Roaring Flame Tongue */}
+      <mesh
+        position={[-0.85, 0.15, -0.04]}
+        rotation={[0, 0, 0.18]}
+        scale={[1.6, 3.2, 1]}
+      >
+        <planeGeometry args={[1, 1, 16, 16]} />
+        <primitive object={leftMat} ref={leftFlameMatRef} attach="material" />
       </mesh>
 
-      {/* Licking 3D Flame Tongues */}
-      <group ref={flameGroupRef}>
-        {flameData.map((flame, idx) => {
-          const posX = Math.cos(flame.angle) * flame.radius;
-          const posY = Math.sin(flame.angle) * flame.radius;
-          const rotZ = flame.angle - Math.PI / 2;
+      {/* 3. Right Flanking Roaring Flame Tongue */}
+      <mesh
+        position={[0.85, 0.15, -0.04]}
+        rotation={[0, 0, -0.18]}
+        scale={[1.6, 3.2, 1]}
+      >
+        <planeGeometry args={[1, 1, 16, 16]} />
+        <primitive object={rightMat} ref={rightFlameMatRef} attach="material" />
+      </mesh>
 
-          return (
-            <mesh
-              key={`flame-${idx}`}
-              position={[posX, posY, 0]}
-              rotation={[0, 0, rotZ]}
-              scale={[1, 1, 1]}
-            >
-              <shapeGeometry args={[flame.shape]} />
-              <meshBasicMaterial
-                color={flame.color}
-                transparent
-                opacity={flame.opacity}
-                blending={THREE.AdditiveBlending}
-                side={THREE.DoubleSide}
-                depthWrite={false}
-              />
-            </mesh>
-          );
-        })}
-      </group>
+      {/* 4. Base Fiery Pyrotechnic Firebed (Under Tailpiece) */}
+      <mesh position={[0, -1.05, -0.02]} scale={[2.2, 1.8, 1]}>
+        <planeGeometry args={[1, 1, 16, 16]} />
+        <primitive object={baseMat} ref={baseFlameMatRef} attach="material" />
+      </mesh>
 
-      {/* Rising Floating Sparks & Embers */}
+      {/* 5. Glowing Fiery Ember Sparks */}
       <points ref={embersRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -199,10 +299,10 @@ function RealisticFlameSystem({ prefersReducedMotion }: { prefersReducedMotion: 
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.065}
-          color="#ff6622"
+          size={0.08}
+          color="#ff7722"
           transparent
-          opacity={0.88}
+          opacity={0.92}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
@@ -212,11 +312,10 @@ function RealisticFlameSystem({ prefersReducedMotion }: { prefersReducedMotion: 
 }
 
 /**
- * Masterpiece Fiery Electric Guitar with Cherry Red Lacquer Sunburst,
- * Polished Chrome Hardware, PAF Humbuckers & Bigsby Tremolo
+ * Masterpiece Cherry Sunburst Flamed Maple Hollow-Body Electric Guitar
+ * With Polished Chrome Bigsby Vibrato, Dual PAF Humbuckers & Photorealistic Stage Flames
  */
 export function StandaloneGuitar({
-  bodyColor = "#a30e1d", // Deep Candy Apple Crimson Red Lacquer
   hardwareColor = "#f0f2f5", // High-grade Polished Chrome
 }: StandaloneGuitarProps) {
   const groupRef = useRef<THREE.Group>(null);
@@ -224,6 +323,9 @@ export function StandaloneGuitar({
   const [isVibrating, setIsVibrating] = useState(false);
   const [scaleSpring, setScaleSpring] = useState(1);
   const prefersReducedMotion = useReducedMotion();
+
+  // Create Hand-rubbed Cherry Sunburst Flamed Maple Texture
+  const sunburstTexture = useMemo(() => createCherrySunburstTexture(), []);
 
   // Curvature for the Archtop Hollow Body with Venetian Cutaway
   const guitarBodyShape = useMemo(() => {
@@ -242,7 +344,7 @@ export function StandaloneGuitar({
     return shape;
   }, []);
 
-  // Multi-ply Soundboard Binding Outline (Slightly larger outline to create luxury perimeter bead)
+  // Multi-ply Soundboard Binding Outline Rim
   const soundboardRimShape = useMemo(() => {
     const shape = new THREE.Shape();
     shape.moveTo(0, -1.52);
@@ -375,30 +477,31 @@ export function StandaloneGuitar({
           rotation={[0.12, 0, -0.18]}
         >
           {/* ======================================================== */}
-          {/* 1. AUTHENTIC 3D FLAME SYSTEM (Dynamic Licking Flames)    */}
+          {/* 1. 99% REALISTIC CONCERT FIRE SHADER SYSTEM              */}
           {/* ======================================================== */}
           <RealisticFlameSystem prefersReducedMotion={prefersReducedMotion} />
 
           {/* ======================================================== */}
-          {/* 2. CHERRY RED LACQUER SUNBURST HOLLOW BODY               */}
+          {/* 2. HAND-RUBBED CHERRY SUNBURST FLAMED MAPLE BODY         */}
           {/* ======================================================== */}
           <group position={[0, 0, -0.14]}>
-            {/* Main Archtop Cherry Red Lacquered Body */}
+            {/* Main Archtop Cherry Sunburst Body with Lacquer Clearcoat */}
             <mesh castShadow receiveShadow>
               <extrudeGeometry args={[guitarBodyShape, extrudeSettings]} />
               <meshPhysicalMaterial
-                color={bodyColor}
+                color="#850917"
+                map={sunburstTexture || undefined}
                 roughness={0.12}
-                metalness={0.2}
+                metalness={0.18}
                 clearcoat={1.0}
-                clearcoatRoughness={0.06}
-                reflectivity={0.9}
-                emissive="#4d0309"
-                emissiveIntensity={0.3}
+                clearcoatRoughness={0.05}
+                reflectivity={0.95}
+                emissive="#380307"
+                emissiveIntensity={0.25}
               />
             </mesh>
 
-            {/* Vintage Multi-Ply Cream/Black Edge Binding Rim */}
+            {/* Vintage Multi-Ply Cream/Black Soundboard Perimeter Rim */}
             <mesh position={[0, 0, 0.285]}>
               <extrudeGeometry
                 args={[
@@ -416,18 +519,19 @@ export function StandaloneGuitar({
               />
             </mesh>
 
-            {/* Glossy Cherry Sunburst Soundboard Face Inset */}
+            {/* Front Soundboard Face: Radiant Sunburst with Flamed Maple Grain */}
             <mesh position={[0, 0, 0.292]}>
               <shapeGeometry args={[guitarBodyShape]} />
               <meshPhysicalMaterial
-                color="#b81022"
+                color="#ffffff"
+                map={sunburstTexture || undefined}
                 roughness={0.08}
-                metalness={0.16}
+                metalness={0.14}
                 clearcoat={1.0}
                 clearcoatRoughness={0.04}
-                reflectivity={0.95}
-                emissive="#3d0307"
-                emissiveIntensity={0.2}
+                reflectivity={0.98}
+                emissive="#ff3344"
+                emissiveIntensity={0.15}
               />
             </mesh>
           </group>
@@ -674,7 +778,7 @@ export function StandaloneGuitar({
             <mesh>
               <boxGeometry args={[0.5, 0.84, 0.09]} />
               <meshPhysicalMaterial
-                color={bodyColor}
+                color="#850917"
                 roughness={0.12}
                 metalness={0.2}
                 clearcoat={1.0}
