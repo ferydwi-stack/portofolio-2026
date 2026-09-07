@@ -13,15 +13,12 @@ function GuitarJackPlugString() {
     <div className="flex items-center gap-2" title="Audio Jack & Vibrating Guitar Strings">
       {/* 1/4" Audio Jack Plug */}
       <svg width="26" height="13" viewBox="0 0 26 13" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-        {/* Metal Tip */}
         <polygon points="1,6.5 5,4 5,9" fill="#e11d2e" />
         <rect x="5" y="4.5" width="2" height="4" fill="#222" />
         <rect x="7" y="5" width="4" height="3" fill="#b8bcc2" />
-        {/* Barrel Handle */}
         <rect x="11" y="2.5" width="10" height="8" rx="1.5" fill="#14101d" stroke="#e11d2e" strokeWidth="1" />
         <line x1="14" y1="3" x2="14" y2="10" stroke="#444" strokeWidth="0.8" />
         <line x1="17" y1="3" x2="17" y2="10" stroke="#444" strokeWidth="0.8" />
-        {/* Rubber Boot */}
         <rect x="21" y="4" width="4" height="5" rx="1" fill="#222" />
         <line x1="25" y1="6.5" x2="26" y2="6.5" stroke="#e11d2e" strokeWidth="1.5" />
       </svg>
@@ -75,13 +72,13 @@ export function Skills() {
             Klasifikasi Stack &amp; Perangkat Kerja
           </h2>
           <p className="text-xs sm:text-base font-sans text-zinc-400 max-w-2xl leading-relaxed">
-            Struktur penguasaan teknologi terbagi menjadi dua ranah utama: Website Development (Frontend, Backend &amp; Database, Tools &amp; Deployment) serta Mobile Development (Framework, Backend &amp; Database, Tools).
+            Struktur penguasaan teknologi terbagi menjadi dua ranah utama: Website Development (Frontend, Backend &amp; Database, Tools &amp; Deployment) serta Mobile Development (Bahasa &amp; Framework, Backend &amp; Database).
           </p>
         </div>
 
         <div className="text-xs font-mono text-zinc-500 flex items-center gap-2 self-start sm:self-end">
           <span className="text-red-400 font-bold bg-red-950/60 px-3.5 py-1.5 rounded-lg border border-red-900/60 tracking-wider">
-            6 KATEGORI TERSTRUKTUR
+            5 KATEGORI TERSTRUKTUR
           </span>
         </div>
       </div>
@@ -109,18 +106,24 @@ export function Skills() {
                 </div>
 
                 <span className="font-mono text-xs text-zinc-500 bg-zinc-900/90 px-3 py-1 rounded-md border border-zinc-800 self-start md:self-auto">
-                  3 CARD EQUAL DIMENSION // 0{domainIdx + 1}
+                  {domain.cards.length} CARD EQUAL DIMENSION // 0{domainIdx + 1}
                 </span>
               </div>
 
-              {/* 3 Symmetrical Cards with Exact Same Dimensions and Height */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+              {/* Symmetrical Cards Grid: 3 columns for Web, 2 balanced columns for Mobile */}
+              <div
+                className={`grid gap-6 items-stretch ${
+                  isWeb
+                    ? "grid-cols-1 md:grid-cols-3"
+                    : "grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto"
+                }`}
+              >
                 {domain.cards.map((card: TechCard, cardIdx: number) => {
                   return (
                     <div
                       key={card.id}
                       className={`tech-card relative rounded-3xl bg-[#0e0b16]/95 border-2 border-zinc-800 hover:border-red-500/60 p-5 sm:p-6 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col justify-between h-full transition-all duration-300 group ${
-                        isWeb ? "min-h-[540px] sm:min-h-[580px]" : "min-h-[460px] sm:min-h-[490px]"
+                        isWeb ? "min-h-[520px] sm:min-h-[560px]" : "min-h-[440px] sm:min-h-[480px]"
                       }`}
                     >
                       {/* Giant Faint Side Watermark in Background */}
@@ -132,7 +135,7 @@ export function Skills() {
                       </div>
 
                       {/* Card Header */}
-                      <div className="relative z-10 border-b border-zinc-800/90 pb-3 mb-2">
+                      <div className="relative z-10 border-b border-zinc-800/90 pb-3 mb-3">
                         <div className="flex items-center justify-between gap-2 mb-1.5">
                           <span className="text-[11px] font-mono font-bold text-red-500 tracking-wider uppercase bg-red-950/40 px-2.5 py-0.5 rounded border border-red-900/40">
                             {card.badge}
@@ -150,29 +153,8 @@ export function Skills() {
                         </p>
                       </div>
 
-                      {/* Running Logo Ticker along Guitar String Wire */}
-                      <div className="relative z-10 my-2 py-1.5 px-2 bg-black/50 rounded-xl border border-zinc-800/80 overflow-hidden group/ticker">
-                        {/* Guitar String Line */}
-                        <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[1px] bg-gradient-to-r from-red-500/20 via-red-500/50 to-red-500/20 pointer-events-none" />
-                        
-                        {/* Animated Smooth Running Marquee */}
-                        <div className="animate-tech-marquee gap-3 items-center">
-                          {[...card.items, ...card.items].map((item, mIdx) => (
-                            <div
-                              key={`${item.name}-${mIdx}`}
-                              className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-zinc-900/90 border border-zinc-800/90 shadow-xs flex-shrink-0"
-                            >
-                              <TechLogo name={item.name} size={13} />
-                              <span className="text-[9px] font-mono font-bold text-zinc-300 whitespace-nowrap">
-                                {item.name}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
                       {/* Interactive Track Items */}
-                      <div className="relative z-10 flex flex-col divide-y divide-zinc-800/50 flex-1 justify-around gap-0.5 sm:gap-1 mt-1">
+                      <div className="relative z-10 flex flex-col divide-y divide-zinc-800/50 flex-1 justify-around gap-1 sm:gap-1.5">
                         {card.items.map((item: TechCardItem, itemIdx: number) => {
                           const globalIdx = domainIdx * 20 + cardIdx * 6 + itemIdx;
                           const brand = getTechBrandColor(item.name);
@@ -200,16 +182,16 @@ export function Skills() {
                                 </span>
 
                                 <div
-                                  className={`w-7 h-7 rounded-lg ${brand.bg} border ${brand.border} flex items-center justify-center p-1 flex-shrink-0 transition-transform duration-300 group-hover/item:scale-110 shadow-sm`}
+                                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl ${brand.bg} border ${brand.border} flex items-center justify-center p-1.5 flex-shrink-0 transition-transform duration-300 group-hover/item:scale-110 shadow-sm`}
                                 >
-                                  <TechLogo name={item.name} size={16} />
+                                  <TechLogo name={item.name} size={17} />
                                 </div>
                               </div>
 
                               {/* Middle: Name + Category */}
                               <div className="flex flex-col min-w-0 flex-1 pr-2">
                                 <div className="flex items-center gap-1.5 truncate">
-                                  <span className="text-sm font-bold text-white group-hover/item:text-red-400 transition-colors font-sans truncate">
+                                  <span className="text-sm sm:text-base font-bold text-white group-hover/item:text-red-400 transition-colors font-sans truncate">
                                     {item.name}
                                   </span>
                                   {item.featured && (
@@ -246,7 +228,7 @@ export function Skills() {
                       </div>
 
                       {/* Card Footer */}
-                      <div className="relative z-10 pt-3 mt-2.5 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px] text-zinc-500">
+                      <div className="relative z-10 pt-3.5 mt-3 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px] text-zinc-500">
                         <div className="flex items-center gap-1.5">
                           <Sparkles className="w-3 h-3 text-red-500" />
                           <span>PRODUCTION-READY</span>

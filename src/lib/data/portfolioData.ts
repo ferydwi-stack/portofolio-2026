@@ -180,20 +180,6 @@ export const TECH_DOMAINS: TechDomain[] = [
           { track: "26", name: "SQLite & Local Cache", category: "Offline-First Local Storage", level: 4, proficiency: 84, bpm: 84 },
         ],
       },
-      {
-        id: "mobile-tools-deploy",
-        number: "06",
-        title: "Tools & Mobile Ecosystem",
-        role: "Mobile IDE, Emulasi Perangkat, Debugging & Distribusi APK",
-        badge: "MOBILE TOOLS",
-        watermark: "STUDIO",
-        items: [
-          { track: "27", name: "Android Studio", category: "Android SDK & Emulators", level: 4, proficiency: 86, bpm: 86 },
-          { track: "28", name: "VS Code (Flutter)", category: "Flutter DevTools & Profiling", level: 5, proficiency: 90, bpm: 90, featured: true },
-          { track: "29", name: "Git & GitHub", category: "Mobile Project Versioning", level: 5, proficiency: 90, bpm: 90 },
-          { track: "30", name: "APK & Play Console", category: "Build Release & Distribution", level: 4, proficiency: 85, bpm: 85 },
-        ],
-      },
     ],
   },
 ];
