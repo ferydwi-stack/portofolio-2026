@@ -247,50 +247,56 @@ function RealisticFlameSystem({ prefersReducedMotion }: { prefersReducedMotion: 
   });
 
   return (
-    <group position={[0, -0.15, -0.18]}>
+    <group position={[0, -0.15, -0.05]}>
       {/* Dynamic Warm Pyrotechnic Fire Light */}
       <pointLight
         ref={fireLightRef}
         color="#ff4411"
-        intensity={3.2}
-        distance={7.5}
+        intensity={3.5}
+        distance={8.5}
         decay={2}
-        position={[0, -0.1, 0.7]}
+        position={[0, -0.1, 0.8]}
       />
 
-      {/* 1. Main Roaring Fire Plume (Rising Directly Behind Guitar Body) */}
-      <mesh position={[0, 0.45, -0.06]} scale={[2.6, 3.8, 1]}>
+      {/* 1. Main Roaring Fire Plume (Rising Behind Guitar Body & Neck) */}
+      <mesh position={[0, 0.85, -0.08]} scale={[3.4, 4.8, 1]}>
         <planeGeometry args={[1, 1, 16, 16]} />
         <primitive object={mainMat} ref={mainFlameMatRef} attach="material" />
       </mesh>
 
-      {/* 2. Left Flanking Roaring Flame Tongue */}
+      {/* 2. Left Flanking Roaring Fire Tongue (Licking around left bout & waist) */}
       <mesh
-        position={[-0.85, 0.15, -0.04]}
-        rotation={[0, 0, 0.18]}
-        scale={[1.6, 3.2, 1]}
+        position={[-1.25, 0.35, -0.04]}
+        rotation={[0, 0, 0.22]}
+        scale={[2.2, 4.2, 1]}
       >
         <planeGeometry args={[1, 1, 16, 16]} />
         <primitive object={leftMat} ref={leftFlameMatRef} attach="material" />
       </mesh>
 
-      {/* 3. Right Flanking Roaring Flame Tongue */}
+      {/* 3. Right Flanking Roaring Fire Tongue (Licking around cutaway horn & right bout) */}
       <mesh
-        position={[0.85, 0.15, -0.04]}
-        rotation={[0, 0, -0.18]}
-        scale={[1.6, 3.2, 1]}
+        position={[1.25, 0.35, -0.04]}
+        rotation={[0, 0, -0.22]}
+        scale={[2.2, 4.2, 1]}
       >
         <planeGeometry args={[1, 1, 16, 16]} />
         <primitive object={rightMat} ref={rightFlameMatRef} attach="material" />
       </mesh>
 
-      {/* 4. Base Fiery Pyrotechnic Firebed (Under Tailpiece) */}
-      <mesh position={[0, -1.05, -0.02]} scale={[2.2, 1.8, 1]}>
+      {/* 4. Neck Fire Plume (Licking up behind the guitar neck) */}
+      <mesh position={[0, 2.2, -0.06]} scale={[1.5, 3.4, 1]}>
+        <planeGeometry args={[1, 1, 16, 16]} />
+        <primitive object={mainMat} attach="material" />
+      </mesh>
+
+      {/* 5. Base Fiery Pyrotechnic Firebed (Under Tailpiece & Bigsby) */}
+      <mesh position={[0, -1.35, -0.02]} scale={[2.8, 2.2, 1]}>
         <planeGeometry args={[1, 1, 16, 16]} />
         <primitive object={baseMat} ref={baseFlameMatRef} attach="material" />
       </mesh>
 
-      {/* 5. Glowing Fiery Ember Sparks */}
+      {/* 6. Glowing Fiery Ember Sparks */}
       <points ref={embersRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -308,6 +314,7 @@ function RealisticFlameSystem({ prefersReducedMotion }: { prefersReducedMotion: 
         />
       </points>
     </group>
+
   );
 }
 
@@ -476,6 +483,19 @@ export function StandaloneGuitar({
           scale={[1.2, 1.2, 1.2]}
           rotation={[0.12, 0, -0.18]}
         >
+          {/* Focused Showroom Stage Spotlight for Lacquer & Sunburst Specular Gleam */}
+          <pointLight
+            color="#fff8ea"
+            intensity={3.2}
+            distance={5.8}
+            position={[0.3, 0.4, 1.8]}
+          />
+          <directionalLight
+            color="#ffe2c4"
+            intensity={1.8}
+            position={[1.2, 2.2, 3.0]}
+          />
+
           {/* ======================================================== */}
           {/* 1. 99% REALISTIC CONCERT FIRE SHADER SYSTEM              */}
           {/* ======================================================== */}
@@ -484,6 +504,7 @@ export function StandaloneGuitar({
           {/* ======================================================== */}
           {/* 2. HAND-RUBBED CHERRY SUNBURST FLAMED MAPLE BODY         */}
           {/* ======================================================== */}
+
           <group position={[0, 0, -0.14]}>
             {/* Main Archtop Cherry Sunburst Body with Lacquer Clearcoat */}
             <mesh castShadow receiveShadow>
