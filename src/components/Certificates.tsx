@@ -45,7 +45,7 @@ export function Certificates() {
       description: "Sertifikasi kelulusan mata kuliah Matematika Diskrit.",
       image: "/matematikadiskrit.png",
       type: "academic",
-      rotationClass: "-rotate-1.5",
+      rotationClass: "-rotate-2",
     },
     {
       title: "Pemrograman Mobile 1",
@@ -72,7 +72,7 @@ export function Certificates() {
       description: "Sertifikasi kelulusan mata kuliah Sistem Operasi.",
       image: "/sistemoperasi.png",
       type: "academic",
-      rotationClass: "rotate-1",
+      rotationClass: "rotate-1.5",
     },
     {
       title: "Sistem Paralel",
@@ -81,7 +81,7 @@ export function Certificates() {
       description: "Sertifikasi kelulusan mata kuliah Sistem Paralel.",
       image: "/sistemparalel.png",
       type: "academic",
-      rotationClass: "-rotate-2",
+      rotationClass: "-rotate-1.5",
     },
     {
       title: "Keamanan Informasi",
@@ -90,7 +90,7 @@ export function Certificates() {
       description: "Sertifikasi kelulusan mata kuliah Keamanan Informasi.",
       image: "/keamananinformasi.png",
       type: "academic",
-      rotationClass: "rotate-1.5",
+      rotationClass: "rotate-1",
     },
     {
       title: "Kalkulus",
@@ -99,7 +99,7 @@ export function Certificates() {
       description: "Sertifikasi kelulusan mata kuliah Kalkulus.",
       image: "/kalkulus.png",
       type: "academic",
-      rotationClass: "-rotate-1",
+      rotationClass: "-rotate-2",
     },
     {
       title: "Grafika Komputer",
@@ -144,7 +144,7 @@ export function Certificates() {
       title: "Data Science",
       issuer: "Dicoding Indonesia",
       year: "2025",
-      description: "Sertifikasi kompetensi analisis dan pengolahan Data Science.",
+      description: "Sertifikasi kompetensi pengolahan dan pemodelan data terapan.",
       image: "/datascience_dicoding.png",
       type: "external",
       rotationClass: "-rotate-1",
@@ -153,16 +153,16 @@ export function Certificates() {
       title: "AI Digitalent",
       issuer: "KOMDIGI",
       year: "2025",
-      description: "Sertifikasi pelatihan keahlian Artificial Intelligence Digitalent.",
+      description: "Sertifikasi kompetensi Artificial Intelligence Digital Talent Scholarship.",
       image: "/aidigitalent.png",
       type: "external",
-      rotationClass: "rotate-1.5",
+      rotationClass: "rotate-2",
     },
     {
       title: "Micro Skill Digitalent",
       issuer: "KOMDIGI",
       year: "2025",
-      description: "Sertifikasi keahlian spesifik Micro Skill Digital Talent Scholarship.",
+      description: "Sertifikasi pelatihan spesialisasi Micro Skill dari Kementerian Komdigi.",
       image: "/microskildigitalent.png",
       type: "external",
       rotationClass: "-rotate-1.5",
@@ -171,22 +171,19 @@ export function Certificates() {
       title: "Junior Web Developer",
       issuer: "KOMDIGI",
       year: "2025",
-      description: "Sertifikasi standar kompetensi industri Junior Web Developer.",
+      description: "Standar sertifikasi industri Junior Web Developer resmi Komdigi.",
       image: "/juniorwebdigitalent.png",
       type: "external",
-      rotationClass: "rotate-2",
+      rotationClass: "rotate-1.5",
     },
   ];
 
   // Handle Escape key to close modal
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setSelectedCert(null);
-      }
-    },
-    []
-  );
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setSelectedCert(null);
+    }
+  }, []);
 
   useEffect(() => {
     if (selectedCert) {
@@ -203,59 +200,55 @@ export function Certificates() {
   }, [selectedCert, handleKeyDown]);
 
   return (
-    <section id="certificates" className="py-20 relative">
+    <section id="certificates" className="py-24 relative overflow-hidden">
       <GuitarStringDivider label="BACKSTAGE PASS &amp; TOUR CREDENTIALS" fret={9} />
 
       <div className="container mx-auto px-6 md:px-12 pt-8">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/40 px-3 py-1 rounded border border-red-900/50">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/50 px-3 py-1 rounded border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
             <Ticket className="w-3.5 h-3.5" />
-            <span>OFFICIAL BADGES &amp; LAMINATES</span>
+            <span>OFFICIAL LAMINATES &amp; MERCH STICKERS</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-bebas)]">
-            Backstage Pass Koleksi
+          <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-bebas)]">
+            Backstage Pass &amp; Sertifikat
           </h2>
           <p className="max-w-2xl mx-auto text-zinc-400 text-sm sm:text-base font-sans">
-            Kredensial dan sertifikasi resmi yang telah diverifikasi — bukti dedikasi teknis layaknya pass akses panggung konser kelas dunia.
+            Kumpulan bukti verifikasi kelulusan uji kompetensi akademik dan industri resmi yang disajikan seperti dinding koleksi pass panggung tur konser.
           </p>
         </div>
 
         {/* Academic Laminates Wall */}
         <div className="mb-20">
-          <div className="flex items-center gap-3 mb-8">
-            <h3 className="text-xl font-bold font-mono uppercase text-white tracking-wider">
-              {"//"} ACADEMIC COURSE PASSES
+          <div className="flex items-center justify-between border-b border-zinc-800 pb-3 mb-8 font-mono text-xs">
+            <h3 className="font-bold uppercase text-white tracking-widest flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-red-500" />
+              <span>{"//"} ACADEMIC PASSES ({matkulCertificates.length} VERIFIED)</span>
             </h3>
-            <div className="flex-1 h-px bg-zinc-800" />
-            <span className="text-xs font-mono text-zinc-500">
-              {matkulCertificates.length} PASSES
-            </span>
+            <span className="text-zinc-500">KLIK KARTU UNTUK MEMBUKA FOTO</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {matkulCertificates.map((cert) => (
               <motion.div
                 key={cert.title}
-                whileHover={{ scale: 1.04, rotate: 0, zIndex: 10 }}
-                transition={{ type: "spring", stiffness: 350, damping: 22 }}
+                whileHover={{ scale: 1.05, rotate: 0, zIndex: 20 }}
+                transition={{ type: "spring", stiffness: 320, damping: 20 }}
                 onClick={() => setSelectedCert(cert)}
-                className={`group bg-[#13111a] border border-zinc-800 hover:border-red-500/80 p-5 rounded-2xl shadow-xl cursor-pointer relative overflow-hidden transition-all duration-300 transform ${cert.rotationClass}`}
+                className={`group bg-[#13111a] border-2 border-zinc-800 hover:border-red-500 p-5 rounded-2xl shadow-xl cursor-pointer relative overflow-hidden transition-all duration-300 transform ${cert.rotationClass}`}
               >
-                {/* Lanyard Clip Punch Hole */}
-                <div className="w-7 h-2 bg-zinc-950 border border-zinc-700 rounded-full mx-auto mb-4" />
+                {/* Lanyard Clip Hole */}
+                <div className="w-8 h-2 bg-black border border-zinc-700 rounded-full mx-auto mb-4" />
 
-                {/* Top Badge Info */}
                 <div className="flex items-center justify-between mb-3 font-mono">
-                  <div className="w-8 h-8 rounded-lg bg-red-950/70 border border-red-800/60 flex items-center justify-center text-red-400">
+                  <div className="w-8 h-8 rounded-lg bg-red-950/80 border border-red-800 flex items-center justify-center text-red-400 group-hover:scale-110 transition-transform">
                     <Award className="w-4 h-4" />
                   </div>
-                  <span className="text-[10px] font-bold text-red-400 bg-red-950/60 px-2.5 py-0.5 rounded border border-red-900/50">
+                  <span className="text-[10px] font-black text-red-400 bg-red-950/60 px-2.5 py-0.5 rounded border border-red-900/60">
                     {cert.year}
                   </span>
                 </div>
 
-                {/* Certificate Title */}
                 <h4 className="text-base font-bold font-mono text-white group-hover:text-red-400 transition-colors line-clamp-2 mb-2">
                   {cert.title}
                 </h4>
@@ -264,10 +257,9 @@ export function Certificates() {
                   {cert.description}
                 </p>
 
-                {/* Bottom Bar */}
-                <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px]">
+                <div className="pt-3 border-t border-zinc-800 flex items-center justify-between font-mono text-[10px]">
                   <span className="text-zinc-500 uppercase">{cert.issuer}</span>
-                  <span className="text-red-400 group-hover:underline flex items-center gap-1">
+                  <span className="text-red-400 group-hover:underline flex items-center gap-1 font-bold">
                     INSPECT ↵
                   </span>
                 </div>
@@ -276,34 +268,32 @@ export function Certificates() {
           </div>
         </div>
 
-        {/* External & Industry Certificates Wall */}
+        {/* National & Industry Honors Wall */}
         <div>
-          <div className="flex items-center gap-3 mb-8">
-            <h3 className="text-xl font-bold font-mono uppercase text-white tracking-wider">
-              {"//"} NATIONAL &amp; INDUSTRY HONORS
+          <div className="flex items-center justify-between border-b border-zinc-800 pb-3 mb-8 font-mono text-xs">
+            <h3 className="font-bold uppercase text-white tracking-widest flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-400" />
+              <span>{"//"} NATIONAL &amp; INDUSTRY HONORS</span>
             </h3>
-            <div className="flex-1 h-px bg-zinc-800" />
-            <span className="text-xs font-mono text-zinc-500">
-              {externalCertificates.length} CREDENTIALS
-            </span>
+            <span className="text-zinc-500">KOMDIGI &amp; DICODING ACCREDITED</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {externalCertificates.map((cert) => (
               <motion.div
                 key={cert.title}
-                whileHover={{ scale: 1.04, rotate: 0, zIndex: 10 }}
-                transition={{ type: "spring", stiffness: 350, damping: 22 }}
+                whileHover={{ scale: 1.05, rotate: 0, zIndex: 20 }}
+                transition={{ type: "spring", stiffness: 320, damping: 20 }}
                 onClick={() => setSelectedCert(cert)}
-                className={`group bg-[#16121f] border-2 border-red-950/60 hover:border-red-500 p-6 rounded-2xl shadow-xl cursor-pointer relative overflow-hidden transition-all duration-300 transform ${cert.rotationClass}`}
+                className={`group bg-[#161220] border-2 border-red-950/70 hover:border-red-500 p-6 rounded-2xl shadow-xl cursor-pointer relative overflow-hidden transition-all duration-300 transform ${cert.rotationClass}`}
               >
-                {/* Hologram Sparkle Marker */}
-                <div className="absolute top-4 right-4 flex items-center gap-1 px-2 py-0.5 rounded bg-red-950/80 border border-red-700/60 text-[9px] font-mono text-red-300">
+                {/* Hologram Stamp */}
+                <div className="absolute top-4 right-4 flex items-center gap-1 px-2.5 py-0.5 rounded bg-red-950 border border-red-700/80 text-[9px] font-mono text-red-300 shadow-md">
                   <Sparkles className="w-3 h-3 text-amber-400" />
                   VERIFIED
                 </div>
 
-                <div className="w-10 h-10 rounded-xl bg-red-950/80 border border-red-800/80 flex items-center justify-center text-red-400 mb-5">
+                <div className="w-10 h-10 rounded-xl bg-red-950 border border-red-700 flex items-center justify-center text-red-400 mb-5">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
 
@@ -320,7 +310,7 @@ export function Certificates() {
                   {cert.description}
                 </p>
 
-                <div className="text-xs font-mono text-red-400 flex items-center gap-1">
+                <div className="text-xs font-mono text-red-400 flex items-center gap-1 font-bold">
                   <span>VIEW CERTIFICATE</span>
                   <span>→</span>
                 </div>
@@ -330,7 +320,7 @@ export function Certificates() {
         </div>
       </div>
 
-      {/* Accessible Fullscreen Certificate Modal */}
+      {/* Accessible Fullscreen Modal Popup */}
       <AnimatePresence>
         {selectedCert && (
           <motion.div
@@ -338,12 +328,11 @@ export function Certificates() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedCert(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-8 cursor-zoom-out"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/92 backdrop-blur-md p-4 sm:p-8 cursor-zoom-out"
             role="dialog"
             aria-modal="true"
             aria-label={`Detail sertifikat ${selectedCert.title}`}
           >
-            {/* Close Button */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -355,19 +344,17 @@ export function Certificates() {
               <X className="w-6 h-6" />
             </button>
 
-            {/* Modal Content */}
             <motion.div
-              initial={{ scale: 0.92, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.92, opacity: 0 }}
+              exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-4xl w-full bg-[#121017] border border-zinc-700/80 rounded-2xl overflow-hidden shadow-2xl p-4 sm:p-6 cursor-default"
+              className="relative max-w-4xl w-full bg-[#121017] border-2 border-zinc-700 rounded-3xl overflow-hidden shadow-2xl p-4 sm:p-6 cursor-default"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header inside modal */}
               <div className="flex items-center justify-between pb-4 mb-4 border-b border-zinc-800 font-mono">
                 <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-white">
+                  <h3 className="text-lg sm:text-xl font-black text-white">
                     {selectedCert.title}
                   </h3>
                   <p className="text-xs text-red-400">
@@ -375,12 +362,11 @@ export function Certificates() {
                   </p>
                 </div>
                 <span className="text-xs text-zinc-500 hidden sm:inline-block">
-                  TEKAN [ESC] UNTUK KELUAR
+                  [ESC] UNTUK MENUTUP
                 </span>
               </div>
 
-              {/* Certificate Image Frame */}
-              <div className="relative w-full h-[55vh] sm:h-[65vh] rounded-xl overflow-hidden bg-black flex items-center justify-center border border-zinc-800">
+              <div className="relative w-full h-[55vh] sm:h-[65vh] rounded-2xl overflow-hidden bg-black flex items-center justify-center border border-zinc-800">
                 <Image
                   src={selectedCert.image}
                   alt={selectedCert.title}

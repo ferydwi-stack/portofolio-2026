@@ -57,13 +57,23 @@ function ElectricGuitar() {
     return arr;
   }, []);
 
-  // Animate gentle floating and reactive rotation
+  // Animate gentle floating, reactive rotation, and mouse tilt
   useFrame((state) => {
     if (!groupRef.current) return;
     const t = state.clock.getElapsedTime();
-    groupRef.current.rotation.y = Math.sin(t * 0.4) * 0.25 + 0.15;
-    groupRef.current.rotation.x = Math.cos(t * 0.3) * 0.15 - 0.1;
-    groupRef.current.rotation.z = -0.3 + Math.sin(t * 0.2) * 0.05;
+    const mouse = state.pointer;
+
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(
+      groupRef.current.rotation.y,
+      Math.sin(t * 0.4) * 0.2 + mouse.x * 0.4 + 0.15,
+      0.05
+    );
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(
+      groupRef.current.rotation.x,
+      Math.cos(t * 0.3) * 0.1 - mouse.y * 0.3 - 0.1,
+      0.05
+    );
+    groupRef.current.rotation.z = -0.3 + Math.sin(t * 0.25) * 0.05;
     groupRef.current.position.y = Math.sin(t * 0.8) * 0.15;
   });
 

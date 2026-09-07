@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
+import { StageCurtainIntro } from "@/components/StageCurtainIntro";
+import { StageFollowSpotlight } from "@/components/StageFollowSpotlight";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,13 +40,19 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning className="dark">
       <body
-        className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased bg-[#08080c] text-zinc-100 min-h-screen relative selection:bg-red-600 selection:text-white`}
+        className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased bg-[#07060a] text-zinc-100 min-h-screen relative selection:bg-red-600 selection:text-white`}
       >
-        {/* Stage Noise Overlay */}
-        <div className="fixed inset-0 pointer-events-none stage-noise z-40 opacity-40" />
+        {/* Stage Curtain Load Intro */}
+        <StageCurtainIntro />
 
-        {/* Ambient Stage Vignette */}
-        <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.7)_100%)] z-30" />
+        {/* Dynamic Concert Stage Follow-Spotlight */}
+        <StageFollowSpotlight />
+
+        {/* Ambient Film Grain Texture */}
+        <div className="fixed inset-0 pointer-events-none stage-noise z-20 opacity-30" />
+
+        {/* Dark Stage Vignette */}
+        <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.75)_100%)] z-10" />
 
         <ThemeProvider
           attribute="class"
