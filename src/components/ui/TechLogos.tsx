@@ -32,6 +32,10 @@ const TECH_ONLINE_LOGOS: Record<string, string> = {
   go: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg",
   golang: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg",
   python: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+  vercel: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg",
+  postman: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg",
+  android: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/android/android-original.svg",
+  sqlite: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg",
 };
 
 export function TechLogo({ name, className = "", size = 24 }: TechLogoProps) {

@@ -61,44 +61,174 @@ export const PERSONAL_INFO = {
   profileImage: "/profile.jpg",
 };
 
+export interface TechCardItem {
+  track: string;
+  name: string;
+  category: string;
+  level: number;
+  proficiency: number;
+  bpm: number;
+  featured?: boolean;
+}
+
+export interface TechCard {
+  id: string;
+  number: string;
+  title: string;
+  role: string;
+  badge: string;
+  watermark: string;
+  items: TechCardItem[];
+}
+
+export interface TechDomain {
+  id: string;
+  tag: string;
+  title: string;
+  subtitle: string;
+  cards: TechCard[];
+}
+
+export const TECH_DOMAINS: TechDomain[] = [
+  {
+    id: "web-dev",
+    tag: "SUB JUDUL 01 // WEBSITE DEVELOPMENT",
+    title: "Website Development & Engineering",
+    subtitle: "Pengembangan ekosistem web fullstack: Frontend interaktif, arsitektur server terdistribusi, basis data relasional & deployment.",
+    cards: [
+      {
+        id: "web-frontend",
+        number: "01",
+        title: "Frontend Development",
+        role: "Antarmuka Web, Styling & Interaktivitas Modern",
+        badge: "FRONTEND",
+        watermark: "FRONTEND",
+        items: [
+          { track: "01", name: "React.js & Next.js", category: "Frontend & SSR/SSG", level: 5, proficiency: 92, bpm: 92, featured: true },
+          { track: "02", name: "TypeScript", category: "Typed Programming Core", level: 5, proficiency: 92, bpm: 92, featured: true },
+          { track: "03", name: "CSS / Tailwind", category: "Utility-First CSS & Styling", level: 5, proficiency: 95, bpm: 95, featured: true },
+          { track: "04", name: "HTML5 & Modern JS", category: "Semantic Web & ES6+", level: 5, proficiency: 94, bpm: 94, featured: true },
+        ],
+      },
+      {
+        id: "web-backend-db",
+        number: "02",
+        title: "Backend & Database",
+        role: "Arsitektur Server, RESTful API & Relational Database",
+        badge: "BACKEND & DB",
+        watermark: "BACKEND",
+        items: [
+          { track: "05", name: "Node.js & Express", category: "Javascript Runtime & API", level: 4, proficiency: 88, bpm: 88, featured: true },
+          { track: "06", name: "PHP & Laravel", category: "Backend MVC Framework", level: 4, proficiency: 86, bpm: 86 },
+          { track: "07", name: "Go (Golang)", category: "High-Performance Services", level: 4, proficiency: 85, bpm: 85 },
+          { track: "08", name: "MySQL & PostgreSQL", category: "Relational Databases", level: 4, proficiency: 88, bpm: 88, featured: true },
+        ],
+      },
+      {
+        id: "web-tools-deploy",
+        number: "03",
+        title: "Tools & Deployment",
+        role: "Kontrol Versi, Pengujian API, Cloud Hosting & CI/CD",
+        badge: "TOOLS & DEPLOY",
+        watermark: "DEPLOY",
+        items: [
+          { track: "09", name: "Git & GitHub", category: "Version Control & Team Repo", level: 5, proficiency: 90, bpm: 90, featured: true },
+          { track: "10", name: "Vercel", category: "Cloud Deployment & Edge CI/CD", level: 4, proficiency: 88, bpm: 88 },
+          { track: "11", name: "Postman", category: "REST API Testing & Debugging", level: 4, proficiency: 85, bpm: 85 },
+          { track: "12", name: "VS Code & Figma", category: "Code Editor & UI/UX Design", level: 5, proficiency: 90, bpm: 90 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "mobile-dev",
+    tag: "SUB JUDUL 02 // MOBILE DEVELOPMENT",
+    title: "Mobile App Development & Ecosystem",
+    subtitle: "Pengembangan aplikasi mobile lintas platform (Android & iOS): framework Dart, cloud database real-time & tools distribusi.",
+    cards: [
+      {
+        id: "mobile-framework",
+        number: "04",
+        title: "Bahasa & Framework Mobile",
+        role: "Pengembangan Aplikasi Mobile Lintas Platform (Android/iOS)",
+        badge: "MOBILE APP",
+        watermark: "FLUTTER",
+        items: [
+          { track: "13", name: "Flutter & Dart", category: "Cross-Platform Framework", level: 5, proficiency: 90, bpm: 90, featured: true },
+          { track: "14", name: "Mobile UI & Widgets", category: "Material Design 3 & State", level: 4, proficiency: 88, bpm: 88 },
+          { track: "15", name: "Geolocation & Maps", category: "GPS Radius & Geofencing", level: 4, proficiency: 86, bpm: 86 },
+          { track: "16", name: "Android & Native APIs", category: "Camera, Storage & Sensor", level: 4, proficiency: 84, bpm: 84 },
+        ],
+      },
+      {
+        id: "mobile-backend-db",
+        number: "05",
+        title: "Backend & Database Mobile",
+        role: "Cloud Database Real-time, Backend API & Offline Storage",
+        badge: "MOBILE BACKEND & DB",
+        watermark: "FIREBASE",
+        items: [
+          { track: "17", name: "Firebase", category: "Cloud Firestore Realtime DB", level: 4, proficiency: 86, bpm: 86, featured: true },
+          { track: "18", name: "Firebase Auth", category: "Cloud User Authentication", level: 4, proficiency: 88, bpm: 88 },
+          { track: "19", name: "Go / Node.js API", category: "Mobile RESTful Microservices", level: 4, proficiency: 85, bpm: 85 },
+          { track: "20", name: "SQLite & Local Cache", category: "Offline-First Local Storage", level: 4, proficiency: 84, bpm: 84 },
+        ],
+      },
+      {
+        id: "mobile-tools-deploy",
+        number: "06",
+        title: "Tools & Mobile Ecosystem",
+        role: "Mobile IDE, Emulasi Perangkat, Debugging & Distribusi APK",
+        badge: "MOBILE TOOLS",
+        watermark: "STUDIO",
+        items: [
+          { track: "21", name: "Android Studio", category: "Android SDK & Emulators", level: 4, proficiency: 86, bpm: 86 },
+          { track: "22", name: "VS Code (Flutter)", category: "Flutter DevTools & Profiling", level: 5, proficiency: 90, bpm: 90, featured: true },
+          { track: "23", name: "Git & GitHub", category: "Mobile Project Versioning", level: 5, proficiency: 90, bpm: 90 },
+          { track: "24", name: "APK & Play Console", category: "Build Release & Distribution", level: 4, proficiency: 85, bpm: 85 },
+        ],
+      },
+    ],
+  },
+];
+
 export const TECH_RIGS: TechRig[] = [
   {
-    category: "Frontend Development",
-    role: "Antarmuka Pengguna & Interaktivitas Web/Mobile",
-    items: ["React & Next.js", "TypeScript", "Tailwind CSS", "Flutter & Dart", "HTML5 & CSS3", "Responsive UI"],
+    category: "Website Development (Frontend)",
+    role: "Antarmuka Pengguna, Styling & Interaktivitas Web",
+    items: ["React & Next.js", "TypeScript", "Tailwind CSS", "HTML5 & CSS3", "Responsive UI", "UI Prototyping"],
   },
   {
-    category: "Backend Development",
-    role: "Arsitektur Server, Microservices & RESTful API",
-    items: ["Go (Golang)", "Node.js & Express", "PHP & Laravel", "Python (API)", "RESTful APIs", "Microservices"],
+    category: "Website Development (Backend & DB)",
+    role: "Arsitektur Server, API & Relational Database",
+    items: ["Node.js & Express", "PHP & Laravel", "MySQL", "PostgreSQL", "RESTful APIs", "ORM & Query"],
   },
   {
-    category: "Database & Cloud",
-    role: "Penyimpanan Terstruktur & Layanan Cloud BaaS",
-    items: ["MySQL", "PostgreSQL", "Firebase Cloud", "Database Design", "SQL Query", "Data Modeling"],
+    category: "Mobile & Cloud Systems",
+    role: "Aplikasi Mobile, Microservices & BaaS",
+    items: ["Flutter & Dart", "Go (Golang)", "Firebase Cloud", "Python (API)", "Microservices", "Realtime Sync"],
   },
   {
-    category: "Tools & Management",
-    role: "Version Control, Developer Tools & Manajemen",
-    items: ["Git & GitHub", "VS Code", "Postman", "Project Management", "Figma", "Terminal & Linux"],
+    category: "Tools & Cloud Deployment",
+    role: "Version Control, Hosting & Workflow",
+    items: ["Git & GitHub", "Vercel", "VS Code", "Postman", "Project Management", "Figma"],
   },
 ];
 
 export const SKILLS_SETLIST: Skill[] = [
-  // --- FRONTEND & MOBILE UI GROUP ---
-  { track: "01", name: "CSS / Tailwind", category: "CSS Framework", group: "frontend", level: 5, proficiency: 95, bpm: 95, featured: true },
-  { track: "02", name: "TypeScript", category: "Typed Programming", group: "frontend", level: 5, proficiency: 92, bpm: 92, featured: true },
-  { track: "03", name: "React.js & Next.js", category: "Frontend & Fullstack", group: "frontend", level: 5, proficiency: 90, bpm: 90, featured: true },
-  { track: "04", name: "Flutter & Dart", category: "Cross-Platform Mobile UI", group: "frontend", level: 4, proficiency: 86, bpm: 86, featured: true },
-  { track: "05", name: "HTML5 & Modern JS", category: "Web Core Standards", group: "frontend", level: 5, proficiency: 94, bpm: 94, featured: true },
-
-  // --- BACKEND, DATABASE & SYSTEMS GROUP ---
-  { track: "06", name: "Go (Golang)", category: "High-Perf Microservices", group: "backend", level: 4, proficiency: 88, bpm: 88, featured: true },
-  { track: "07", name: "Node.js & Express", category: "JavaScript Runtime & API", group: "backend", level: 4, proficiency: 86, bpm: 86 },
-  { track: "08", name: "PHP & Laravel", category: "Backend MVC Framework", group: "backend", level: 4, proficiency: 85, bpm: 85 },
-  { track: "09", name: "MySQL & PostgreSQL", category: "Relational Databases", group: "backend", level: 4, proficiency: 84, bpm: 84 },
+  // Flat list export for compatibility
+  { track: "01", name: "React.js & Next.js", category: "Frontend & Fullstack", group: "frontend", level: 5, proficiency: 92, bpm: 92, featured: true },
+  { track: "02", name: "TypeScript", category: "Typed Programming Core", group: "frontend", level: 5, proficiency: 92, bpm: 92, featured: true },
+  { track: "03", name: "CSS / Tailwind", category: "CSS Framework & UI", group: "frontend", level: 5, proficiency: 95, bpm: 95, featured: true },
+  { track: "04", name: "Node.js & Express", category: "Backend Runtime & API", group: "frontend", level: 4, proficiency: 86, bpm: 86 },
+  { track: "05", name: "PHP & Laravel", category: "Backend MVC Framework", group: "frontend", level: 4, proficiency: 85, bpm: 85 },
+  { track: "06", name: "MySQL & PostgreSQL", category: "Relational Databases", group: "frontend", level: 4, proficiency: 84, bpm: 84 },
+  { track: "07", name: "Flutter & Dart", category: "Cross-Platform Mobile UI", group: "backend", level: 4, proficiency: 88, bpm: 88, featured: true },
+  { track: "08", name: "Go (Golang)", category: "High-Perf Microservices", group: "backend", level: 4, proficiency: 88, bpm: 88, featured: true },
+  { track: "09", name: "Firebase", category: "Cloud & Realtime BaaS", group: "backend", level: 4, proficiency: 82, bpm: 82 },
   { track: "10", name: "Python", category: "Scripting & AI / NLP", group: "backend", level: 4, proficiency: 82, bpm: 82 },
-  { track: "11", name: "Firebase", category: "Cloud & Realtime BaaS", group: "backend", level: 4, proficiency: 80, bpm: 80 },
+  { track: "11", name: "Git & GitHub", category: "Version Control & Team", group: "backend", level: 4, proficiency: 88, bpm: 88 },
+  { track: "12", name: "Vercel & Deployment", category: "Cloud Hosting & CI/CD", group: "backend", level: 4, proficiency: 86, bpm: 86 },
 ];
 
 export const PROJECTS: Project[] = [

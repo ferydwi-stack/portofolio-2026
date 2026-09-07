@@ -7,10 +7,10 @@ import { registerGSAP } from "./gsapConfig";
 
 interface SkillsTimelineRefs {
   sectionRef: RefObject<HTMLElement | null>;
-  trackRef: RefObject<HTMLElement | null>;
+  trackRef?: RefObject<HTMLElement | null>;
 }
 
-export function useSkillsTimeline({ sectionRef, trackRef }: SkillsTimelineRefs) {
+export function useSkillsTimeline({ sectionRef }: SkillsTimelineRefs) {
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -18,28 +18,27 @@ export function useSkillsTimeline({ sectionRef, trackRef }: SkillsTimelineRefs) 
     if (typeof window === "undefined") return;
 
     const section = sectionRef.current;
-    const track = trackRef.current;
-    if (!section || !track) return;
-
-    if (prefersReducedMotion) return;
+    if (!section || prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      const getScrollAmount = () => -(track.scrollWidth - window.innerWidth + 120);
-
-      gsap.to(track, {
-        x: getScrollAmount,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: () => `+=${track.scrollWidth - window.innerWidth + 450}`,
-          scrub: 1.1,
-          pin: true,
-          invalidateOnRefresh: true,
-        },
+      const domains = section.querySelectorAll(".tech-domain-group");
+      domains.forEach((group) => {
+        const cards = group.querySelectorAll(".tech-card");
+        gsap.from(cards, {
+          opacity: 0,
+          y: 40,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: group,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        });
       });
     }, section);
 
     return () => ctx.revert();
-  }, [sectionRef, trackRef, prefersReducedMotion]);
+  }, [sectionRef, prefersReducedMotion]);
 }
