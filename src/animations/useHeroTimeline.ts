@@ -93,12 +93,11 @@ export function useHeroTimeline({
         });
       }
 
-      // 2. Scroll-driven Exit Animation (headline breaks fast to left on scroll down)
+      // 2. Scroll-driven Exit Animation (headline slides smoothly left on scroll down as a coherent unit)
       if (chars.length > 0) {
         gsap.to(chars, {
-          xPercent: -40,
+          xPercent: -25,
           opacity: 0.2,
-          stagger: 0.01,
           ease: "none",
           scrollTrigger: {
             trigger: container,

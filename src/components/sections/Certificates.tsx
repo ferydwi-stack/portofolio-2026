@@ -8,12 +8,7 @@ import { CERTIFICATES, Certificate } from "@/lib/data/portfolioData";
 import { useCertificatesTimeline } from "@/animations/useCertificatesTimeline";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { playStringPluck, playStompClick } from "@/lib/sound/guitarSynth";
-
-// Deterministic pseudo-random numbers based on index (avoids SSR hydration mismatches)
-function getSeededRandom(seed: number) {
-  const x = Math.sin(seed + 42) * 10000;
-  return x - Math.floor(x);
-}
+import { getSeededCertificateTransforms } from "@/hooks/useSeededRandom";
 
 export function Certificates() {
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
@@ -26,14 +21,9 @@ export function Certificates() {
   // Connect GSAP staggered entrance timeline
   useCertificatesTimeline({ sectionRef, wallRef });
 
-  // Precompute stable rotation & offset for each certificate
+  // Precompute stable rotation & offset for each certificate via deterministic mulberry32 PRNG
   const cardTransforms = useMemo(() => {
-    return CERTIFICATES.map((_, i) => {
-      const rot = (getSeededRandom(i * 3 + 1) - 0.5) * 16; // -8deg to +8deg
-      const offsetY = (getSeededRandom(i * 5 + 2) - 0.5) * 24; // -12px to +12px
-      const offsetX = (getSeededRandom(i * 7 + 3) - 0.5) * 16; // -8px to +8px
-      return { rotation: Math.round(rot), offsetY: Math.round(offsetY), offsetX: Math.round(offsetX) };
-    });
+    return CERTIFICATES.map((_, i) => getSeededCertificateTransforms(i));
   }, []);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -74,7 +64,7 @@ export function Certificates() {
             <Ticket className="w-3.5 h-3.5" />
             <span>BACKSTAGE PASSES &amp; LAMINATES WALL</span>
           </div>
-          <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-bebas)]">
+          <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-anton)]">
             Sticker Wall &amp; Credentials
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base font-sans leading-relaxed">

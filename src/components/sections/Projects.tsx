@@ -48,6 +48,14 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <motion.div
       ref={cardRef}
+      tabIndex={0}
+      role="article"
+      aria-label={`Album 0${index + 1}: ${project.title}`}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          handlePlayRiff();
+        }
+      }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
@@ -55,7 +63,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         rotateY: prefersReducedMotion ? 0 : rotateY,
         transformStyle: "preserve-3d",
       }}
-      className="flex-none w-[88vw] sm:w-[84vw] max-w-[1100px] h-[520px] sm:h-[580px] rounded-3xl bg-[#0f0c18]/95 border-2 border-zinc-800 hover:border-red-500/80 shadow-[0_25px_60px_rgba(0,0,0,0.95)] backdrop-blur-2xl relative transition-colors duration-300 group overflow-hidden"
+      className="flex-none w-[88vw] sm:w-[84vw] max-w-[1100px] h-[520px] sm:h-[580px] rounded-3xl bg-[#0f0c18]/95 border-2 border-zinc-800 hover:border-red-500/80 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 shadow-[0_25px_60px_rgba(0,0,0,0.95)] backdrop-blur-2xl relative transition-colors duration-300 group overflow-hidden"
     >
       {/* 3D Vinyl Record Sliding Out on Hover */}
       <div className="absolute -top-6 right-8 sm:right-12 z-30 pointer-events-none filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)] transform group-hover:translate-x-6 group-hover:-translate-y-2 transition-transform duration-500">
@@ -101,7 +109,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             <span>{project.side}</span>
           </div>
 
-          <h3 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase text-white group-hover:text-red-400 transition-colors font-[family-name:var(--font-bebas)] tracking-wide leading-none">
+          <h3 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase text-white group-hover:text-red-400 transition-colors font-[family-name:var(--font-anton)] tracking-tight leading-none">
             {project.title}
           </h3>
         </div>
@@ -189,7 +197,7 @@ export function Projects() {
             <Radio className="w-3.5 h-3.5 animate-pulse" />
             <span>ORIGINAL MASTER DISCS &amp; ALBUMS</span>
           </div>
-          <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-bebas)]">
+          <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-anton)]">
             Discography Releases
           </h2>
           <p className="text-xs sm:text-sm font-mono text-zinc-400">

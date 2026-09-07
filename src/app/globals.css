@@ -3,29 +3,40 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-bebas: var(--font-bebas), "Bebas Neue", impact, sans-serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --color-crimson: #ff2a3b;
-  --color-crimson-dark: #b91c1c;
-  --color-amber-stage: #f59e0b;
-  --color-stage-black: #08080c;
-  --color-stage-card: #121017;
-  --color-stage-border: #262130;
+  --font-anton: var(--font-anton), "Anton", impact, sans-serif;
+  --font-display: var(--font-anton), "Anton", impact, sans-serif;
+  --font-sans: var(--font-space), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
+  
+  --color-stage-black: #0a0a0c;
+  --color-stage-charcoal: #1a1a1e;
+  --color-spotlight-white: #f5f5f0;
+  --color-stage-red: #e11d2e;
+  --color-chrome-silver: #b8bcc2;
+  --color-tape-beige: #d8c9a3;
+  --color-amp-glow: #ff6b35;
 }
 
 :root {
-  --background: #09090d;
-  --foreground: #f4f4f5;
-  --card: #121017;
-  --card-foreground: #f4f4f5;
-  --border: #27272a;
+  --background: #0a0a0c;
+  --foreground: #f5f5f0;
+  --card: #1a1a1e;
+  --card-foreground: #f5f5f0;
+  --border: #262130;
+  --stage-black: #0a0a0c;
+  --stage-charcoal: #1a1a1e;
+  --spotlight-white: #f5f5f0;
+  --stage-red: #e11d2e;
+  --chrome-silver: #b8bcc2;
+  --tape-beige: #d8c9a3;
+  --amp-glow: #ff6b35;
 }
 
 .dark {
-  --background: #08080c;
-  --foreground: #fafafa;
-  --card: #121017;
-  --card-foreground: #fafafa;
+  --background: #0a0a0c;
+  --foreground: #f5f5f0;
+  --card: #1a1a1e;
+  --card-foreground: #f5f5f0;
   --border: #262130;
 }
 
@@ -42,15 +53,15 @@ html {
 
 /* Subtle Stage Film Grain Overlay */
 .stage-noise {
-  background-image: radial-gradient(rgba(255, 42, 59, 0.04) 1px, transparent 0);
+  background-image: radial-gradient(rgba(225, 29, 46, 0.04) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
 /* Concert Ticket Angled Stub Border */
 .ticket-border {
   position: relative;
-  background: linear-gradient(135deg, #181520 0%, #0d0b12 100%);
-  border: 1px dashed rgba(255, 42, 59, 0.4);
+  background: linear-gradient(135deg, #1a1a1e 0%, #0a0a0c 100%);
+  border: 1px dashed rgba(225, 29, 46, 0.4);
 }
 
 /* Equalizer Bars Animation */
@@ -81,24 +92,17 @@ html {
 .eq-bar-4 { animation: eq-dance-4 0.6s ease-in-out infinite 0.15s; }
 .eq-bar-5 { animation: eq-dance-5 0.9s ease-in-out infinite 0.25s; }
 
-/* Neon Crimson Glow */
+/* Neon Stage Glow */
 .glow-crimson {
-  box-shadow: 0 0 25px rgba(255, 42, 59, 0.35);
+  box-shadow: 0 0 25px rgba(225, 29, 46, 0.35);
 }
 
 .glow-amber {
-  box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 25px rgba(255, 107, 53, 0.3);
 }
 
 .text-glow-crimson {
-  text-shadow: 0 0 16px rgba(255, 42, 59, 0.65);
-}
-
-/* Custom Guitar Pick Cursor (Desktop only) */
-@media (pointer: fine) {
-  a, button, [role="button"], .cursor-pointer {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='28' viewBox='0 0 24 28' fill='none'%3E%3Cpath d='M12 26C8 20 2 12 2 6C2 2.5 6 1 12 1C18 1 22 2.5 22 6C22 12 16 20 12 26Z' fill='%23ff2a3b' stroke='%23ffffff' stroke-width='1.5'/%3E%3Ccircle cx='12' cy='8' r='2' fill='%23ffffff'/%3E%3C/svg%3E") 12 2, pointer !important;
-  }
+  text-shadow: 0 0 16px rgba(225, 29, 46, 0.65);
 }
 
 /* Vinyl record spin */

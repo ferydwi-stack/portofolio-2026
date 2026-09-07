@@ -59,14 +59,19 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Massive Out-Of-Grid Headline (Left-aligned text-[14vw] overlapping 3D character) */}
-      <div className="relative z-10 my-auto py-8 w-full">
+      {/* Massive Out-Of-Grid Headline (Left-aligned text-[clamp(3.5rem,14vw,13rem)] overlapping 3D character) */}
+      <div className="relative z-10 my-auto py-8 w-full pl-2 sm:pl-4 lg:pl-10">
+        {/* Stage Shadow & Contrast Gradient behind Headline */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent pointer-events-none -z-10 rounded-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none -z-10" />
+
         <h1
-          className="text-[13vw] sm:text-[14vw] leading-[0.82] font-black uppercase text-white font-[family-name:var(--font-bebas)] tracking-tight whitespace-nowrap overflow-visible select-none drop-shadow-2xl"
+          className="text-[clamp(3.5rem,14vw,13rem)] leading-[0.84] font-black uppercase text-white font-[family-name:var(--font-anton)] tracking-tight whitespace-nowrap overflow-visible select-none drop-shadow-2xl"
           aria-label={headline}
         >
           {chars.map((char, index) => {
-            const isOverlapBehind = index >= 6 && index <= 9;
+            // Exactly 2 middle letters ("D" and "W") overlap behind the 3D character
+            const isOverlapBehind = index === 5 || index === 6;
             return (
               <span
                 key={index}
@@ -75,7 +80,11 @@ export function Hero() {
                 }}
                 className={`inline-block transition-colors hover:text-red-500 duration-300 ${
                   char === " " ? "mr-[2.5vw]" : ""
-                } ${isOverlapBehind ? "relative -z-0 opacity-80 text-zinc-300" : "relative z-20"}`}
+                } ${
+                  isOverlapBehind
+                    ? "relative z-0 opacity-80 text-zinc-300"
+                    : "relative z-20 text-[#f5f5f0] drop-shadow-md"
+                }`}
                 style={{
                   willChange: "transform, opacity, filter",
                 }}
@@ -168,8 +177,8 @@ export function Hero() {
         title="Scroll Down to Backstage Bio"
         data-cursor-text="SCROLL"
       >
-        <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest group-hover:text-red-400 transition-colors">
-          SCROLL
+        <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest group-hover:text-red-400 transition-colors">
+          Keep scrolling
         </span>
         <svg
           className="w-5 h-6 text-red-500 group-hover:text-red-400 transition-colors filter drop-shadow-[0_0_6px_rgba(255,42,59,0.6)]"

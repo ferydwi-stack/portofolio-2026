@@ -38,10 +38,10 @@ function SilhouetteMesh({ scrollProgress = 0 }: { scrollProgress?: number }) {
   });
 
   return (
-    <group ref={groupRef} position={[0.4, -0.4, 0]}>
+    <group ref={groupRef} position={[0.5, -0.3, 0]}>
       {/* Dynamic Crimson Concert Backlight Plane Glow */}
       <mesh position={[0, 0, -0.05]}>
-        <planeGeometry args={[3.8, 5.7]} />
+        <planeGeometry args={[2.7, 4.0]} />
         <meshBasicMaterial
           map={texture}
           transparent
@@ -54,7 +54,7 @@ function SilhouetteMesh({ scrollProgress = 0 }: { scrollProgress?: number }) {
 
       {/* Main Stylized Emo Guitarist Silhouette Artwork Plane */}
       <mesh position={[0, 0, 0]}>
-        <planeGeometry args={[3.6, 5.4]} />
+        <planeGeometry args={[2.5, 3.75]} />
         <meshBasicMaterial
           map={texture}
           transparent

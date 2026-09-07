@@ -104,7 +104,7 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
         <div className="px-6 py-2 rounded-full border border-red-500/80 bg-red-950/80 text-red-400 font-mono text-xs uppercase tracking-widest shadow-[0_0_25px_rgba(255,42,59,0.5)] mb-3">
           &bull; LIVE AMP STAGE LOADED &bull;
         </div>
-        <h1 className="text-5xl sm:text-7xl font-black uppercase text-white font-[family-name:var(--font-bebas)] tracking-wider">
+        <h1 className="text-5xl sm:text-7xl font-black uppercase text-white font-[family-name:var(--font-anton)] tracking-wider">
           FERY DWI RAMADHI
         </h1>
         <p className="font-mono text-xs text-zinc-400 tracking-widest mt-2">

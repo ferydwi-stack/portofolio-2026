@@ -7,6 +7,14 @@ import { useSkillsTimeline } from "@/animations/useSkillsTimeline";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { playGuitarChord } from "@/lib/sound/guitarSynth";
 
+const LEVEL_TO_SIZE: Record<number, string> = {
+  5: "clamp(4rem, 9vw, 11rem)", // headliner
+  4: "clamp(3rem, 7vw, 8rem)",
+  3: "clamp(2.2rem, 5.5vw, 6rem)",
+  2: "clamp(1.6rem, 4vw, 4.5rem)",
+  1: "clamp(1.2rem, 3vw, 3rem)", // opener/support act
+};
+
 export function Skills() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -30,7 +38,7 @@ export function Skills() {
       data-cursor-drag="true"
     >
       {/* Background Stage Watermark Decal */}
-      <div className="absolute left-6 top-1/2 -translate-y-1/2 font-[family-name:var(--font-bebas)] text-[20vw] font-black text-white/[0.02] pointer-events-none select-none">
+      <div className="absolute left-6 top-1/2 -translate-y-1/2 font-[family-name:var(--font-anton)] text-[20vw] font-black text-white/[0.02] pointer-events-none select-none">
         SETLIST
       </div>
 
@@ -41,7 +49,7 @@ export function Skills() {
             <Radio className="w-3.5 h-3.5 animate-pulse" />
             <span>OFFICIAL CONCERT TOUR SETLIST</span>
           </div>
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-bebas)] leading-none">
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-anton)] leading-none">
             Live Tour Setlist
           </h2>
           <p className="text-xs sm:text-sm font-mono text-zinc-400">
@@ -75,16 +83,25 @@ export function Skills() {
             return (
               <div
                 key={skill.name}
+                tabIndex={0}
+                role="button"
+                aria-label={`Track 0${index + 1}: ${skill.name}, Category ${skill.category}, Level ${skill.level} of 5`}
                 onClick={() => handlePlaySongChord(index)}
-                className={`relative group cursor-pointer transition-all duration-300 flex flex-col justify-between ${
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handlePlaySongChord(index);
+                  }
+                }}
+                className={`relative group cursor-pointer transition-all duration-300 flex flex-col justify-between focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 ${
                   prefersReducedMotion
                     ? "w-full py-8 border-b border-zinc-800"
                     : "flex-none min-w-[340px] sm:min-w-[480px] lg:min-w-[580px] h-[460px] sm:h-[520px] p-8 sm:p-12 rounded-3xl bg-[#0c0914]/90 border-2 border-zinc-800/80 hover:border-red-500/80 shadow-[0_20px_50px_rgba(0,0,0,0.9)] backdrop-blur-xl"
                 }`}
                 data-cursor-text="PLAY"
               >
-                {/* Giant Transparent Track Number in Background (text-[8vw] - text-[10vw]) */}
-                <div className="absolute right-4 bottom-2 font-[family-name:var(--font-bebas)] text-[16vw] sm:text-[14vw] font-black text-white/[0.04] group-hover:text-red-500/[0.08] transition-colors pointer-events-none select-none leading-none">
+                {/* Giant Transparent Track Number in Background */}
+                <div className="absolute right-4 bottom-2 font-[family-name:var(--font-anton)] text-[16vw] sm:text-[14vw] font-black text-white/[0.04] group-hover:text-red-500/[0.08] transition-colors pointer-events-none select-none leading-none">
                   #{skill.track}
                 </div>
 
@@ -107,15 +124,16 @@ export function Skills() {
                   )}
                 </div>
 
-                {/* Main Song Name: Huge Concert Typography (text-[5vw] to text-[9vw] based on level) */}
+                {/* Main Song Name: Huge Concert Typography with explicit level-to-size mapping */}
                 <div className="relative z-10 my-auto py-6">
                   <h3
-                    className={`uppercase font-[family-name:var(--font-bebas)] tracking-tight leading-[0.88] transition-colors group-hover:text-red-400 ${
+                    style={{ fontSize: LEVEL_TO_SIZE[skill.level] || LEVEL_TO_SIZE[3] }}
+                    className={`uppercase font-[family-name:var(--font-anton)] tracking-tight leading-[0.88] transition-colors group-hover:text-red-400 ${
                       isHeadliner
-                        ? "text-[9vw] sm:text-[7vw] lg:text-[6.5vw] font-black text-white text-glow-crimson"
+                        ? "font-black text-white text-glow-crimson"
                         : isMidTier
-                        ? "text-[7.5vw] sm:text-[5.5vw] lg:text-[5vw] font-black text-zinc-200"
-                        : "text-[6vw] sm:text-[4.5vw] lg:text-[4vw] font-extrabold text-zinc-400"
+                        ? "font-black text-zinc-200"
+                        : "font-bold text-zinc-400"
                     }`}
                   >
                     {skill.name}

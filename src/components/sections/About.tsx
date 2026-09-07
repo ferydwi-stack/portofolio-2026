@@ -36,15 +36,15 @@ export function About() {
 
       {/* Asymmetric Diagonal Split Container */}
       <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-8">
-        {/* Left Bio Column (Asymmetric 55% width) */}
-        <div className="w-full lg:w-[58%] space-y-8">
+        {/* Left Bio Column (Asymmetric 55% width with solid stage charcoal backdrop) */}
+        <div className="w-full lg:w-[58%] space-y-8 relative z-20 p-6 sm:p-10 rounded-3xl bg-[#0a0a0c]/90 border border-zinc-800/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.85)]">
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3 py-1 rounded border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
               <Flame className="w-4 h-4 text-red-500" />
               <span>{"//"} FRONTMAN DOSSIER &amp; PHILOSOPHY</span>
             </div>
 
-            <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase text-white font-[family-name:var(--font-bebas)] leading-[0.92] tracking-wide">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase text-white font-[family-name:var(--font-anton)] leading-[1.05] tracking-tight">
               {PERSONAL_INFO.tagline}
             </h2>
           </div>

@@ -3,14 +3,11 @@
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { usePerformanceTier } from "@/store/usePerformanceTier";
 
-const PARTICLE_COUNT = 180;
-
-// Deterministic pseudo-random generation to avoid SSR/purity warnings
 function createParticleData(count: number) {
   const data = [];
   for (let i = 0; i < count; i++) {
-    // Seeded distribution across stage depth
     const seed = (i * 9301 + 49297) % 233280;
     const rnd1 = seed / 233280;
     const rnd2 = ((seed * 9301 + 49297) % 233280) / 233280;
@@ -31,15 +28,18 @@ function createParticleData(count: number) {
 
 export function ParticleField() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
+  const tier = usePerformanceTier((s) => s.tier);
+
+  const count = tier === "low" ? 60 : tier === "mid" ? 150 : 300;
+
   const dummy = useMemo(() => new THREE.Object3D(), []);
-  const particles = useMemo(() => createParticleData(PARTICLE_COUNT), []);
+  const particles = useMemo(() => createParticleData(count), [count]);
 
   useFrame((state) => {
     if (!meshRef.current) return;
     const t = state.clock.getElapsedTime();
 
     particles.forEach((p, i) => {
-      // Float upward like stage sparks / ember dust
       const currentY = ((p.y + t * p.speedY + 6) % 12) - 6;
       const currentX = p.x + Math.sin(t * 0.8 + p.phase) * 0.3;
       const currentZ = p.z + Math.cos(t * 0.5 + p.phase) * 0.2;
@@ -57,8 +57,9 @@ export function ParticleField() {
   return (
     <instancedMesh
       ref={meshRef}
-      args={[undefined, undefined, PARTICLE_COUNT]}
+      args={[undefined, undefined, count]}
       frustumCulled={false}
+      aria-hidden="true"
     >
       <sphereGeometry args={[1, 6, 6]} />
       <meshBasicMaterial

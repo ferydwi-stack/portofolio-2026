@@ -18,9 +18,9 @@ export function DiagonalDivider({
   return (
     <div className="relative w-full py-6 overflow-hidden select-none" aria-hidden="true">
       <div className="relative w-full flex flex-col items-center justify-center">
-        {/* Slanted subtle backdrop polygon */}
+        {/* Slanted solid backdrop polygon ensuring stage separation */}
         <div
-          className={`absolute inset-0 bg-red-950/20 border-y border-red-900/30 backdrop-blur-xs ${
+          className={`absolute inset-0 bg-[#0a0a0c] border-y border-red-950/60 shadow-[0_10px_30px_rgba(0,0,0,0.95)] ${
             isRight ? "-skew-y-1" : "skew-y-1"
           }`}
         />

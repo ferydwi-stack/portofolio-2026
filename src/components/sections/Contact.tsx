@@ -2,8 +2,10 @@
 
 import { useState, useRef } from "react";
 import { Mail, MessageSquare, Send, Linkedin, CheckCircle2, Radio } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { PERSONAL_INFO } from "@/lib/data/portfolioData";
 import { useContactTimeline } from "@/animations/useContactTimeline";
+import { playStompClick, playGuitarChord } from "@/lib/sound/guitarSynth";
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,13 +27,15 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    playStompClick();
 
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
+      playGuitarChord(164.81); // Bright triumph rock chord
       setFormState({ name: "", email: "", subject: "", message: "" });
-      setTimeout(() => setIsSubmitted(false), 4000);
-    }, 1200);
+      setTimeout(() => setIsSubmitted(false), 4500);
+    }, 1000);
   };
 
   return (
@@ -55,7 +59,7 @@ export function Contact() {
               <span>DIRECT STAGE DISPATCH</span>
             </div>
 
-            <h2 className="text-5xl sm:text-7xl lg:text-8xl font-black uppercase text-white font-[family-name:var(--font-bebas)] leading-[0.88]">
+            <h2 className="text-5xl sm:text-7xl lg:text-8xl font-black uppercase text-white font-[family-name:var(--font-anton)] leading-[0.92]">
               Ready To Rock? <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-red-600">
                 Book The Tour
@@ -227,26 +231,55 @@ export function Contact() {
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting || isSubmitted}
-              className="w-full py-4 bg-red-600 hover:bg-red-500 text-white rounded-xl font-mono text-xs uppercase tracking-widest font-black transition-all flex items-center justify-center gap-2 group disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(255,42,59,0.5)] cursor-pointer"
-              data-cursor-text="TRANSMIT"
-            >
-              {isSubmitting ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : isSubmitted ? (
-                <>
-                  <CheckCircle2 className="w-4 h-4 text-emerald-300" />
-                  <span>PESAN BERHASIL DITRANSMISIKAN // TERIMA KASIH!</span>
-                </>
-              ) : (
-                <>
-                  <span>TRANSMIT STAGE MESSAGE</span>
-                  <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </>
-              )}
-            </button>
+            <div className="relative">
+              <button
+                type="submit"
+                disabled={isSubmitting || isSubmitted}
+                className="relative w-full py-4 bg-red-600 hover:bg-red-500 text-white rounded-xl font-mono text-xs uppercase tracking-widest font-black transition-all flex items-center justify-center gap-2 group disabled:opacity-75 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(255,42,59,0.5)] cursor-pointer overflow-hidden"
+                data-cursor-text="TRANSMIT"
+              >
+                {isSubmitting ? (
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : isSubmitted ? (
+                  <>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-300" />
+                    <span className="text-emerald-200">PASS CONFIRMED // MESSAGE SENT BACKSTAGE</span>
+                  </>
+                ) : (
+                  <>
+                    <span>SEND IT BACKSTAGE</span>
+                    <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </>
+                )}
+              </button>
+
+              {/* Spark Burst Confirmation Micro-interaction */}
+              <AnimatePresence>
+                {isSubmitted && (
+                  <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-visible">
+                    {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, idx) => {
+                      const rad = (angle * Math.PI) / 180;
+                      const dist = 70 + (idx % 2) * 20;
+                      return (
+                        <motion.div
+                          key={angle}
+                          initial={{ opacity: 1, scale: 0, x: 0, y: 0 }}
+                          animate={{
+                            opacity: 0,
+                            scale: [0, 1.5, 0.4],
+                            x: Math.cos(rad) * dist,
+                            y: Math.sin(rad) * dist,
+                          }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.65, ease: "easeOut" }}
+                          className="absolute w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_12px_#ff6b35]"
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+              </AnimatePresence>
+            </div>
           </form>
         </div>
       </div>

@@ -6,13 +6,15 @@ import { Home, User, Flame, Disc3, Award, Send, Menu, X } from "lucide-react";
 import { useLenis } from "@/hooks/useLenis";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
+import { useScrollStore } from "@/store/useScrollStore";
+
 const NAV_ITEMS = [
-  { id: "hero", label: "STAGE", icon: Home },
-  { id: "about", label: "BIO", icon: User },
-  { id: "skills", label: "SETLIST", icon: Flame },
-  { id: "projects", label: "ALBUMS", icon: Disc3 },
-  { id: "certificates", label: "PASSES", icon: Award },
-  { id: "contact", label: "DISPATCH", icon: Send },
+  { id: "hero", label: "Opening", icon: Home },
+  { id: "about", label: "The Artist", icon: User },
+  { id: "skills", label: "Setlist", icon: Flame },
+  { id: "projects", label: "Discography", icon: Disc3 },
+  { id: "certificates", label: "Backstage Passes", icon: Award },
+  { id: "contact", label: "Meet & Greet", icon: Send },
 ];
 
 export function NavbarDock() {
@@ -32,13 +34,16 @@ export function NavbarDock() {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = docHeight > 0 ? Math.min(1, Math.max(0, scrollY / docHeight)) : 0;
       setScrollProgress(progress);
+      useScrollStore.getState().setScrollProgress(progress);
 
       // Determine active section
       const viewMiddle = scrollY + window.innerHeight * 0.35;
       for (let i = sections.length - 1; i >= 0; i--) {
         const sec = sections[i];
         if (sec && sec.offsetTop <= viewMiddle) {
-          setActiveSection(NAV_ITEMS[i].id);
+          const sectionId = NAV_ITEMS[i].id;
+          setActiveSection(sectionId);
+          useScrollStore.getState().setActiveSection(sectionId);
           break;
         }
       }
