@@ -35,15 +35,15 @@ export function BandLogo({
       >
         <defs>
           <linearGradient id="pickGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#e11d2e" />
-            <stop offset="50%" stop-color="#990b17" />
-            <stop offset="100%" stop-color="#0a080f" />
+            <stop offset="0%" stopColor="#e11d2e" />
+            <stop offset="50%" stopColor="#990b17" />
+            <stop offset="100%" stopColor="#0a080f" />
           </linearGradient>
 
           <linearGradient id="neonEdgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ff3344" />
-            <stop offset="50%" stop-color="#ff2e88" />
-            <stop offset="100%" stop-color="#17e0c9" />
+            <stop offset="0%" stopColor="#ff3344" />
+            <stop offset="50%" stopColor="#ff2e88" />
+            <stop offset="100%" stopColor="#17e0c9" />
           </linearGradient>
         </defs>
 

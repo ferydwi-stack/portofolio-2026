@@ -7,6 +7,8 @@ import { useSkillsTimeline } from "@/animations/useSkillsTimeline";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { playGuitarChord } from "@/lib/sound/guitarSynth";
 
+import { TechLogo, getTechBrandColor } from "@/components/ui/TechLogos";
+
 // Level to progress bar fill mapping (§5.4)
 const LEVEL_TO_BAR_FILL: Record<number, string> = {
   5: "100%", // ●●●●● — headliner
@@ -109,10 +111,10 @@ export function Skills() {
           {columns.map((column, colIdx) => (
             <div
               key={column.side}
-              className={`relative rounded-3xl bg-[#0e0b16]/90 border-2 border-zinc-800/80 p-6 sm:p-10 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col justify-between ${
+              className={`relative rounded-3xl bg-[#0e0b16]/95 border-2 border-zinc-800 p-6 sm:p-8 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col justify-between ${
                 prefersReducedMotion
                   ? "w-full"
-                  : "flex-none w-[92vw] sm:w-[580px] lg:w-[680px]"
+                  : "flex-none w-[94vw] sm:w-[620px] lg:w-[720px] xl:w-[780px]"
               }`}
             >
               {/* Giant Faint Side Watermark in Background */}
@@ -124,7 +126,7 @@ export function Skills() {
               </div>
 
               {/* Sleeve Header */}
-              <div className="relative z-10 flex items-center justify-between border-b border-zinc-800 pb-4 mb-2">
+              <div className="relative z-10 flex items-center justify-between border-b border-zinc-800 pb-4 mb-3">
                 <div>
                   <span className="text-red-500 font-mono text-xs font-black tracking-widest">
                     {column.side}
@@ -138,12 +140,13 @@ export function Skills() {
                 </div>
               </div>
 
-              {/* Track Rows (1 Skill = 1 Horizontal Row, §5.4) */}
-              <div className="relative z-10 flex flex-col divide-y divide-zinc-800/50">
+              {/* Track Rows (1 Skill = 1 Horizontal Row, with Authentic Tech Logo) */}
+              <div className="relative z-10 flex flex-col divide-y divide-zinc-800/60">
                 {column.tracks.map((skill: Skill, idxInCol: number) => {
                   const globalIndex = colIdx * 5 + idxInCol;
                   const isHeadliner = skill.level >= 5;
                   const duration = getTrackDuration(globalIndex + 1, skill.bpm, skill.level);
+                  const brand = getTechBrandColor(skill.name);
 
                   return (
                     <div
@@ -158,41 +161,50 @@ export function Skills() {
                           handlePlaySongChord(globalIndex);
                         }
                       }}
-                      className={`group py-3.5 px-3 rounded-xl transition-all duration-200 flex items-center justify-between gap-3 cursor-pointer focus:outline-none focus:bg-red-950/40 focus:ring-1 focus:ring-red-500 ${
+                      className={`group py-3 px-3 sm:px-4 rounded-2xl transition-all duration-300 flex items-center justify-between gap-3 sm:gap-4 cursor-pointer focus:outline-none focus:bg-zinc-900 focus:ring-1 focus:ring-red-500 ${
                         isHeadliner
-                          ? "bg-red-950/20 hover:bg-red-950/40 border-l-2 border-red-500"
-                          : "hover:bg-zinc-900/60"
+                          ? "bg-red-950/20 hover:bg-zinc-900/80 border-l-2 border-red-500"
+                          : "hover:bg-zinc-900/80"
                       }`}
                       data-cursor-text="PLAY"
                     >
-                      {/* Left: Track Number + Headliner Icon */}
-                      <div className="flex items-center gap-2 flex-shrink-0 min-w-[42px]">
-                        <span className="font-mono text-xs sm:text-sm font-bold text-red-500">
+                      {/* Left: Track Number + Official Tech Logo Badge */}
+                      <div className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
+                        <span className="font-mono text-xs sm:text-sm font-bold text-zinc-400 group-hover:text-red-400 transition-colors w-6">
                           {skill.track}
                         </span>
-                        {isHeadliner && (
-                          <Flame className="w-3.5 h-3.5 text-red-400 animate-pulse flex-shrink-0" />
-                        )}
+
+                        {/* Official Tech Logo Container */}
+                        <div
+                          className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl ${brand.bg} border ${brand.border} flex items-center justify-center p-2 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-md`}
+                        >
+                          <TechLogo name={skill.name} size={22} />
+                        </div>
                       </div>
 
-                      {/* Track Title (Uniform Font Size clamp(1.8rem, 3.2vw, 3rem) as §5.4 specifies) */}
-                      <div className="flex items-baseline gap-2 flex-shrink-0">
-                        <span className="headline-section text-xl sm:text-2xl lg:text-[1.75rem] uppercase text-white group-hover:text-red-400 transition-colors tracking-wide leading-none">
-                          {skill.name}
-                        </span>
-                        <span className="hidden sm:inline-block font-mono text-[10px] text-zinc-500 uppercase tracking-widest">
+                      {/* Track Title + Category */}
+                      <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2.5 flex-shrink-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="headline-section text-xl sm:text-2xl lg:text-[1.65rem] uppercase text-white group-hover:text-red-400 transition-colors tracking-wide leading-none">
+                            {skill.name}
+                          </span>
+                          {isHeadliner && (
+                            <Flame className="w-3.5 h-3.5 text-red-500 animate-pulse flex-shrink-0" />
+                          )}
+                        </div>
+                        <span className="font-mono text-[9px] sm:text-[10px] text-zinc-400 uppercase tracking-widest">
                           [{skill.category}]
                         </span>
                       </div>
 
-                      {/* Connecting Leader Line (Hairline Tracklist Dot Fill) */}
+                      {/* Connecting Leader Line (Dotted hairline) */}
                       <div
-                        className="flex-1 mx-2 border-b border-dotted border-zinc-800 group-hover:border-red-500/40 transition-colors min-w-[16px]"
+                        className="flex-1 mx-2 sm:mx-3 border-b border-dotted border-zinc-800 group-hover:border-zinc-700 transition-colors hidden md:block min-w-[20px]"
                         aria-hidden="true"
                       />
 
-                      {/* Level Indicator: 5 Signal Meter Dots + Progress Bar (§5.4) */}
-                      <div className="flex items-center gap-3 flex-shrink-0">
+                      {/* Level Indicator: 5 Signal Meter Dots + Progress Bar */}
+                      <div className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 ml-auto md:ml-0">
                         {/* 5 Dots Meter */}
                         <div className="flex items-center gap-1" aria-hidden="true">
                           {[1, 2, 3, 4, 5].map((dot) => (
@@ -209,7 +221,7 @@ export function Skills() {
 
                         {/* Miniature Progress Bar */}
                         <div
-                          className="hidden md:block w-16 sm:w-20 h-1.5 rounded-full bg-zinc-800/80 overflow-hidden"
+                          className="hidden sm:block w-14 sm:w-16 h-1.5 rounded-full bg-zinc-800/80 overflow-hidden"
                           aria-hidden="true"
                         >
                           <div
@@ -218,8 +230,8 @@ export function Skills() {
                           />
                         </div>
 
-                        {/* Song Duration / Timecode Mono Label (§5.4) */}
-                        <span className="font-mono text-[11px] text-zinc-400 group-hover:text-red-300 transition-colors">
+                        {/* Song Duration / Timecode Mono Label */}
+                        <span className="font-mono text-[10px] sm:text-[11px] text-zinc-400 group-hover:text-red-300 transition-colors">
                           [{duration}]
                         </span>
                       </div>

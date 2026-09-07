@@ -7,6 +7,8 @@ import { PERSONAL_INFO, TECH_RIGS } from "@/lib/data/portfolioData";
 import { useAboutTimeline } from "@/animations/useAboutTimeline";
 import { useLenis } from "@/hooks/useLenis";
 
+import { TechLogo } from "@/components/ui/TechLogos";
+
 export function About() {
   const containerRef = useRef<HTMLDivElement>(null);
   const photoRef = useRef<HTMLDivElement>(null);
@@ -44,7 +46,7 @@ export function About() {
               <span>{"//"} FRONTMAN DOSSIER &amp; PHILOSOPHY</span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase text-white font-[family-name:var(--font-anton)] leading-[1.05] tracking-tight">
+            <h2 className="headline-section text-3xl sm:text-5xl lg:text-6xl font-normal uppercase text-white leading-[1.05] tracking-wide">
               {PERSONAL_INFO.tagline}
             </h2>
           </div>
@@ -83,9 +85,10 @@ export function About() {
                     {rig.items.map((item) => (
                       <span
                         key={item}
-                        className="text-[10px] font-mono text-zinc-300 bg-black/60 px-2 py-0.5 rounded border border-zinc-800 group-hover:border-zinc-700"
+                        className="inline-flex items-center gap-1.5 text-[10px] font-mono text-zinc-300 bg-black/60 px-2.5 py-1 rounded border border-zinc-800 group-hover:border-zinc-700"
                       >
-                        {item}
+                        <TechLogo name={item} size={13} />
+                        <span>{item}</span>
                       </span>
                     ))}
                   </div>
