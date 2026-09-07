@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" width="800" height="1200">
+  <defs>
+    <!-- Stage Backlight Glow Filter -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="15" flood-color="#e11d2e" flood-opacity="0.8"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="30" flood-color="#ff2a3b" flood-opacity="0.4"/>
+    </filter>
+
+    <linearGradient id="silhouetteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14111c" />
+      <stop offset="50%" stop-color="#0a080f" />
+      <stop offset="100%" stop-color="#050408" />
+    </linearGradient>
+
+    <linearGradient id="rimRedGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff3344" stop-opacity="0.9" />
+      <stop offset="15%" stop-color="#ff1122" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#ff1122" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="guitarBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e11d2e" />
+      <stop offset="40%" stop-color="#880815" />
+      <stop offset="100%" stop-color="#1a0205" />
+    </linearGradient>
+
+    <linearGradient id="chromeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="50%" stop-color="#888899" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+  </defs>
+
+  <g id="guitarist-complete">
+    <!-- Back Rim Light Flare Behind Silhouette -->
+    <path d="M 320 180 Q 400 100 480 180 Q 550 300 520 600 Q 560 900 450 1150 L 350 1150 Q 240 850 300 500 Z" 
+          fill="none" stroke="url(#rimRedGrad)" stroke-width="8" filter="url(#neonGlow)" opacity="0.6"/>
+
+    <!-- GUITAR STRAP across chest -->
+    <path d="M 330 300 L 460 560 L 420 580 L 290 320 Z" fill="#1b1822" stroke="#2a2436" stroke-width="2" />
+
+    <!-- LEGS & STANCE (Skinny ripped jeans & Punk Platform Boots) -->
+    <!-- Left Leg -->
+    <path d="M 340 680 L 310 950 L 290 1100 L 260 1120 L 250 1150 L 340 1150 L 350 1110 L 360 950 L 390 690 Z" 
+          fill="url(#silhouetteGrad)" stroke="#ff2a3b" stroke-width="1.5" stroke-opacity="0.3"/>
+    <!-- Right Leg (Back stance) -->
+    <path d="M 430 680 L 470 940 L 490 1090 L 470 1115 L 480 1150 L 560 1150 L 560 1115 L 530 940 L 480 680 Z" 
+          fill="url(#silhouetteGrad)" stroke="#ff2a3b" stroke-width="1.5" stroke-opacity="0.3"/>
+
+    <!-- Boot Soles & Metal Eyelets -->
+    <path d="M 245 1135 L 345 1135 L 345 1150 L 245 1150 Z" fill="#000000" stroke="#ff3344" stroke-width="1" />
+    <path d="M 470 1135 L 565 1135 L 565 1150 L 470 1150 Z" fill="#000000" stroke="#ff3344" stroke-width="1" />
+
+    <!-- TORSO & OVERSIZED EMO HOODIE / JACKET -->
+    <!-- Jacket Main Torso -->
+    <path d="M 310 320 Q 270 420 280 580 Q 285 680 340 690 L 480 690 Q 525 660 515 540 Q 510 400 480 320 Z" 
+          fill="url(#silhouetteGrad)" stroke="#ff2a3b" stroke-width="2" stroke-opacity="0.4"/>
+    <!-- Hoodie folds & wrinkles -->
+    <path d="M 310 450 Q 380 520 470 470" fill="none" stroke="#252030" stroke-width="4" />
+    <path d="M 330 540 Q 400 590 460 550" fill="none" stroke="#252030" stroke-width="3" />
+    <path d="M 350 630 Q 410 660 450 630" fill="none" stroke="#252030" stroke-width="3" />
+
+    <!-- ELECTRIC GUITAR (Offset Double-Cutaway Fender Jazzmaster / Stratocaster Style) -->
+    <!-- Guitar Body -->
+    <g id="electric-guitar" transform="rotate(-32 390 580)">
+      <!-- Body Outline with Bevels -->
+      <path d="M 250 520 C 230 450 280 400 320 430 C 340 445 350 470 340 500 C 330 530 360 580 430 580 C 490 580 510 520 490 470 C 470 420 520 380 550 430 C 580 480 570 580 520 650 C 470 720 320 730 270 660 C 240 615 260 550 250 520 Z" 
+            fill="url(#guitarBodyGrad)" stroke="#ff4d5a" stroke-width="3" filter="url(#neonGlow)"/>
+
+      <!-- Guitar Pickguard (Gloss Black/Tortoise) -->
+      <path d="M 310 480 C 330 490 350 520 390 520 C 440 520 460 480 480 470 C 490 510 480 580 440 610 C 370 630 310 590 310 480 Z" 
+            fill="#09070d" stroke="#332b40" stroke-width="2"/>
+
+      <!-- Dual Humbucker Pickups -->
+      <rect x="375" y="500" width="55" height="20" rx="3" fill="#121018" stroke="url(#chromeGrad)" stroke-width="1.5"/>
+      <rect x="375" y="535" width="55" height="20" rx="3" fill="#121018" stroke="url(#chromeGrad)" stroke-width="1.5"/>
+      <!-- Pickup Pole Pieces -->
+      <circle cx="385" cy="510" r="2.5" fill="#ffffff"/>
+      <circle cx="395" cy="510" r="2.5" fill="#ffffff"/>
+      <circle cx="405" cy="510" r="2.5" fill="#ffffff"/>
+      <circle cx="415" cy="510" r="2.5" fill="#ffffff"/>
+      <circle cx="385" cy="545" r="2.5" fill="#ffffff"/>
+      <circle cx="395" cy="545" r="2.5" fill="#ffffff"/>
+      <circle cx="405" cy="545" r="2.5" fill="#ffffff"/>
+      <circle cx="415" cy="545" r="2.5" fill="#ffffff"/>
+
+      <!-- Chrome Bridge & Tremolo Tailpiece -->
+      <rect x="375" y="580" width="55" height="28" rx="4" fill="url(#chromeGrad)" stroke="#111" stroke-width="1"/>
+      <!-- Volume & Tone Knobs -->
+      <circle cx="455" cy="580" r="9" fill="url(#chromeGrad)" stroke="#111" stroke-width="1"/>
+      <circle cx="445" cy="610" r="9" fill="url(#chromeGrad)" stroke="#111" stroke-width="1"/>
+
+      <!-- Long Maple Fretboard & Neck -->
+      <path d="M 390 500 L 390 100 L 415 100 L 415 500 Z" fill="#1f1816" stroke="#3a2f2b" stroke-width="1.5"/>
+      <!-- Frets (24 Nickel Frets) -->
+      <line x1="390" y1="120" x2="415" y2="120" stroke="url(#chromeGrad)" stroke-width="1.5"/>
+      <line x1="390" y1="145" x2="415" y2="145" stroke="url(#chromeGrad)" stroke-width="1.5"/>
+      <line x1="390" y1="175" x2="415" y2="175" stroke="url(#chromeGrad)" stroke-width="1.5"/>
+      <line x1="390" y1="210" x2="415" y2="210" stroke="url(#chromeGrad)" stroke-width="1.5"/>
+      <line x1="390" y1="250" x2="415" y2="250" stroke="url(#chromeGrad)" stroke-width="1.5"/>
+      <line x1="390" y1="300" x2="415" y2="300" stroke="url(#chromeGrad)" stroke-width="1.5"/>
+      <line x1="390" y1="360" x2="415" y2="360" stroke="url(#chromeGrad)" stroke-width="1.5"/>
+      <line x1="390" y1="430" x2="415" y2="430" stroke="url(#chromeGrad)" stroke-width="1.5"/>
+
+      <!-- Pearloid Fret Marker Inlays -->
+      <circle cx="402" cy="192" r="3" fill="#ffffff" opacity="0.9"/>
+      <circle cx="402" cy="275" r="3" fill="#ffffff" opacity="0.9"/>
+      <circle cx="402" cy="395" r="3" fill="#ffffff" opacity="0.9"/>
+
+      <!-- Headstock with 6 Inline Tuning Pegs -->
+      <path d="M 390 100 L 375 30 L 395 15 L 420 35 L 415 100 Z" fill="url(#guitarBodyGrad)" stroke="#ff4d5a" stroke-width="2"/>
+      <!-- Tuning Pegs -->
+      <circle cx="370" cy="30" r="5" fill="url(#chromeGrad)"/>
+      <circle cx="372" cy="45" r="5" fill="url(#chromeGrad)"/>
+      <circle cx="374" cy="60" r="5" fill="url(#chromeGrad)"/>
+      <circle cx="376" cy="75" r="5" fill="url(#chromeGrad)"/>
+      <circle cx="378" cy="90" r="5" fill="url(#chromeGrad)"/>
+
+      <!-- 6 Gleaming Steel Guitar Strings -->
+      <line x1="393" y1="35" x2="393" y2="590" stroke="#ffffff" stroke-width="1" opacity="0.9"/>
+      <line x1="396" y1="35" x2="396" y2="590" stroke="#ffffff" stroke-width="1" opacity="0.9"/>
+      <line x1="400" y1="35" x2="400" y2="590" stroke="#ffffff" stroke-width="1.2" opacity="0.9"/>
+      <line x1="404" y1="35" x2="404" y2="590" stroke="#ffffff" stroke-width="1.4" opacity="0.9"/>
+      <line x1="408" y1="35" x2="408" y2="590" stroke="#ffffff" stroke-width="1.6" opacity="0.9"/>
+      <line x1="412" y1="35" x2="412" y2="590" stroke="#ffffff" stroke-width="1.8" opacity="0.9"/>
+    </g>
+
+    <!-- FRETTING ARM (Left Hand gripping neck around 5th fret) -->
+    <path d="M 310 320 L 220 400 L 210 370 L 250 260 L 270 240 L 300 280 Z" 
+          fill="url(#silhouetteGrad)" stroke="#ff2a3b" stroke-width="1" stroke-opacity="0.3"/>
+    <!-- Left Hand around fretboard -->
+    <path d="M 215 365 Q 235 340 260 370 Q 240 395 215 385 Z" fill="#2d222b" stroke="#ff3344" stroke-width="1"/>
+
+    <!-- STRUMMING ARM (Right Arm bent in aggressive rock strum over bridge) -->
+    <path d="M 480 330 Q 560 410 520 510 L 460 540 L 450 500 Q 490 440 450 360 Z" 
+          fill="url(#silhouetteGrad)" stroke="#ff2a3b" stroke-width="1" stroke-opacity="0.3"/>
+    <!-- Right Hand with Guitar Pick (Plectrum) -->
+    <path d="M 460 520 Q 440 540 435 560 Q 460 570 475 540 Z" fill="#2d222b" stroke="#ff3344" stroke-width="1"/>
+    <!-- Crimson Guitar Pick -->
+    <polygon points="438,552 446,550 442,560" fill="#ff0022" filter="url(#neonGlow)"/>
+
+    <!-- HEAD, HOOD & SIGNATURE EMO HAIR BANGS SWOOPING DOWN -->
+    <!-- Head Angle Tilted Downward in Concentration -->
+    <g id="emo-head">
+      <!-- Neck -->
+      <path d="M 370 300 L 410 300 L 415 250 L 375 250 Z" fill="#221920"/>
+      <!-- Face profile (mostly hidden in shadow under bangs) -->
+      <path d="M 380 270 Q 370 230 390 190 Q 430 180 435 230 Q 430 270 395 275 Z" fill="#1e161c"/>
+      <!-- Piercing jawline & chin -->
+      <path d="M 380 250 L 390 275 L 410 260" fill="none" stroke="#ff2a3b" stroke-width="1" opacity="0.5"/>
+
+      <!-- Iconic Long Emo Swoop Bangs (Covering forehead, eyes, and sweeping past jaw) -->
+      <path d="M 350 160 C 390 110 460 120 465 170 C 470 210 440 240 420 280 C 400 320 370 330 350 310 C 370 270 385 240 370 210 C 360 190 340 180 350 160 Z" 
+            fill="#060508" stroke="#ff2a3b" stroke-width="1.5" filter="url(#neonGlow)"/>
+      <!-- Additional layered hair strands -->
+      <path d="M 365 170 Q 400 230 360 290" fill="none" stroke="#1d1624" stroke-width="6"/>
+      <path d="M 380 160 Q 425 220 390 295" fill="none" stroke="#1d1624" stroke-width="5"/>
+      <path d="M 400 150 Q 445 200 425 270" fill="none" stroke="#1d1624" stroke-width="5"/>
+      <path d="M 430 155 Q 465 185 455 240" fill="none" stroke="#1d1624" stroke-width="4"/>
+
+      <!-- Spiky Back Hair & Silhouette Contours -->
+      <path d="M 450 160 L 485 140 L 470 175 L 500 170 L 475 205 L 485 225 L 460 235 L 450 260" 
+            fill="#060508" stroke="#ff2a3b" stroke-width="1" opacity="0.6"/>
+    </g>
+  </g>
+</svg>

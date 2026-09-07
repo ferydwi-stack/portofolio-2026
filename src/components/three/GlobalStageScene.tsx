@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { GuitaristCharacter } from "./GuitaristCharacter";
@@ -146,7 +146,9 @@ function SceneController({ scrollProgress }: { scrollProgress: number }) {
 
       {/* Centerpiece 3D Emo Guitarist Character */}
       <group ref={charGroupRef} position={[0.6, -1.7, 0]}>
-        <GuitaristCharacter scrollProgress={scrollProgress} />
+        <Suspense fallback={null}>
+          <GuitaristCharacter scrollProgress={scrollProgress} />
+        </Suspense>
       </group>
     </>
   );
