@@ -2,18 +2,15 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { Flame, Award, Cpu } from "lucide-react";
-import { PERSONAL_INFO, TECH_RIGS } from "@/lib/data/portfolioData";
+import { Flame, Award } from "lucide-react";
+import { PERSONAL_INFO } from "@/lib/data/portfolioData";
 import { useAboutTimeline } from "@/animations/useAboutTimeline";
 import { useLenis } from "@/hooks/useLenis";
-
-import { TechLogo } from "@/components/ui/TechLogos";
 
 export function About() {
   const containerRef = useRef<HTMLDivElement>(null);
   const photoRef = useRef<HTMLDivElement>(null);
   const bioTextRef = useRef<HTMLDivElement>(null);
-  const rigsRef = useRef<HTMLDivElement>(null);
 
   const { scrollTo } = useLenis();
 
@@ -22,7 +19,6 @@ export function About() {
     containerRef,
     photoRef,
     bioTextRef,
-    rigsRef,
   });
 
   return (
@@ -58,52 +54,8 @@ export function About() {
             ))}
           </div>
 
-          {/* Tech Rigs / Studio Gear Arsenal */}
-          <div className="pt-2 sm:pt-4 space-y-3 sm:space-y-4">
-            <div className="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-red-400 font-bold border-b border-zinc-800 pb-2 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-red-500" />
-                <span>{"//"} STACK TEKNOLOGI &amp; ALAT PENGEMBANGAN</span>
-              </div>
-              <span className="text-zinc-500 text-[9px] sm:text-[10px] hidden xs:inline">KOMPETENSI TERVERIFIKASI</span>
-            </div>
-
-            <div ref={rigsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 items-stretch">
-              {TECH_RIGS.map((rig, idx) => (
-                <div
-                  key={rig.category}
-                  className="h-full min-h-[190px] sm:min-h-[210px] p-4 sm:p-5 rounded-2xl bg-[#110e19]/95 border border-zinc-800/90 hover:border-red-500/70 transition-all backdrop-blur-md group flex flex-col justify-between shadow-sm"
-                >
-                  <div className="min-h-[38px] sm:min-h-[44px] flex flex-col justify-start">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xs font-bold font-mono uppercase text-white group-hover:text-red-400 transition-colors tracking-wide">
-                        {rig.category}
-                      </h3>
-                      <span className="font-mono text-[9px] text-zinc-500 bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800">
-                        0{idx + 1}
-                      </span>
-                    </div>
-                    <p className="text-[10px] font-mono text-zinc-400 mt-1">{rig.role}</p>
-                  </div>
-
-                  <div className="flex-1 flex flex-wrap content-start gap-1.5 pt-3 border-t border-zinc-800/80 mt-3">
-                    {rig.items.map((item) => (
-                      <span
-                        key={item}
-                        className="inline-flex items-center gap-1.5 text-[10px] font-mono text-zinc-300 bg-black/60 px-2.5 py-1.5 rounded-lg border border-zinc-800 group-hover:border-zinc-700/80 transition-colors"
-                      >
-                        <TechLogo name={item} size={14} />
-                        <span>{item}</span>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Action to Certificates */}
-          <div className="pt-2">
+          <div className="pt-4 sm:pt-6 border-t border-zinc-800/80">
             <button
               onClick={() => scrollTo("#certificates", { duration: 1.2 })}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-[#14101e] border border-red-500/50 hover:bg-red-600 hover:text-white text-xs font-mono uppercase tracking-widest font-bold text-red-400 transition-all shadow-lg group cursor-pointer"

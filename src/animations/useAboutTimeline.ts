@@ -9,7 +9,7 @@ interface AboutTimelineRefs {
   containerRef: RefObject<HTMLElement | null>;
   photoRef: RefObject<HTMLElement | null>;
   bioTextRef: RefObject<HTMLElement | null>;
-  rigsRef: RefObject<HTMLElement | null>;
+  rigsRef?: RefObject<HTMLElement | null>;
 }
 
 export function useAboutTimeline({
@@ -28,7 +28,9 @@ export function useAboutTimeline({
     if (!container) return;
 
     if (prefersReducedMotion) {
-      gsap.to([photoRef.current, bioTextRef.current, rigsRef.current], {
+      const elementsToAnimate = [photoRef.current, bioTextRef.current];
+      if (rigsRef?.current) elementsToAnimate.push(rigsRef.current);
+      gsap.to(elementsToAnimate, {
         opacity: 1,
         x: 0,
         y: 0,
@@ -66,8 +68,8 @@ export function useAboutTimeline({
         );
       }
 
-      // Tech gear items stagger
-      if (rigsRef.current) {
+      // Tech gear items stagger (optional)
+      if (rigsRef?.current) {
         const rigs = Array.from(rigsRef.current.children);
         tl.fromTo(
           rigs,

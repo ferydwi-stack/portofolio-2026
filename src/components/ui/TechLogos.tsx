@@ -36,6 +36,13 @@ const TECH_ONLINE_LOGOS: Record<string, string> = {
   postman: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg",
   android: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/android/android-original.svg",
   sqlite: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg",
+  gsap: "https://cdn.simpleicons.org/greensock/88CE02",
+  three: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/threejs/threejs-original.svg",
+  docker: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
+  vite: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg",
+  railway: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/railway/railway-original.svg",
+  supabase: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg",
+  pythonanywhere: "https://cdn.simpleicons.org/pythonanywhere/1D99B8",
 };
 
 export function TechLogo({ name, className = "", size = 24 }: TechLogoProps) {
@@ -117,6 +124,27 @@ export function getTechBrandColor(name: string): { glow: string; border: string;
   }
   if (normalized.includes("firebase")) {
     return { glow: "rgba(255, 202, 40, 0.45)", border: "border-[#FFCA28]/40", bg: "bg-[#FFCA28]/10", text: "text-[#FFCA28]" };
+  }
+  if (normalized.includes("gsap")) {
+    return { glow: "rgba(136, 206, 2, 0.45)", border: "border-[#88CE02]/40", bg: "bg-[#88CE02]/10", text: "text-[#88CE02]" };
+  }
+  if (normalized.includes("three")) {
+    return { glow: "rgba(255, 255, 255, 0.4)", border: "border-white/40", bg: "bg-white/10", text: "text-white" };
+  }
+  if (normalized.includes("docker")) {
+    return { glow: "rgba(36, 150, 237, 0.45)", border: "border-[#2496ed]/40", bg: "bg-[#2496ed]/10", text: "text-[#2496ed]" };
+  }
+  if (normalized.includes("postman")) {
+    return { glow: "rgba(255, 108, 55, 0.45)", border: "border-[#ff6c37]/40", bg: "bg-[#ff6c37]/10", text: "text-[#ff6c37]" };
+  }
+  if (normalized.includes("railway")) {
+    return { glow: "rgba(238, 238, 238, 0.45)", border: "border-purple-400/40", bg: "bg-purple-950/20", text: "text-purple-300" };
+  }
+  if (normalized.includes("supabase")) {
+    return { glow: "rgba(62, 207, 142, 0.45)", border: "border-[#3ecf8e]/40", bg: "bg-[#3ecf8e]/10", text: "text-[#3ecf8e]" };
+  }
+  if (normalized.includes("pythonanywhere") || normalized.includes("pythonwhere")) {
+    return { glow: "rgba(29, 153, 184, 0.45)", border: "border-[#1D99B8]/40", bg: "bg-[#1D99B8]/10", text: "text-[#1D99B8]" };
   }
   return { glow: "rgba(255, 42, 59, 0.4)", border: "border-red-500/40", bg: "bg-red-500/10", text: "text-red-500" };
 }

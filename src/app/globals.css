@@ -161,3 +161,32 @@ html {
   letter-spacing: 0.02em;
   line-height: 0.92;
 }
+
+/* Tech logo continuous running ticker animation */
+@keyframes tech-marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-tech-marquee {
+  display: flex;
+  width: max-content;
+  animation: tech-marquee 16s linear infinite;
+}
+
+.animate-tech-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Guitar string vibration animation */
+@keyframes guitar-string-vibrate {
+  0%, 100% { transform: scaleY(1); }
+  25% { transform: scaleY(2) translateY(-1px); }
+  50% { transform: scaleY(0.6) translateY(1px); }
+  75% { transform: scaleY(1.6) translateY(-0.5px); }
+}
+
+.animate-guitar-string {
+  animation: guitar-string-vibrate 0.25s ease-in-out infinite;
+}
+

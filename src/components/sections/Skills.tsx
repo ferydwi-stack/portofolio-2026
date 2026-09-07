@@ -1,11 +1,41 @@
 "use client";
 
 import { useRef } from "react";
-import { Radio, Flame, Sparkles, Globe, Smartphone, Terminal, Layers } from "lucide-react";
+import { Radio, Flame, Sparkles, Globe, Smartphone } from "lucide-react";
 import { TECH_DOMAINS, TechDomain, TechCard, TechCardItem } from "@/lib/data/portfolioData";
 import { useSkillsTimeline } from "@/animations/useSkillsTimeline";
 import { playGuitarChord } from "@/lib/sound/guitarSynth";
 import { TechLogo, getTechBrandColor } from "@/components/ui/TechLogos";
+
+// 1/4" Guitar Jack Plug & Vibrating Guitar String Graphic Component
+function GuitarJackPlugString() {
+  return (
+    <div className="flex items-center gap-2" title="Audio Jack & Vibrating Guitar Strings">
+      {/* 1/4" Audio Jack Plug */}
+      <svg width="26" height="13" viewBox="0 0 26 13" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+        {/* Metal Tip */}
+        <polygon points="1,6.5 5,4 5,9" fill="#e11d2e" />
+        <rect x="5" y="4.5" width="2" height="4" fill="#222" />
+        <rect x="7" y="5" width="4" height="3" fill="#b8bcc2" />
+        {/* Barrel Handle */}
+        <rect x="11" y="2.5" width="10" height="8" rx="1.5" fill="#14101d" stroke="#e11d2e" strokeWidth="1" />
+        <line x1="14" y1="3" x2="14" y2="10" stroke="#444" strokeWidth="0.8" />
+        <line x1="17" y1="3" x2="17" y2="10" stroke="#444" strokeWidth="0.8" />
+        {/* Rubber Boot */}
+        <rect x="21" y="4" width="4" height="5" rx="1" fill="#222" />
+        <line x1="25" y1="6.5" x2="26" y2="6.5" stroke="#e11d2e" strokeWidth="1.5" />
+      </svg>
+
+      {/* 4 Oscillating Vibrating Guitar Strings */}
+      <div className="flex flex-col justify-center gap-[2px] w-12 sm:w-16 h-3.5 overflow-hidden">
+        <span className="w-full h-[1.5px] bg-gradient-to-r from-red-500 to-amber-400 shadow-[0_0_5px_#e11d2e] animate-guitar-string origin-center" style={{ animationDelay: "0s" }} />
+        <span className="w-full h-[1px] bg-zinc-300 shadow-[0_0_3px_#fff] animate-guitar-string origin-center" style={{ animationDelay: "0.08s" }} />
+        <span className="w-full h-[1.5px] bg-red-400 shadow-[0_0_4px_#e11d2e] animate-guitar-string origin-center" style={{ animationDelay: "0.16s" }} />
+        <span className="w-full h-[1px] bg-zinc-400 animate-guitar-string origin-center" style={{ animationDelay: "0.04s" }} />
+      </div>
+    </div>
+  );
+}
 
 export function Skills() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -35,15 +65,17 @@ export function Skills() {
       {/* Header Bar */}
       <div className="pb-12 sm:pb-16 flex flex-col sm:flex-row sm:items-end justify-between gap-6 relative z-10">
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3.5 py-1.5 rounded-lg border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
-            <Radio className="w-3.5 h-3.5 animate-pulse" />
+          {/* Label with Guitar Plug & Vibrating Guitar Strings */}
+          <div className="inline-flex items-center gap-2.5 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3.5 py-1.5 rounded-lg border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
+            <GuitarJackPlugString />
             <span>PENGUASAAN TEKNOLOGI &amp; TOOLS</span>
           </div>
+
           <h2 className="headline-section text-3xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-wider text-white leading-tight">
             Klasifikasi Stack &amp; Perangkat Kerja
           </h2>
           <p className="text-xs sm:text-base font-sans text-zinc-400 max-w-2xl leading-relaxed">
-            Struktur penguasaan teknologi terbagi menjadi dua ranah utama: Website Development (Frontend, Backend, Tools &amp; Deployment) serta Mobile Development (Framework, Backend &amp; Database, Tools).
+            Struktur penguasaan teknologi terbagi menjadi dua ranah utama: Website Development (Frontend, Backend &amp; Database, Tools &amp; Deployment) serta Mobile Development (Framework, Backend &amp; Database, Tools).
           </p>
         </div>
 
@@ -87,7 +119,9 @@ export function Skills() {
                   return (
                     <div
                       key={card.id}
-                      className="tech-card relative rounded-3xl bg-[#0e0b16]/95 border-2 border-zinc-800 hover:border-red-500/60 p-5 sm:p-6 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col justify-between h-full min-h-[460px] sm:min-h-[480px] transition-all duration-300 group"
+                      className={`tech-card relative rounded-3xl bg-[#0e0b16]/95 border-2 border-zinc-800 hover:border-red-500/60 p-5 sm:p-6 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col justify-between h-full transition-all duration-300 group ${
+                        isWeb ? "min-h-[540px] sm:min-h-[580px]" : "min-h-[460px] sm:min-h-[490px]"
+                      }`}
                     >
                       {/* Giant Faint Side Watermark in Background */}
                       <div
@@ -98,7 +132,7 @@ export function Skills() {
                       </div>
 
                       {/* Card Header */}
-                      <div className="relative z-10 border-b border-zinc-800/90 pb-4 mb-4">
+                      <div className="relative z-10 border-b border-zinc-800/90 pb-3 mb-2">
                         <div className="flex items-center justify-between gap-2 mb-1.5">
                           <span className="text-[11px] font-mono font-bold text-red-500 tracking-wider uppercase bg-red-950/40 px-2.5 py-0.5 rounded border border-red-900/40">
                             {card.badge}
@@ -116,10 +150,31 @@ export function Skills() {
                         </p>
                       </div>
 
-                      {/* 4 Interactive Track Items */}
-                      <div className="relative z-10 flex flex-col divide-y divide-zinc-800/60 flex-1 justify-around">
+                      {/* Running Logo Ticker along Guitar String Wire */}
+                      <div className="relative z-10 my-2 py-1.5 px-2 bg-black/50 rounded-xl border border-zinc-800/80 overflow-hidden group/ticker">
+                        {/* Guitar String Line */}
+                        <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[1px] bg-gradient-to-r from-red-500/20 via-red-500/50 to-red-500/20 pointer-events-none" />
+                        
+                        {/* Animated Smooth Running Marquee */}
+                        <div className="animate-tech-marquee gap-3 items-center">
+                          {[...card.items, ...card.items].map((item, mIdx) => (
+                            <div
+                              key={`${item.name}-${mIdx}`}
+                              className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-zinc-900/90 border border-zinc-800/90 shadow-xs flex-shrink-0"
+                            >
+                              <TechLogo name={item.name} size={13} />
+                              <span className="text-[9px] font-mono font-bold text-zinc-300 whitespace-nowrap">
+                                {item.name}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Interactive Track Items */}
+                      <div className="relative z-10 flex flex-col divide-y divide-zinc-800/50 flex-1 justify-around gap-0.5 sm:gap-1 mt-1">
                         {card.items.map((item: TechCardItem, itemIdx: number) => {
-                          const globalIdx = domainIdx * 12 + cardIdx * 4 + itemIdx;
+                          const globalIdx = domainIdx * 20 + cardIdx * 6 + itemIdx;
                           const brand = getTechBrandColor(item.name);
 
                           return (
@@ -135,7 +190,7 @@ export function Skills() {
                                   handlePlaySongChord(globalIdx);
                                 }
                               }}
-                              className="group/item py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-between gap-2.5 cursor-pointer hover:bg-zinc-900/80 focus:outline-none focus:ring-1 focus:ring-red-500"
+                              className="group/item py-2 px-2 rounded-xl transition-all duration-200 flex items-center justify-between gap-2.5 cursor-pointer hover:bg-zinc-900/80 focus:outline-none focus:ring-1 focus:ring-red-500"
                               data-cursor-text="PLAY"
                             >
                               {/* Left: Track Number + Official Online Logo Badge */}
@@ -145,9 +200,9 @@ export function Skills() {
                                 </span>
 
                                 <div
-                                  className={`w-8 h-8 rounded-xl ${brand.bg} border ${brand.border} flex items-center justify-center p-1.5 flex-shrink-0 transition-transform duration-300 group-hover/item:scale-110 shadow-sm`}
+                                  className={`w-7 h-7 rounded-lg ${brand.bg} border ${brand.border} flex items-center justify-center p-1 flex-shrink-0 transition-transform duration-300 group-hover/item:scale-110 shadow-sm`}
                                 >
-                                  <TechLogo name={item.name} size={18} />
+                                  <TechLogo name={item.name} size={16} />
                                 </div>
                               </div>
 
@@ -191,7 +246,7 @@ export function Skills() {
                       </div>
 
                       {/* Card Footer */}
-                      <div className="relative z-10 pt-3.5 mt-3 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px] text-zinc-500">
+                      <div className="relative z-10 pt-3 mt-2.5 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px] text-zinc-500">
                         <div className="flex items-center gap-1.5">
                           <Sparkles className="w-3 h-3 text-red-500" />
                           <span>PRODUCTION-READY</span>
