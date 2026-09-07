@@ -33,21 +33,20 @@ export function Skills() {
   // Connect GSAP horizontal scroll pinning timeline
   useSkillsTimeline({ sectionRef, trackRef });
 
-  // Divide skills into Frontend and Backend/Mobile columns
+  // Divide skills into Frontend & Mobile UI and Backend, Database & Systems
   const columns = useMemo(() => {
-    const half = Math.ceil(SKILLS_SETLIST.length / 2);
     return [
       {
-        side: "FRONTEND & UI",
-        subtitle: "Pengembangan Antarmuka Web & Interaktivitas",
+        side: "FRONTEND & MOBILE UI",
+        subtitle: "Pengembangan Antarmuka Web & Mobile",
         watermark: "FRONTEND",
-        tracks: SKILLS_SETLIST.slice(0, half),
+        tracks: SKILLS_SETLIST.filter((s) => s.group === "frontend"),
       },
       {
-        side: "BACKEND & MOBILE",
-        subtitle: "Arsitektur Server, Basis Data & Aplikasi",
+        side: "BACKEND, DATABASE & SYSTEMS",
+        subtitle: "Arsitektur Server, Microservices & Basis Data",
         watermark: "BACKEND",
-        tracks: SKILLS_SETLIST.slice(half),
+        tracks: SKILLS_SETLIST.filter((s) => s.group === "backend"),
       },
     ];
   }, []);
@@ -160,7 +159,7 @@ export function Skills() {
                           handlePlaySongChord(globalIndex);
                         }
                       }}
-                      className={`group py-2.5 px-2.5 sm:px-3 rounded-xl transition-all duration-200 flex items-center justify-between gap-3 cursor-pointer focus:outline-none focus:bg-zinc-900 focus:ring-1 focus:ring-red-500 ${
+                      className={`group py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl transition-all duration-200 flex items-center justify-between gap-2 sm:gap-3 cursor-pointer focus:outline-none focus:bg-zinc-900 focus:ring-1 focus:ring-red-500 ${
                         isHeadliner
                           ? "bg-red-950/15 hover:bg-zinc-900/80 border-l-2 border-red-500"
                           : "hover:bg-zinc-900/80"
@@ -168,30 +167,30 @@ export function Skills() {
                       data-cursor-text="PLAY"
                     >
                       {/* Left: Track Number + Official Online Tech Logo Badge */}
-                      <div className="flex items-center gap-2.5 flex-shrink-0">
-                        <span className="font-mono text-xs font-bold text-zinc-500 group-hover:text-red-400 transition-colors w-5">
+                      <div className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
+                        <span className="font-mono text-[11px] sm:text-xs font-bold text-zinc-500 group-hover:text-red-400 transition-colors w-4 sm:w-5">
                           {skill.track}
                         </span>
 
                         {/* Official Online Tech Logo Container */}
                         <div
-                          className={`w-9 h-9 rounded-xl ${brand.bg} border ${brand.border} flex items-center justify-center p-1.5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-sm`}
+                          className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl ${brand.bg} border ${brand.border} flex items-center justify-center p-1 sm:p-1.5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-sm`}
                         >
-                          <TechLogo name={skill.name} size={20} />
+                          <TechLogo name={skill.name} size={18} />
                         </div>
                       </div>
 
                       {/* Skill Name + Category (Clean, readable text size) */}
                       <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 flex-shrink-0">
                         <div className="flex items-center gap-1.5">
-                          <span className="text-base sm:text-lg font-bold text-white group-hover:text-red-400 transition-colors tracking-wide font-sans">
+                          <span className="text-sm sm:text-lg font-bold text-white group-hover:text-red-400 transition-colors tracking-wide font-sans">
                             {skill.name}
                           </span>
                           {isHeadliner && (
-                            <Flame className="w-3.5 h-3.5 text-red-500 animate-pulse flex-shrink-0" />
+                            <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-500 animate-pulse flex-shrink-0" />
                           )}
                         </div>
-                        <span className="font-mono text-[9px] sm:text-[10px] text-zinc-400 uppercase tracking-wider">
+                        <span className="font-mono text-[8px] sm:text-[10px] text-zinc-400 uppercase tracking-wider">
                           [{skill.category}]
                         </span>
                       </div>
@@ -203,13 +202,13 @@ export function Skills() {
                       />
 
                       {/* Level Indicator: 5 Dots + Percentage Proficiency */}
-                      <div className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 ml-auto md:ml-0">
+                      <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0 ml-auto md:ml-0">
                         {/* 5 Dots Meter */}
-                        <div className="flex items-center gap-1" aria-hidden="true">
+                        <div className="hidden xs:flex items-center gap-1" aria-hidden="true">
                           {[1, 2, 3, 4, 5].map((dot) => (
                             <span
                               key={dot}
-                              className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                              className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-200 ${
                                 dot <= skill.level
                                   ? "bg-red-500 shadow-[0_0_6px_#ff2a3b]"
                                   : "bg-zinc-700/60"
@@ -219,8 +218,8 @@ export function Skills() {
                         </div>
 
                         {/* Proficiency Percentage + Track Duration */}
-                        <div className="flex items-center gap-1.5 font-mono text-xs">
-                          <span className="font-bold text-red-400 bg-red-950/40 px-2 py-0.5 rounded border border-red-900/40 min-w-[38px] text-center">
+                        <div className="flex items-center gap-1 sm:gap-1.5 font-mono text-[11px] sm:text-xs">
+                          <span className="font-bold text-red-400 bg-red-950/40 px-1.5 sm:px-2 py-0.5 rounded border border-red-900/40 min-w-[34px] sm:min-w-[38px] text-center">
                             {skill.proficiency}%
                           </span>
                           <span className="text-[10px] text-zinc-500 hidden sm:inline-block">

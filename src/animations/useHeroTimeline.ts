@@ -7,7 +7,7 @@ import { registerGSAP } from "./gsapConfig";
 
 interface HeroTimelineRefs {
   containerRef: RefObject<HTMLElement | null>;
-  headlineCharsRef: RefObject<(HTMLSpanElement | null)[]>;
+  headlineRef: RefObject<HTMLElement | null>;
   subheadingRef: RefObject<HTMLElement | null>;
   ctaRef: RefObject<HTMLElement | null>;
   pickIndicatorRef: RefObject<HTMLElement | null>;
@@ -15,7 +15,7 @@ interface HeroTimelineRefs {
 
 export function useHeroTimeline({
   containerRef,
-  headlineCharsRef,
+  headlineRef,
   subheadingRef,
   ctaRef,
   pickIndicatorRef,
@@ -27,59 +27,52 @@ export function useHeroTimeline({
     if (typeof window === "undefined") return;
 
     const container = containerRef.current;
-    if (!container) return;
-
-    const chars = (headlineCharsRef.current || []).filter(Boolean);
+    const headline = headlineRef.current;
+    if (!container || !headline) return;
 
     if (prefersReducedMotion) {
-      gsap.to([chars, subheadingRef.current, ctaRef.current, pickIndicatorRef.current], {
+      gsap.set([headline, subheadingRef.current, ctaRef.current, pickIndicatorRef.current], {
         opacity: 1,
         y: 0,
-        filter: "blur(0px)",
-        duration: 0.4,
+        filter: "none",
       });
       return;
     }
 
     const ctx = gsap.context(() => {
-      // 1. Entrance timeline - use clearProps so text is never stuck at opacity 0
-      if (chars.length > 0) {
-        gsap.from(chars, {
-          y: 40,
-          opacity: 0,
-          stagger: 0.02,
-          duration: 0.9,
-          ease: "power3.out",
-          clearProps: "all",
-        });
-      }
+      // 1. Entrance timeline on initial load
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+      });
+
+      tl.fromTo(
+        headline,
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, clearProps: "transform" }
+      );
 
       if (subheadingRef.current) {
-        gsap.from(subheadingRef.current, {
-          x: 40,
-          opacity: 0,
-          duration: 0.8,
-          delay: 0.3,
-          ease: "power3.out",
-          clearProps: "all",
-        });
+        tl.fromTo(
+          subheadingRef.current,
+          { x: 30, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.7, clearProps: "transform" },
+          "-=0.5"
+        );
       }
 
       if (ctaRef.current) {
-        gsap.from(ctaRef.current, {
-          y: 25,
-          opacity: 0,
-          duration: 0.6,
-          delay: 0.4,
-          ease: "back.out(1.5)",
-          clearProps: "all",
-        });
+        tl.fromTo(
+          ctaRef.current,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.5)", clearProps: "transform" },
+          "-=0.4"
+        );
       }
 
       // Infinite Pick Bounce Indicator
       if (pickIndicatorRef.current) {
         gsap.to(pickIndicatorRef.current, {
-          y: 10,
+          y: 8,
           repeat: -1,
           yoyo: true,
           duration: 0.9,
@@ -87,22 +80,25 @@ export function useHeroTimeline({
         });
       }
 
-      // 2. Scroll-driven Exit Animation (gentle slide left on scroll)
-      if (chars.length > 0) {
-        gsap.to(chars, {
-          xPercent: -20,
-          opacity: 0.35,
+      // 2. Scroll Parallax - Always restores opacity 1 and y 0 when scrolled back to the top!
+      gsap.fromTo(
+        headline,
+        { opacity: 1, y: 0 },
+        {
+          opacity: 0.45,
+          y: -40,
           ease: "none",
           scrollTrigger: {
             trigger: container,
             start: "top top",
             end: "bottom top",
-            scrub: 1,
+            scrub: true,
+            invalidateOnRefresh: true,
           },
-        });
-      }
+        }
+      );
     }, container);
 
     return () => ctx.revert();
-  }, [containerRef, headlineCharsRef, subheadingRef, ctaRef, pickIndicatorRef, prefersReducedMotion]);
+  }, [containerRef, headlineRef, subheadingRef, ctaRef, pickIndicatorRef, prefersReducedMotion]);
 }

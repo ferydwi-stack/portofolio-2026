@@ -6,6 +6,7 @@ export interface Project {
   image: string;
   tags: string[];
   githubUrl: string;
+  demoUrl?: string;
   rpm: string;
   side: string;
 }
@@ -14,6 +15,7 @@ export interface Skill {
   track: string;
   name: string;
   category: string;
+  group: "frontend" | "backend";
   level: number; // 1-5 scale or percentage
   proficiency: number; // 0-100%
   bpm: number;
@@ -61,39 +63,42 @@ export const PERSONAL_INFO = {
 
 export const TECH_RIGS: TechRig[] = [
   {
-    category: "Languages & Frameworks",
-    role: "Bahasa Pemrograman & Framework Utama",
-    items: ["Go (Golang)", "Python", "TypeScript & JavaScript", "Dart (Flutter)", "PHP & Laravel", "React & Next.js"],
+    category: "Frontend Development",
+    role: "Antarmuka Pengguna & Interaktivitas Web/Mobile",
+    items: ["React & Next.js", "TypeScript", "Tailwind CSS", "Flutter & Dart", "HTML5 & CSS3", "Responsive UI"],
   },
   {
-    category: "Frontend Engineering",
-    role: "Antarmuka Pengguna & Interaktivitas Web",
-    items: ["Tailwind CSS", "HTML5 & CSS3", "Responsive UI", "UI/UX Prototyping"],
+    category: "Backend Development",
+    role: "Arsitektur Server, Microservices & RESTful API",
+    items: ["Go (Golang)", "Node.js & Express", "PHP & Laravel", "Python (API)", "RESTful APIs", "Microservices"],
   },
   {
-    category: "Backend & Databases",
-    role: "Arsitektur Microservices, RESTful API & Basis Data",
-    items: ["Go Microservices", "Node.js & Express", "MySQL & PostgreSQL", "Firebase", "RESTful APIs"],
+    category: "Database & Cloud",
+    role: "Penyimpanan Terstruktur & Layanan Cloud BaaS",
+    items: ["MySQL", "PostgreSQL", "Firebase Cloud", "Database Design", "SQL Query", "Data Modeling"],
   },
   {
     category: "Tools & Management",
-    role: "Version Control, Developer Tools & Manajemen Proyek",
-    items: ["Git & GitHub", "VS Code", "Postman", "Project Management", "Figma"],
+    role: "Version Control, Developer Tools & Manajemen",
+    items: ["Git & GitHub", "VS Code", "Postman", "Project Management", "Figma", "Terminal & Linux"],
   },
 ];
 
 export const SKILLS_SETLIST: Skill[] = [
-  { track: "01", name: "CSS / Tailwind", category: "CSS Framework", level: 5, proficiency: 95, bpm: 95, featured: true },
-  { track: "02", name: "TypeScript", category: "Typed Programming", level: 5, proficiency: 92, bpm: 92, featured: true },
-  { track: "03", name: "React.js", category: "Frontend Library", level: 5, proficiency: 90, bpm: 90, featured: true },
-  { track: "04", name: "Go (Golang)", category: "Systems & Backend", level: 4, proficiency: 88, bpm: 88, featured: true },
-  { track: "05", name: "Flutter & Dart", category: "Cross-Platform Mobile", level: 4, proficiency: 86, bpm: 86, featured: true },
-  { track: "06", name: "Node.js", category: "JavaScript Runtime", level: 4, proficiency: 86, bpm: 86 },
-  { track: "07", name: "PHP & Laravel", category: "Backend MVC Framework", level: 4, proficiency: 85, bpm: 85 },
-  { track: "08", name: "MySQL", category: "Relational Database", level: 4, proficiency: 84, bpm: 84 },
-  { track: "09", name: "Python", category: "Scripting & AI/NLP", level: 4, proficiency: 82, bpm: 82 },
-  { track: "10", name: "Firebase", category: "Backend-as-a-Service", level: 4, proficiency: 80, bpm: 80 },
-  { track: "11", name: "PostgreSQL", category: "Relational Database", level: 3, proficiency: 78, bpm: 78 },
+  // --- FRONTEND & MOBILE UI GROUP ---
+  { track: "01", name: "CSS / Tailwind", category: "CSS Framework", group: "frontend", level: 5, proficiency: 95, bpm: 95, featured: true },
+  { track: "02", name: "TypeScript", category: "Typed Programming", group: "frontend", level: 5, proficiency: 92, bpm: 92, featured: true },
+  { track: "03", name: "React.js & Next.js", category: "Frontend & Fullstack", group: "frontend", level: 5, proficiency: 90, bpm: 90, featured: true },
+  { track: "04", name: "Flutter & Dart", category: "Cross-Platform Mobile UI", group: "frontend", level: 4, proficiency: 86, bpm: 86, featured: true },
+  { track: "05", name: "HTML5 & Modern JS", category: "Web Core Standards", group: "frontend", level: 5, proficiency: 94, bpm: 94, featured: true },
+
+  // --- BACKEND, DATABASE & SYSTEMS GROUP ---
+  { track: "06", name: "Go (Golang)", category: "High-Perf Microservices", group: "backend", level: 4, proficiency: 88, bpm: 88, featured: true },
+  { track: "07", name: "Node.js & Express", category: "JavaScript Runtime & API", group: "backend", level: 4, proficiency: 86, bpm: 86 },
+  { track: "08", name: "PHP & Laravel", category: "Backend MVC Framework", group: "backend", level: 4, proficiency: 85, bpm: 85 },
+  { track: "09", name: "MySQL & PostgreSQL", category: "Relational Databases", group: "backend", level: 4, proficiency: 84, bpm: 84 },
+  { track: "10", name: "Python", category: "Scripting & AI / NLP", group: "backend", level: 4, proficiency: 82, bpm: 82 },
+  { track: "11", name: "Firebase", category: "Cloud & Realtime BaaS", group: "backend", level: 4, proficiency: 80, bpm: 80 },
 ];
 
 export const PROJECTS: Project[] = [
@@ -139,15 +144,41 @@ export const PROJECTS: Project[] = [
     year: "2025",
     description:
       "Platform pembelajaran daring interaktif yang dikembangkan saat kegiatan PKL untuk distribusi modul materi, kuis pembelajaran, dan manajemen tugas akademik yang fleksibel kapan saja dan di mana saja.",
-    image: "/elearning.jpg",
+    image: "/elearning.png",
     tags: ["TypeScript", "PHP", "MySQL", "LMS", "REST API"],
     githubUrl: "https://github.com/ferydwi-stack/Sistem-E-learning",
     rpm: "45 RPM",
     side: "SIDE D // E-LEARNING RIG",
   },
   {
+    title: "PHOTOBOOTH WEB APP",
+    catalogNo: "CAT-05 // INTERACTIVE WEBCAM",
+    year: "2026",
+    description:
+      "Aplikasi photobooth interaktif berbasis Next.js dan TypeScript dengan fitur pengambilan foto webcam real-time, filter kamera digital, strip kolase foto, dan ekspor cetak foto instan.",
+    image: "",
+    tags: ["Next.js", "TypeScript", "React", "Tailwind CSS", "Webcam API"],
+    githubUrl: "https://github.com/ferydwi-stack/photoboth",
+    demoUrl: "https://photoboth-zeta.vercel.app",
+    rpm: "33 RPM",
+    side: "SIDE E // PHOTOBOOTH APP",
+  },
+  {
+    title: "UNDANGYUK — DIGITAL INVITATION",
+    catalogNo: "CAT-06 // EVENT PLATFORM",
+    year: "2026",
+    description:
+      "Platform penyedia template dan layanan undangan digital interaktif multi-acara (pernikahan adat Nusantara & modern, khitanan, wisuda) dengan integrasi RSVP Firebase dan audio latar.",
+    image: "",
+    tags: ["HTML5", "CSS3", "JavaScript", "Firebase RSVP", "Web Audio"],
+    githubUrl: "https://github.com/ferydwi-stack/UndangyYuk",
+    demoUrl: "https://undangy-yuk.vercel.app",
+    rpm: "45 RPM",
+    side: "SIDE F // INVITATION RIG",
+  },
+  {
     title: "SAHABAT BK",
-    catalogNo: "CAT-05 // DIGITAL COUNSELING",
+    catalogNo: "CAT-07 // DIGITAL COUNSELING",
     year: "2024",
     description:
       "Platform bimbingan konseling digital untuk mendampingi siswa sekolah dalam mengatasi kendala akademik maupun psikososial melalui konseling privat dan panduan bimbingan terstruktur.",
@@ -155,19 +186,19 @@ export const PROJECTS: Project[] = [
     tags: ["Flutter", "Dart", "Firebase", "Mobile UI", "Cross-Platform"],
     githubUrl: "https://github.com/ferydwi-stack/SahabatBK-by-vitamin",
     rpm: "33 RPM",
-    side: "SIDE E // COUNSELING APP",
+    side: "SIDE G // COUNSELING APP",
   },
   {
     title: "BACKEND SMART VILLAGE",
-    catalogNo: "CAT-06 // SERVICE ARCHITECTURE",
+    catalogNo: "CAT-08 // SERVICE ARCHITECTURE",
     year: "2025",
     description:
       "Arsitektur backend microservice berkinerja tinggi menggunakan bahasa pemrograman Go (Golang) untuk mengelola data kependudukan, permohonan surat administrasi warga, dan integrasi layanan smart village.",
-    image: "/smart_village.jpg",
+    image: "",
     tags: ["Go (Golang)", "RESTful API", "Microservices", "PostgreSQL", "Backend"],
     githubUrl: "https://github.com/ferydwi-stack/backend_smart_village",
     rpm: "45 RPM",
-    side: "SIDE F // MICROSERVICE API",
+    side: "SIDE H // MICROSERVICE API",
   },
 ];
 

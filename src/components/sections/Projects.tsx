@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { Github, ExternalLink, Disc3, Radio, Play, Pause } from "lucide-react";
+import { Github, ExternalLink, Disc3, Radio, Play, Pause, Terminal, Code2 } from "lucide-react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { PROJECTS, Project } from "@/lib/data/portfolioData";
 import { VinylRecord } from "@/components/three/VinylRecord";
@@ -14,6 +14,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const [isPlayingRiff, setIsPlayingRiff] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   // Mouse tilt tracking with framer-motion
   const mouseX = useMotionValue(0);
@@ -45,6 +46,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     }, 1200);
   };
 
+  const hasValidImage = Boolean(project.image && !imgError);
+
   return (
     <motion.div
       ref={cardRef}
@@ -66,62 +69,85 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       className="flex-none w-[88vw] sm:w-[84vw] max-w-[1100px] h-[520px] sm:h-[580px] rounded-3xl bg-[#0f0c18]/95 border-2 border-zinc-800 hover:border-red-500/80 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 shadow-[0_25px_60px_rgba(0,0,0,0.95)] backdrop-blur-2xl relative transition-colors duration-300 group overflow-hidden"
     >
       {/* 3D Vinyl Record Sliding Out on Hover */}
-      <div className="absolute -top-6 right-8 sm:right-12 z-30 pointer-events-none filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)] transform group-hover:translate-x-6 group-hover:-translate-y-2 transition-transform duration-500">
+      <div className="absolute -top-6 right-2 sm:right-12 z-30 pointer-events-none filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)] transform group-hover:translate-x-6 group-hover:-translate-y-2 transition-transform duration-500 scale-75 sm:scale-100 hidden xs:block">
         <VinylRecord albumIndex={index} />
       </div>
 
-      {/* Full-Bleed Background Image with Stage Lighting Gradient */}
+      {/* Background: Either Authentic Image OR Clean Blueprint Code Grid (NO broken image icon) */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          sizes="(max-width: 1200px) 100vw, 1200px"
-          className="object-cover object-center group-hover:scale-105 transition-transform duration-700 filter brightness-60 contrast-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a080f] via-[#0a080f]/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a080f] via-[#0a080f]/50 to-transparent" />
+        {hasValidImage ? (
+          <>
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes="(max-width: 1200px) 100vw, 1200px"
+              onError={() => setImgError(true)}
+              className="object-cover object-center group-hover:scale-105 transition-transform duration-700 filter brightness-60 contrast-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a080f] via-[#0a080f]/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0a080f] via-[#0a080f]/50 to-transparent" />
+          </>
+        ) : (
+          <div className="absolute inset-0 bg-[#0c0a15] flex items-center justify-center overflow-hidden">
+            {/* Architectural Matrix Grid */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#2a183520_1px,transparent_1px),linear-gradient(to_bottom,#2a183520_1px,transparent_1px)] bg-[size:32px_32px]" />
+            <div className="absolute inset-0 bg-radial from-red-950/20 via-[#0a080f]/90 to-[#0a080f]" />
+            {/* Clean Blueprint Watermark */}
+            <div className="relative z-10 flex flex-col items-center justify-center text-center p-6 sm:p-8 opacity-40 group-hover:opacity-60 transition-opacity">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-zinc-900/80 border border-zinc-700 flex items-center justify-center mb-3 text-red-400">
+                <Code2 className="w-7 h-7 sm:w-8 sm:h-8" />
+              </div>
+              <span className="font-mono text-[11px] sm:text-xs tracking-widest text-zinc-400 uppercase font-bold">
+                {"//"} BACKEND MICROSERVICE &amp; API ARCHITECTURE
+              </span>
+              <span className="font-mono text-[9px] sm:text-[10px] text-zinc-500 mt-1">
+                Layanan headless / backend service — kode sumber &amp; skema tersedia di GitHub
+              </span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Top Header Information Bar */}
-      <div className="relative z-10 p-6 sm:p-8 flex items-center justify-between font-mono text-xs border-b border-zinc-800/80">
-        <div className="flex items-center gap-3">
-          <span className="px-2.5 py-1 rounded bg-red-600 text-white font-black tracking-wider">
+      <div className="relative z-10 p-4 sm:p-6 lg:p-8 flex items-center justify-between font-mono text-xs border-b border-zinc-800/80">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded bg-red-600 text-white font-black tracking-wider text-[10px] sm:text-xs">
             PROYEK 0{index + 1}
           </span>
-          <span className="text-zinc-300 font-bold hidden sm:inline">
+          <span className="text-zinc-300 font-bold text-[10px] sm:text-xs hidden xs:inline">
             {project.catalogNo}
           </span>
         </div>
-        <div className="flex items-center gap-4 mr-28 sm:mr-36">
-          <span className="text-red-400 font-bold bg-red-950/80 px-2.5 py-1 rounded border border-red-900/80">
+        <div className="flex items-center gap-2 sm:gap-4 mr-2 sm:mr-36">
+          <span className="text-red-400 font-bold bg-red-950/80 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded border border-red-900/80 text-[10px] sm:text-xs">
             {project.rpm}
           </span>
-          <span className="text-zinc-500 hidden md:inline">{project.year}</span>
+          <span className="text-zinc-500 hidden md:inline text-xs">{project.year}</span>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-10 p-6 sm:p-10 flex flex-col justify-end h-[calc(100%-75px)] space-y-4 max-w-2xl">
+      <div className="relative z-10 p-4 sm:p-8 lg:p-10 flex flex-col justify-end h-[calc(100%-65px)] sm:h-[calc(100%-75px)] space-y-2.5 sm:space-y-4 max-w-2xl">
         <div className="space-y-1">
-          <span className="text-[10px] font-mono text-red-400 font-bold uppercase tracking-widest">
+          <span className="text-[9px] sm:text-[10px] font-mono text-red-400 font-bold uppercase tracking-widest">
             {project.side}
           </span>
-          <h3 className="headline-section text-2xl sm:text-4xl lg:text-5xl font-normal uppercase tracking-wide text-white drop-shadow-md">
+          <h3 className="headline-section text-xl sm:text-3xl lg:text-5xl font-normal uppercase tracking-wide text-white drop-shadow-md leading-tight">
             {project.title}
           </h3>
         </div>
 
-        <p className="text-xs sm:text-sm text-zinc-300 font-sans line-clamp-3 leading-relaxed">
+        <p className="text-[11px] sm:text-sm text-zinc-300 font-sans line-clamp-2 sm:line-clamp-3 leading-relaxed">
           {project.description}
         </p>
 
         {/* Tech Stack Pills */}
-        <div className="flex flex-wrap gap-2 pt-2">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-1 sm:pt-2">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-[10px] font-mono text-zinc-300 bg-[#161220]/90 px-3 py-1 rounded-md border border-zinc-700/80 shadow-sm"
+              className="text-[9px] sm:text-[10px] font-mono text-zinc-300 bg-[#161220]/90 px-2 sm:px-3 py-0.5 sm:py-1 rounded-md border border-zinc-700/80 shadow-sm"
             >
               {tag}
             </span>
@@ -129,27 +155,27 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
 
         {/* Action Links & Preview Soundboard */}
-        <div className="pt-3 border-t border-zinc-800/80 flex flex-wrap items-center gap-4">
+        <div className="pt-2 sm:pt-3 border-t border-zinc-800/80 flex flex-wrap items-center gap-2.5 sm:gap-4">
           <a
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black rounded-xl transition-all shadow-[0_0_20px_rgba(255,42,59,0.5)] cursor-pointer active:scale-95"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 bg-red-600 hover:bg-red-500 text-white font-mono text-[11px] sm:text-xs uppercase tracking-widest font-black rounded-xl transition-all shadow-[0_0_20px_rgba(255,42,59,0.5)] cursor-pointer active:scale-95"
             data-cursor-text="KODE"
           >
-            <Github className="w-4 h-4" />
+            <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>KODE SUMBER</span>
           </a>
 
           <a
-            href={project.githubUrl}
+            href={project.demoUrl || project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-mono text-zinc-300 hover:text-red-400 flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="text-[11px] sm:text-xs font-mono text-zinc-300 hover:text-red-400 flex items-center gap-1 sm:gap-1.5 transition-colors cursor-pointer"
             data-cursor-text="DEMO"
           >
             <span>LIHAT DEMO</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           </a>
 
           {/* Interactive Riff Preview Button */}
