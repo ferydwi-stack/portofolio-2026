@@ -1,40 +1,112 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
+  --font-bebas: var(--font-bebas), "Bebas Neue", impact, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --color-primary: #3b82f6; /* Blue accent */
-  --color-primary-dark: #2563eb;
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-border: var(--border);
-  --radius-lg: 0.5rem;
-  --radius-md: calc(0.5rem - 2px);
-  --radius-sm: calc(0.5rem - 4px);
+  --color-crimson: #ff2a3b;
+  --color-crimson-dark: #b91c1c;
+  --color-amber-stage: #f59e0b;
+  --color-stage-black: #08080c;
+  --color-stage-card: #121017;
+  --color-stage-border: #262130;
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --border: #e2e8f0;
+  --background: #09090d;
+  --foreground: #f4f4f5;
+  --card: #121017;
+  --card-foreground: #f4f4f5;
+  --border: #27272a;
 }
 
 .dark {
-  --background: #09090b;
-  --foreground: #f8fafc;
-  --card: #121214;
-  --card-foreground: #f8fafc;
-  --border: #27272a;
+  --background: #08080c;
+  --foreground: #fafafa;
+  --card: #121017;
+  --card-foreground: #fafafa;
+  --border: #262130;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
+  position: relative;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Subtle Stage Film Grain Overlay */
+.stage-noise {
+  background-image: radial-gradient(rgba(255, 42, 59, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Concert Ticket Angled Stub Border */
+.ticket-border {
+  position: relative;
+  background: linear-gradient(135deg, #181520 0%, #0d0b12 100%);
+  border: 1px dashed rgba(255, 42, 59, 0.4);
+}
+
+/* Equalizer Bars Animation */
+@keyframes eq-dance-1 {
+  0%, 100% { height: 18%; }
+  50% { height: 95%; }
+}
+@keyframes eq-dance-2 {
+  0%, 100% { height: 85%; }
+  50% { height: 25%; }
+}
+@keyframes eq-dance-3 {
+  0%, 100% { height: 40%; }
+  50% { height: 100%; }
+}
+@keyframes eq-dance-4 {
+  0%, 100% { height: 90%; }
+  50% { height: 35%; }
+}
+@keyframes eq-dance-5 {
+  0%, 100% { height: 30%; }
+  50% { height: 80%; }
+}
+
+.eq-bar-1 { animation: eq-dance-1 0.75s ease-in-out infinite; }
+.eq-bar-2 { animation: eq-dance-2 0.65s ease-in-out infinite 0.1s; }
+.eq-bar-3 { animation: eq-dance-3 0.85s ease-in-out infinite 0.2s; }
+.eq-bar-4 { animation: eq-dance-4 0.6s ease-in-out infinite 0.15s; }
+.eq-bar-5 { animation: eq-dance-5 0.9s ease-in-out infinite 0.25s; }
+
+/* Neon Crimson Glow */
+.glow-crimson {
+  box-shadow: 0 0 25px rgba(255, 42, 59, 0.35);
+}
+
+.glow-amber {
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+}
+
+.text-glow-crimson {
+  text-shadow: 0 0 16px rgba(255, 42, 59, 0.65);
+}
+
+/* Custom Guitar Pick Cursor (Desktop only) */
+@media (pointer: fine) {
+  a, button, [role="button"], .cursor-pointer {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='28' viewBox='0 0 24 28' fill='none'%3E%3Cpath d='M12 26C8 20 2 12 2 6C2 2.5 6 1 12 1C18 1 22 2.5 22 6C22 12 16 20 12 26Z' fill='%23ff2a3b' stroke='%23ffffff' stroke-width='1.5'/%3E%3Ccircle cx='12' cy='8' r='2' fill='%23ffffff'/%3E%3C/svg%3E") 12 2, pointer !important;
+  }
+}
+
+/* Vinyl record spin */
+@keyframes spin-vinyl {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-vinyl 12s linear infinite;
 }
