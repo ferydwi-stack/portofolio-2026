@@ -62,6 +62,9 @@ export default function RootLayout({
         {/* Global Custom Cursor with Lagging Ring & State Variants */}
         <CustomCursor />
 
+        {/* Animated stage gradient background (ambient concert glow) */}
+        <div className="fixed inset-0 pointer-events-none stage-ambient-gradient -z-20" aria-hidden="true" />
+
         {/* Global Fixed 3D Stage Scene with 3D Emo Guitarist Centerpiece */}
         <GlobalStageLayer />
 

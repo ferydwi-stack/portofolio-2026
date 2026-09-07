@@ -3,6 +3,8 @@
 import { ArrowUp, Github, Linkedin, Mail, MessageSquare } from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/data/portfolioData";
 import { useLenis } from "@/hooks/useLenis";
+import { EqualizerBars } from "@/components/ui/EqualizerBars";
+import { BandLogo } from "@/components/ui/BandLogo";
 
 export function Footer() {
   const { scrollTo } = useLenis();
@@ -39,7 +41,17 @@ export function Footer() {
   ];
 
   return (
-    <footer className="relative w-full py-10 px-6 sm:px-12 lg:px-24 overflow-hidden select-none bg-[#070609]">
+    <footer className="relative w-full py-12 px-6 sm:px-12 lg:px-24 overflow-hidden select-none bg-[#070609]">
+      {/* Full-width Equalizer Bars Ambience (§4.10c) */}
+      <div className="absolute inset-x-0 bottom-0 pointer-events-none opacity-20 flex justify-center overflow-hidden" aria-hidden="true">
+        <EqualizerBars count={40} height={28} />
+      </div>
+
+      {/* Faint BandLogo watermark in bottom corner (§5.8) */}
+      <div className="absolute right-6 -bottom-4 pointer-events-none opacity-[0.06] select-none" aria-hidden="true">
+        <BandLogo size={120} />
+      </div>
+
       {/* Vibrating Full-Width Guitar String Top Line */}
       <div className="relative w-full h-4 mb-8 flex items-center justify-center pointer-events-none" aria-hidden="true">
         <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/60 to-transparent animate-pulse" />

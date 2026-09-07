@@ -1,9 +1,18 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { usePerformanceTier } from "@/store/usePerformanceTier";
+
+const CONCERT_PALETTE = [
+  "#e11d2e", // stage-red
+  "#ff6b35", // amp-glow
+  "#ffb020", // stage-amber
+  "#ff2e88", // stage-magenta
+  "#8b3ff2", // stage-violet
+  "#17e0c9", // stage-cyan
+];
 
 function createParticleData(count: number) {
   const data = [];
@@ -21,6 +30,7 @@ function createParticleData(count: number) {
       speedX: (rnd2 - 0.5) * 0.15,
       phase: rnd3 * Math.PI * 2,
       scale: 0.02 + rnd1 * 0.035,
+      colorIndex: Math.floor(rnd2 * CONCERT_PALETTE.length) % CONCERT_PALETTE.length,
     });
   }
   return data;
@@ -34,6 +44,21 @@ export function ParticleField() {
 
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const particles = useMemo(() => createParticleData(count), [count]);
+
+  // Set per-instance colors from multi-color stage palette
+  useEffect(() => {
+    if (!meshRef.current) return;
+    const tempColor = new THREE.Color();
+
+    particles.forEach((p, i) => {
+      tempColor.set(CONCERT_PALETTE[p.colorIndex]);
+      meshRef.current?.setColorAt(i, tempColor);
+    });
+
+    if (meshRef.current.instanceColor) {
+      meshRef.current.instanceColor.needsUpdate = true;
+    }
+  }, [particles]);
 
   useFrame((state) => {
     if (!meshRef.current) return;
@@ -63,9 +88,8 @@ export function ParticleField() {
     >
       <sphereGeometry args={[1, 6, 6]} />
       <meshBasicMaterial
-        color="#ff3344"
         transparent
-        opacity={0.65}
+        opacity={0.7}
         blending={THREE.AdditiveBlending}
       />
     </instancedMesh>

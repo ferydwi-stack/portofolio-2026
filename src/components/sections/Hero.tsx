@@ -66,7 +66,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none -z-10" />
 
         <h1
-          className="text-[clamp(3.5rem,11.5vw,10.5rem)] leading-[0.88] font-black uppercase text-white font-[family-name:var(--font-bebas)] tracking-wider whitespace-nowrap overflow-visible select-none drop-shadow-2xl"
+          className="headline-hero text-[clamp(3rem,11vw,9.5rem)] leading-[0.9] font-normal uppercase text-white tracking-wider whitespace-nowrap overflow-visible select-none drop-shadow-2xl"
           aria-label={headline}
         >
           {chars.map((char, index) => {

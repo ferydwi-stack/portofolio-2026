@@ -6,6 +6,7 @@ import { Home, User, Flame, Disc3, Award, Send, Menu, X } from "lucide-react";
 import { useLenis } from "@/hooks/useLenis";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
+import { BandLogo } from "@/components/ui/BandLogo";
 import { useScrollStore } from "@/store/useScrollStore";
 
 const NAV_ITEMS = [
@@ -64,9 +65,7 @@ export function NavbarDock() {
     <>
       {/* Separate Top-Left Logo / Brand Mark */}
       <header className="fixed top-5 left-6 z-50 flex items-center gap-3 select-none pointer-events-auto">
-        <div className="w-8 h-8 rounded-lg bg-red-600 border border-red-400 flex items-center justify-center font-mono font-black text-white text-xs shadow-[0_0_15px_rgba(255,42,59,0.5)]">
-          FR
-        </div>
+        <BandLogo size={36} glow />
         <div className="flex flex-col">
           <span className="text-xs font-mono font-black text-white tracking-widest uppercase">
             FERY DWI RAMADHI
@@ -82,9 +81,18 @@ export function NavbarDock() {
         aria-label="Navigasi Panggung"
         className="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center select-none"
       >
-        <div className="relative py-4 px-2.5 rounded-full bg-[#110e19]/90 border border-zinc-800 backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.8)] flex flex-col items-center gap-5">
+        <div className="relative py-4 px-2.5 rounded-full bg-[#110e19]/90 border border-zinc-800 backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.8)] flex flex-col items-center gap-4">
+          {/* Top Anchor: Band Logo (§5.1) */}
+          <button
+            onClick={() => handleNavClick("hero")}
+            aria-label="Back to Opening"
+            className="cursor-pointer transition-transform hover:scale-110 active:scale-95 mb-1"
+          >
+            <BandLogo size={32} glow />
+          </button>
+
           {/* Vertical Vibrating Guitar String Line */}
-          <div className="absolute left-1/2 top-4 bottom-4 -translate-x-1/2 w-[1px] bg-zinc-800 pointer-events-none">
+          <div className="absolute left-1/2 top-14 bottom-4 -translate-x-1/2 w-[1px] bg-zinc-800 pointer-events-none">
             {/* Glowing active string fill based on scroll */}
             <div
               className="w-full bg-red-500 shadow-[0_0_8px_#ff2a3b] transition-all duration-150"

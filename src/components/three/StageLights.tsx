@@ -34,17 +34,32 @@ export function StageLights({ interactive = false }: StageLightsProps) {
 
     if (prefersReducedMotion) return;
 
+    // Color cycling through concert palette: violet -> cyan -> magenta -> amber -> red
+    const PALETTE = ["#8b3ff2", "#17e0c9", "#ff2e88", "#ffb020", "#e11d2e"];
+    
     // Left sweeping beam
     if (leftConeRef.current) {
       leftConeRef.current.rotation.z = 0.45 + Math.sin(t * 0.7) * 0.12;
+      const leftMat = leftConeRef.current.material as THREE.MeshBasicMaterial;
+      const colorIdx = (t * 0.2) % PALETTE.length;
+      const c1 = new THREE.Color(PALETTE[Math.floor(colorIdx)]);
+      const c2 = new THREE.Color(PALETTE[(Math.floor(colorIdx) + 1) % PALETTE.length]);
+      leftMat.color.lerpColors(c1, c2, colorIdx % 1);
+
       if (interactive) {
         leftConeRef.current.rotation.y = mouseTargetRef.current.x * 0.4;
       }
     }
 
-    // Right crimson beam
+    // Right beam color cycling with time offset
     if (rightConeRef.current) {
       rightConeRef.current.rotation.z = -0.45 + Math.cos(t * 0.6) * 0.14;
+      const rightMat = rightConeRef.current.material as THREE.MeshBasicMaterial;
+      const rightIdx = (t * 0.2 + 2.5) % PALETTE.length;
+      const rc1 = new THREE.Color(PALETTE[Math.floor(rightIdx)]);
+      const rc2 = new THREE.Color(PALETTE[(Math.floor(rightIdx) + 1) % PALETTE.length]);
+      rightMat.color.lerpColors(rc1, rc2, rightIdx % 1);
+
       if (interactive) {
         rightConeRef.current.rotation.x = mouseTargetRef.current.y * 0.3;
       }

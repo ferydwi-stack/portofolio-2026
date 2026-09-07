@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { BandLogo } from "@/components/ui/BandLogo";
+import { EqualizerBars } from "@/components/ui/EqualizerBars";
 
 interface CurtainIntroProps {
   onComplete?: () => void;
@@ -29,18 +31,18 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
       },
     });
 
-    // 1. Initial quick text flicker & glow
+    // 1. Initial quick logo & text flicker, draw-on & neon glow
     tl.to(marqueeRef.current, {
       opacity: 1,
       scale: 1,
-      duration: 0.5,
+      duration: 0.7,
       ease: "power2.out",
     })
       .to(marqueeRef.current, {
         opacity: 0,
-        scale: 1.05,
+        scale: 1.04,
         duration: 0.4,
-        delay: 0.4,
+        delay: 0.5,
         ease: "power2.in",
       })
       // 2. Split stage curtains open outwards
@@ -96,20 +98,30 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
         </div>
       </div>
 
-      {/* Center Stage Marquee Sign */}
+      {/* Center Stage Marquee Sign with Band Logo & Equalizer (§4.9, §4.10c) */}
       <div
         ref={marqueeRef}
-        className="absolute inset-0 flex flex-col items-center justify-center opacity-0 scale-95 pointer-events-none"
+        className="absolute inset-0 flex flex-col items-center justify-center opacity-0 scale-95 pointer-events-none px-6 text-center"
       >
-        <div className="px-6 py-2 rounded-full border border-red-500/80 bg-red-950/80 text-red-400 font-mono text-xs uppercase tracking-widest shadow-[0_0_25px_rgba(255,42,59,0.5)] mb-3">
-          &bull; LIVE AMP STAGE LOADED &bull;
+        <div className="mb-4">
+          <BandLogo size={84} glow animated />
         </div>
-        <h1 className="text-5xl sm:text-7xl font-black uppercase text-white font-[family-name:var(--font-anton)] tracking-wider">
+
+        <div className="px-6 py-1.5 rounded-full border border-red-500/80 bg-red-950/80 text-red-400 font-mono text-xs uppercase tracking-widest shadow-[0_0_25px_rgba(255,42,59,0.5)] mb-3">
+          &bull; SOUNDCHECK IN PROGRESS &bull;
+        </div>
+
+        <h1 className="headline-hero text-4xl sm:text-6xl lg:text-7xl font-normal uppercase text-white tracking-wider">
           FERY DWI RAMADHI
         </h1>
-        <p className="font-mono text-xs text-zinc-400 tracking-widest mt-2">
+
+        <p className="font-mono text-xs text-zinc-400 tracking-widest mt-2 mb-4">
           FULLSTACK ARCHITECTURE &bull; GUITAR DISTORTION
         </p>
+
+        <div className="opacity-40">
+          <EqualizerBars count={24} height={20} />
+        </div>
       </div>
     </div>
   );
