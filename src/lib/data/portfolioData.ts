@@ -42,11 +42,10 @@ export const PERSONAL_INFO = {
   name: "FERY DWI RAMADHI",
   role: "Mahasiswa Informatika & Web Developer",
   headline: "FERY DWI RAMADHI",
-  npm: "23312086",
   major: "Informatika",
   tagline: "Membangun Solusi Digital Berkualitas Tinggi & Berkinerja Optimal",
   bioParagraphs: [
-    "Halo! Saya Fery Dwi Ramadhi, Mahasiswa Informatika (NPM: 23312086) yang memiliki minat mendalam di bidang Web Development dan Project Management khusus dunia Informatika.",
+    "Halo! Saya Fery Dwi Ramadhi, Mahasiswa Informatika yang memiliki minat mendalam di bidang Web Development dan Project Management khusus dunia Informatika.",
     "Fokus saya mencakup perancangan antarmuka responsif, rekayasa fullstack terstruktur, arsitektur basis data, serta pengelolaan siklus hidup proyek perangkat lunak dari inisiasi hingga tahap produksi.",
     "Selalu antusias mempelajari teknologi web termutakhir, mengoptimalkan arsitektur sistem yang skalabel, dan mewujudkan ide-ide inovatif menjadi aplikasi nyata yang berdaya guna tinggi.",
   ],

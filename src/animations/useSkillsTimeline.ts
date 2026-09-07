@@ -24,18 +24,26 @@ export function useSkillsTimeline({ sectionRef }: SkillsTimelineRefs) {
       const domains = section.querySelectorAll(".tech-domain-group");
       domains.forEach((group) => {
         const cards = group.querySelectorAll(".tech-card");
-        gsap.from(cards, {
-          opacity: 0,
-          y: 40,
-          duration: 0.7,
-          stagger: 0.12,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: group,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-        });
+        if (!cards.length) return;
+
+        // Animate entrance once, and clear all inline styles so cards NEVER disappear
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 25 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.55,
+            stagger: 0.08,
+            ease: "power2.out",
+            clearProps: "all", // Clears inline opacity and transform
+            scrollTrigger: {
+              trigger: group,
+              start: "top 95%",
+              once: true, // Play once only; never reverse or hide cards again
+            },
+          }
+        );
       });
     }, section);
 

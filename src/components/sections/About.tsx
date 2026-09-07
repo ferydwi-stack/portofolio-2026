@@ -102,7 +102,7 @@ export function About() {
                   {PERSONAL_INFO.name}
                 </p>
                 <p className="text-xs text-red-400 font-bold">
-                  {PERSONAL_INFO.major} // NPM: {PERSONAL_INFO.npm}
+                  {PERSONAL_INFO.major} // FULLSTACK DEVELOPER
                 </p>
               </div>
               <span className="text-[10px] font-mono text-zinc-500">INDONESIA // 2026</span>
