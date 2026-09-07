@@ -218,10 +218,15 @@ export function Skills() {
                           ))}
                         </div>
 
-                        {/* Proficiency Percentage Label */}
-                        <span className="font-mono text-xs font-bold text-red-400 bg-red-950/40 px-2 py-0.5 rounded border border-red-900/40 min-w-[42px] text-center">
-                          {skill.proficiency}%
-                        </span>
+                        {/* Proficiency Percentage + Track Duration */}
+                        <div className="flex items-center gap-1.5 font-mono text-xs">
+                          <span className="font-bold text-red-400 bg-red-950/40 px-2 py-0.5 rounded border border-red-900/40 min-w-[38px] text-center">
+                            {skill.proficiency}%
+                          </span>
+                          <span className="text-[10px] text-zinc-500 hidden sm:inline-block">
+                            [{`0${Math.floor(skill.proficiency / 22)}:${(skill.bpm * 3 % 60).toString().padStart(2, '0')}`}]
+                          </span>
+                        </div>
                       </div>
                     </div>
                   );

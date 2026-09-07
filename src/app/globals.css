@@ -14,13 +14,8 @@
   --color-spotlight-white: #f5f5f0;
   --color-stage-red: #e11d2e;
   --color-chrome-silver: #b8bcc2;
-  --color-tape-beige: #d8c9a3;
-  --color-amp-glow: #ff6b35;
-
   --color-stage-violet: #8b3ff2;
   --color-stage-cyan: #17e0c9;
-  --color-stage-magenta: #ff2e88;
-  --color-stage-amber: #ffb020;
 }
 
 :root {
@@ -29,18 +24,14 @@
   --card: #1a1a1e;
   --card-foreground: #f5f5f0;
   --border: #262130;
+  
   --stage-black: #0a0a0c;
   --stage-charcoal: #1a1a1e;
   --spotlight-white: #f5f5f0;
   --stage-red: #e11d2e;
   --chrome-silver: #b8bcc2;
-  --tape-beige: #d8c9a3;
-  --amp-glow: #ff6b35;
-
   --stage-violet: #8b3ff2;
   --stage-cyan: #17e0c9;
-  --stage-magenta: #ff2e88;
-  --stage-amber: #ffb020;
 }
 
 .dark {
@@ -108,8 +99,12 @@ html {
   box-shadow: 0 0 25px rgba(225, 29, 46, 0.35);
 }
 
-.glow-amber {
-  box-shadow: 0 0 25px rgba(255, 107, 53, 0.3);
+.glow-violet {
+  box-shadow: 0 0 25px rgba(139, 63, 242, 0.35);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 25px rgba(23, 224, 201, 0.35);
 }
 
 .text-glow-crimson {
@@ -136,9 +131,9 @@ html {
 
 .stage-ambient-gradient {
   background: radial-gradient(circle at 20% 30%, rgba(139, 63, 242, 0.25) 0%, transparent 50%),
-              radial-gradient(circle at 80% 40%, rgba(255, 46, 136, 0.22) 0%, transparent 55%),
-              radial-gradient(circle at 50% 80%, rgba(255, 107, 53, 0.18) 0%, transparent 60%),
-              radial-gradient(circle at 70% 85%, rgba(23, 224, 201, 0.15) 0%, transparent 50%);
+              radial-gradient(circle at 80% 40%, rgba(225, 29, 46, 0.25) 0%, transparent 55%),
+              radial-gradient(circle at 50% 80%, rgba(139, 63, 242, 0.18) 0%, transparent 60%),
+              radial-gradient(circle at 70% 85%, rgba(23, 224, 201, 0.20) 0%, transparent 50%);
   filter: blur(60px);
   animation: stage-ambient-drift 24s ease-in-out infinite alternate;
   will-change: transform, opacity;
@@ -151,9 +146,10 @@ html {
   }
 }
 
-/* V3 Typography hierarchy (§3.2) */
+/* V4 Typography hierarchy (§3.2) */
 .headline-hero {
-  font-family: var(--font-bebas), "Bebas Neue", sans-serif;
+  font-family: var(--font-anton), "Anton", sans-serif;
+  font-weight: 400;
   font-size: clamp(3.5rem, 11.5vw, 10.5rem);
   letter-spacing: 0.02em;
   line-height: 0.88;

@@ -145,10 +145,10 @@ export function About() {
                   {PERSONAL_INFO.name}
                 </p>
                 <p className="text-xs text-red-400 font-bold">
-                  {PERSONAL_INFO.role}
+                  {PERSONAL_INFO.major} // NPM: {PERSONAL_INFO.npm}
                 </p>
               </div>
-              <span className="text-[10px] font-mono text-zinc-500">INDONESIA</span>
+              <span className="text-[10px] font-mono text-zinc-500">INDONESIA // 2026</span>
             </div>
           </div>
         </div>

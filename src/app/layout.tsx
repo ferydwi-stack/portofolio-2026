@@ -6,6 +6,7 @@ import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvide
 import { GlobalStageLayer } from "@/components/providers/GlobalStageLayer";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { NavbarDock } from "@/components/ui/NavbarDock";
+import { SoundToggle } from "@/components/ui/SoundToggle";
 import { SkipToContent } from "@/components/ui/SkipToContent";
 
 const bebasNeue = Bebas_Neue({
@@ -83,6 +84,8 @@ export default function RootLayout({
           <SmoothScrollProvider>
             {/* Left Edge Vertical Dock / Responsive Mobile Sheet */}
             <NavbarDock />
+            {/* Audio Synth Toggle Switch */}
+            <SoundToggle />
             <main id="main-content" className="min-h-screen relative z-20">{children}</main>
           </SmoothScrollProvider>
         </ThemeProvider>

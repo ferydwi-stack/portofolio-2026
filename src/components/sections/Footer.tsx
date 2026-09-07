@@ -3,7 +3,7 @@
 import { ArrowUp, Github, Linkedin, Mail, MessageSquare } from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/data/portfolioData";
 import { useLenis } from "@/hooks/useLenis";
-import { EqualizerBars } from "@/components/ui/EqualizerBars";
+import { EqualizerVisualizer } from "@/components/ui/EqualizerVisualizer";
 import { BandLogo } from "@/components/ui/BandLogo";
 
 export function Footer() {
@@ -42,9 +42,9 @@ export function Footer() {
 
   return (
     <footer className="relative w-full py-12 px-6 sm:px-12 lg:px-24 overflow-hidden select-none bg-[#070609]">
-      {/* Full-width Equalizer Bars Ambience (§4.10c) */}
-      <div className="absolute inset-x-0 bottom-0 pointer-events-none opacity-20 flex justify-center overflow-hidden" aria-hidden="true">
-        <EqualizerBars count={40} height={28} />
+      {/* Full-width Equalizer Visualizer Ambience (§4.10c) */}
+      <div className="absolute inset-x-0 bottom-0 pointer-events-none opacity-25 flex justify-center overflow-hidden" aria-hidden="true">
+        <EqualizerVisualizer width={340} height={32} opacity={0.35} />
       </div>
 
       {/* Faint BandLogo watermark in bottom corner (§5.8) */}

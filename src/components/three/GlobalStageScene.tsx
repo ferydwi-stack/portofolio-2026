@@ -3,9 +3,8 @@
 import { useEffect, useState, useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { GuitaristCharacter } from "./GuitaristCharacter";
-import { ParticleField } from "./ParticleField";
-import { StageLights } from "./StageLights";
+import { StandaloneGuitar } from "./StandaloneGuitar";
+import { StageEffects } from "./StageEffects";
 import { WebGLFallback } from "./WebGLFallback";
 import { mapScrollToCameraKeyframes } from "@/animations/cameraKeyframes";
 import { useScrollStore } from "@/store/useScrollStore";
@@ -38,7 +37,7 @@ function SceneController() {
     }
 
     // Read real-time progress from Zustand store without triggering React re-renders
-    const progress = useScrollStore.getState().scrollProgress;
+    const progress = useScrollStore.getState().scrollProgress || 0;
     const kf = mapScrollToCameraKeyframes(progress);
 
     // Smooth camera inertia lerp
@@ -54,28 +53,19 @@ function SceneController() {
     state.camera.rotation.copy(currentRot.current);
   });
 
-  const activeSection = useScrollStore((s) => s.activeSection);
   const tier = usePerformanceTier((s) => s.tier);
 
   return (
     <>
-      {tier !== "low" && <fog attach="fog" args={["#0a0a0c", 4, 22]} />}
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 10, 5]} intensity={1.5} color="#ffffff" />
-      <pointLight position={[-4, -2, -2]} intensity={2.0} color="#e11d2e" />
+      {tier !== "low" && <fog attach="fog" args={["#0a0a0c", 5, 25]} />}
 
-      {/* Volumetric Stage Lights */}
-      <StageLights interactive={activeSection === "contact"} />
+      {/* Library-based stage lights, atmosphere sparkles & bloom (§4.10) */}
+      <StageEffects />
 
-      {/* Concert Ember Sparks */}
-      <ParticleField />
-
-      {/* Centerpiece 3D Emo Guitarist Character Silhouette Artwork */}
-      <group position={[0, 0, 0]}>
-        <Suspense fallback={null}>
-          <GuitaristCharacter />
-        </Suspense>
-      </group>
+      {/* 3D Standalone Floating Guitar (§4.3) */}
+      <Suspense fallback={null}>
+        <StandaloneGuitar />
+      </Suspense>
     </>
   );
 }
@@ -104,7 +94,7 @@ export default function GlobalStageScene() {
           alpha: true,
         }}
         camera={{ position: [0, 1.6, 5.5], fov: 48 }}
-        className="w-full h-full"
+        className="w-full h-full pointer-events-auto"
       >
         <SceneController />
       </Canvas>

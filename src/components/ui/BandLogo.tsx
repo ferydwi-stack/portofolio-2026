@@ -65,25 +65,25 @@ export function BandLogo({
         <line x1="11" y1="20" x2="29" y2="20" stroke="#f5f5f0" strokeWidth="0.9" opacity="0.75" />
         <line x1="14" y1="27" x2="26" y2="27" stroke="#b8bcc2" strokeWidth="0.8" opacity="0.6" />
 
-        {/* Monogram Initial "FR" (Fery Ramadhi) */}
+        {/* Monogram Initial "FDR" (Fery Dwi Ramadhi) */}
         <text
           x="20"
-          y="23.5"
+          y="23"
           textAnchor="middle"
           dominantBaseline="central"
           fill="#f5f5f0"
-          className="font-[family-name:var(--font-bebas)] font-black select-none"
+          className="font-[family-name:var(--font-anton)] font-normal select-none"
           style={{
-            fontSize: "15px",
+            fontSize: "12px",
             letterSpacing: "0.5px",
             filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.9))",
           }}
         >
-          FR
+          FDR
         </text>
 
-        {/* Subtle Lightning Notch Accent */}
-        <polygon points="19.5,4 21,7.5 19,8 20.5,11.5 18,7.5 20,7" fill="#ffb020" opacity="0.9" />
+        {/* Subtle Cyan Electric Notch Accent */}
+        <polygon points="19.5,4 21,7.5 19,8 20.5,11.5 18,7.5 20,7" fill="#17e0c9" opacity="0.9" />
       </svg>
     </motion.div>
   );

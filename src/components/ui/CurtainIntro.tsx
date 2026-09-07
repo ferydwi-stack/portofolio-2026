@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { BandLogo } from "@/components/ui/BandLogo";
-import { EqualizerBars } from "@/components/ui/EqualizerBars";
+import { EqualizerVisualizer } from "@/components/ui/EqualizerVisualizer";
 
 interface CurtainIntroProps {
   onComplete?: () => void;
@@ -119,8 +119,8 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
           REKAYASA WEB &bull; ARSITEKTUR PERANGKAT LUNAK
         </p>
 
-        <div className="opacity-40">
-          <EqualizerBars count={24} height={20} />
+        <div className="opacity-50">
+          <EqualizerVisualizer width={200} height={24} opacity={0.6} />
         </div>
       </div>
     </div>

@@ -38,13 +38,15 @@ export interface TechRig {
 
 export const PERSONAL_INFO = {
   name: "FERY DWI RAMADHI",
-  role: "Fullstack Developer & Web Engineer",
+  role: "Mahasiswa Informatika & Web Developer",
   headline: "FERY DWI RAMADHI",
+  npm: "23312086",
+  major: "Informatika",
   tagline: "Membangun Solusi Digital Berkualitas Tinggi & Berkinerja Optimal",
   bioParagraphs: [
-    "Halo! Saya Fery Dwi Ramadhi, seorang Fullstack Developer yang berdomisili di Indonesia. Saya berfokus pada perancangan dan pengembangan aplikasi web modern, arsitektur sistem perangkat lunak yang andal, serta antarmuka pengguna yang responsif.",
-    "Pengalaman rekayasa saya mencakup pengembangan frontend interaktif berbasis React dan Next.js, hingga pembangunan layanan backend, RESTful API, dan optimasi basis data relasional. Setiap sistem dirancang dengan fokus pada skalabilitas, keamanan, dan kemudahan pemeliharaan.",
-    "Komitmen saya adalah menghadirkan produk digital yang efisien, berkinerja tinggi, dan memberikan dampak positif serta solusi nyata bagi kebutuhan pengguna dan organisasi.",
+    "Halo! Saya Fery Dwi Ramadhi, Mahasiswa Informatika (NPM: 23312086) yang memiliki minat mendalam di bidang Web Development dan Project Management khusus dunia Informatika.",
+    "Fokus saya mencakup perancangan antarmuka responsif, rekayasa fullstack terstruktur, arsitektur basis data, serta pengelolaan siklus hidup proyek perangkat lunak dari inisiasi hingga tahap produksi.",
+    "Selalu antusias mempelajari teknologi web termutakhir, mengoptimalkan arsitektur sistem yang skalabel, dan mewujudkan ide-ide inovatif menjadi aplikasi nyata yang berdaya guna tinggi.",
   ],
   contacts: {
     email: "ferydwir27@gmail.com",
@@ -74,14 +76,14 @@ export const TECH_RIGS: TechRig[] = [
     items: ["Flutter & Dart", "Firebase", "Responsive Design", "PWA"],
   },
   {
-    category: "Tools & Workflow",
-    role: "Version Control, Editor & Deployment",
-    items: ["Git & GitHub", "VS Code", "Figma", "Vercel Deployments"],
+    category: "Tools & Management",
+    role: "Version Control, Workflow & Project Management",
+    items: ["Git & GitHub", "Project Management", "VS Code", "Figma"],
   },
 ];
 
 export const SKILLS_SETLIST: Skill[] = [
-  { track: "01", name: "Tailwind CSS", category: "CSS Framework", level: 5, proficiency: 95, bpm: 95, featured: true },
+  { track: "01", name: "CSS / Tailwind", category: "CSS Framework", level: 5, proficiency: 95, bpm: 95, featured: true },
   { track: "02", name: "React.js", category: "Frontend Library", level: 5, proficiency: 90, bpm: 90, featured: true },
   { track: "03", name: "Next.js", category: "Fullstack Framework", level: 4, proficiency: 88, bpm: 88, featured: true },
   { track: "04", name: "Node.js", category: "JavaScript Runtime", level: 4, proficiency: 86, bpm: 86, featured: true },
@@ -95,40 +97,52 @@ export const SKILLS_SETLIST: Skill[] = [
 
 export const PROJECTS: Project[] = [
   {
-    title: "Portfolio Profile",
-    catalogNo: "PROYEK UTAMA // WEB PORTOFOLIO",
-    year: "2026",
-    description:
-      "Website portofolio interaktif berbasis Next.js 16, visualisasi 3D Three.js, dan animasi modern untuk menampilkan profil profesional serta karya digital.",
-    image: "/portofolio.png",
-    tags: ["Next.js", "Tailwind CSS", "TypeScript", "Three.js", "GSAP"],
-    githubUrl: "https://github.com/ferydwi-stack/Portfolio-Profile",
-    rpm: "Web App",
-    side: "FULLSTACK APPLICATION",
-  },
-  {
-    title: "Sistem Kasir Warung",
-    catalogNo: "SISTEM INFORMASI // POINT OF SALE",
+    title: "SISTEM KASIR ADMIN",
+    catalogNo: "CAT-01 // POINT OF SALE",
     year: "2025",
     description:
-      "Sistem Point of Sale (POS) untuk operasional toko kelontong, mencakup manajemen inventaris barang, pencatatan transaksi kasir real-time, dan pelaporan keuangan.",
+      "Dashboard manajemen produk terintegrasi, pemrosesan transaksi kasir instan, dan pelaporan penjualan otomatis berbasis arsitektur web andal.",
     image: "/kasir.png",
-    tags: ["Laravel", "MySQL", "Tailwind CSS", "PHP"],
+    tags: ["PHP", "HTML", "CSS", "MySQL", "Dashboard"],
     githubUrl: "https://github.com/ferydwi-stack/sistem-kasir-warung",
-    rpm: "Web App",
-    side: "COMMERCIAL POS SYSTEM",
+    rpm: "33 RPM",
+    side: "SIDE A // MASTER POS",
+  },
+  {
+    title: "LAT7 — BIODATA & KEAHLIAN",
+    catalogNo: "CAT-02 // ADVANCED LAYOUT",
+    year: "2025",
+    description:
+      "Project layouting tingkat lanjut (Final Fix) dengan implementasi struktur antarmuka responsif, tipografi presisi, dan visualisasi data keahlian.",
+    image: "/portofolio.png",
+    tags: ["HTML5", "CSS3", "JavaScript", "Responsive UI"],
+    githubUrl: "https://github.com/ferydwi-stack/Portfolio-Profile",
+    rpm: "45 RPM",
+    side: "SIDE B // FRONTEND RIG",
+  },
+  {
+    title: "Tugas MusikA3",
+    catalogNo: "CAT-03 // MULTIMEDIA & AUDIO",
+    year: "2025",
+    description:
+      "Project multimedia interaktif dengan analisis vokal/audio digital dan integrasi pemrosesan sinyal suara berbasis Web Audio.",
+    image: "/absen.jpg",
+    tags: ["JavaScript", "Web Audio", "Multimedia", "Signal Analysis"],
+    githubUrl: "https://github.com/ferydwi-stack",
+    rpm: "33 RPM",
+    side: "SIDE C // AUDIO LAB",
   },
   {
     title: "Aplikasi Presensi Guru",
-    catalogNo: "APLIKASI MOBILE // SISTEM PRESENSI",
+    catalogNo: "CAT-04 // MOBILE PRESENCE",
     year: "2025",
     description:
-      "Aplikasi mobile lintas platform bagi instansi pendidikan untuk melacak absensi pendidik secara akurat berbasis radius geolokasi GPS dan validasi wajah.",
+      "Aplikasi mobile lintas platform bagi instansi pendidikan untuk pelacakan absensi berbasis geofencing GPS dan sinkronisasi real-time.",
     image: "/absen.jpg",
     tags: ["Flutter", "Dart", "Firebase", "Geolocation"],
     githubUrl: "https://github.com/ferydwi-stack/kelompok-Citra-Garden",
-    rpm: "Mobile App",
-    side: "MOBILE ATTENDANCE SYSTEM",
+    rpm: "45 RPM",
+    side: "SIDE D // MOBILE CORE",
   },
   {
     title: "SahabatBK",

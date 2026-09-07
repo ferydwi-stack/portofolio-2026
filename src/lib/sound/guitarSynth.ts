@@ -19,8 +19,14 @@ function getAudioContext(): AudioContext | null {
   return audioCtx;
 }
 
+function isMuted(): boolean {
+  if (typeof window === "undefined") return true;
+  return localStorage.getItem("stage_audio_muted") === "true";
+}
+
 // Play heavy distorted guitar power chord (E5, A5, D5, etc.)
 export function playGuitarChord(rootFreq: number = 82.41) {
+  if (isMuted()) return;
   const ctx = getAudioContext();
   if (!ctx) return;
 
