@@ -126,7 +126,7 @@ export const PROJECTS: Project[] = [
     year: "2025",
     description:
       "Project multimedia interaktif dengan analisis vokal/audio digital dan integrasi pemrosesan sinyal suara berbasis Web Audio.",
-    image: "/absen.jpg",
+    image: "/musika3.jpg",
     tags: ["JavaScript", "Web Audio", "Multimedia", "Signal Analysis"],
     githubUrl: "https://github.com/ferydwi-stack",
     rpm: "33 RPM",
