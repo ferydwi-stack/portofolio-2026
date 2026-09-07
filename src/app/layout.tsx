@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { StageCurtainIntro } from "@/components/StageCurtainIntro";
 import { StageFollowSpotlight } from "@/components/StageFollowSpotlight";
+import { GlobalStageLayer } from "@/components/GlobalStageLayer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,19 +41,22 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning className="dark">
       <body
-        className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased bg-[#07060a] text-zinc-100 min-h-screen relative selection:bg-red-600 selection:text-white`}
+        className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased bg-[#07060a] text-zinc-100 min-h-screen relative selection:bg-red-600 selection:text-white overflow-x-hidden`}
       >
-        {/* Stage Curtain Load Intro */}
+        {/* Stage Curtain Horizontal Split Load Intro */}
         <StageCurtainIntro />
 
         {/* Dynamic Concert Stage Follow-Spotlight */}
         <StageFollowSpotlight />
 
+        {/* Global Fixed 3D Stage Scene with Emo Guitarist Centerpiece */}
+        <GlobalStageLayer />
+
         {/* Ambient Film Grain Texture */}
-        <div className="fixed inset-0 pointer-events-none stage-noise z-20 opacity-30" />
+        <div className="fixed inset-0 pointer-events-none stage-noise z-10 opacity-30" />
 
         {/* Dark Stage Vignette */}
-        <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.75)_100%)] z-10" />
+        <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.85)_100%)] z-10" />
 
         <ThemeProvider
           attribute="class"
@@ -62,7 +66,7 @@ export default function RootLayout({
         >
           <SmoothScrollProvider>
             <Navbar />
-            <main className="min-h-screen relative z-10">{children}</main>
+            <main className="min-h-screen relative z-20">{children}</main>
           </SmoothScrollProvider>
         </ThemeProvider>
       </body>

@@ -33,19 +33,19 @@ export function StageCurtainIntro() {
           exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
           className="fixed inset-0 z-[9999] bg-[#050508] flex flex-col items-center justify-center p-6 select-none overflow-hidden"
         >
-          {/* Top & Bottom Curtain Panels splitting away */}
+          {/* Left & Right Curtain Panels splitting horizontally */}
           <motion.div
-            exit={{ y: "-100%", transition: { duration: 0.9, ease: [0.77, 0, 0.175, 1] } }}
-            className="absolute top-0 inset-x-0 h-1/2 bg-[#08070d] border-b-2 border-red-600/40 shadow-2xl flex items-end justify-center pb-8"
+            exit={{ x: "-100%", transition: { duration: 1.0, ease: [0.77, 0, 0.175, 1] } }}
+            className="absolute left-0 inset-y-0 w-1/2 bg-[#060509] border-r-2 border-red-600/50 shadow-2xl flex items-center justify-end pr-8"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,42,59,0.15)_0%,transparent_70%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(255,42,59,0.18)_0%,transparent_70%)]" />
           </motion.div>
 
           <motion.div
-            exit={{ y: "100%", transition: { duration: 0.9, ease: [0.77, 0, 0.175, 1] } }}
-            className="absolute bottom-0 inset-x-0 h-1/2 bg-[#08070d] border-t-2 border-red-600/40 shadow-2xl flex items-start justify-center pt-8"
+            exit={{ x: "100%", transition: { duration: 1.0, ease: [0.77, 0, 0.175, 1] } }}
+            className="absolute right-0 inset-y-0 w-1/2 bg-[#060509] border-l-2 border-red-600/50 shadow-2xl flex items-center justify-start pl-8"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(255,42,59,0.15)_0%,transparent_70%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_right,rgba(255,42,59,0.18)_0%,transparent_70%)]" />
           </motion.div>
 
           {/* Soundcheck Console Display */}

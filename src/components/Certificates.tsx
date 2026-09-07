@@ -13,13 +13,14 @@ interface CertItem {
   description: string;
   image: string;
   type: "academic" | "external";
-  rotationClass: string;
+  rotation: number;
+  offsetY: number;
 }
 
 export function Certificates() {
   const [selectedCert, setSelectedCert] = useState<CertItem | null>(null);
 
-  const matkulCertificates: CertItem[] = [
+  const certificates: CertItem[] = [
     {
       title: "Sertifikasi Web Junior",
       issuer: "Universitas",
@@ -27,7 +28,8 @@ export function Certificates() {
       description: "Sertifikasi kelulusan uji kompetensi Web Programmer Junior.",
       image: "/juniorweb.png",
       type: "academic",
-      rotationClass: "-rotate-1",
+      rotation: -6,
+      offsetY: 8,
     },
     {
       title: "Kecerdasan Buatan",
@@ -36,110 +38,9 @@ export function Certificates() {
       description: "Sertifikasi kelulusan mata kuliah Kecerdasan Buatan.",
       image: "/kecerdasanbuatan.png",
       type: "academic",
-      rotationClass: "rotate-1",
+      rotation: 5,
+      offsetY: -12,
     },
-    {
-      title: "Matematika Diskrit",
-      issuer: "Universitas",
-      year: "2024",
-      description: "Sertifikasi kelulusan mata kuliah Matematika Diskrit.",
-      image: "/matematikadiskrit.png",
-      type: "academic",
-      rotationClass: "-rotate-2",
-    },
-    {
-      title: "Pemrograman Mobile 1",
-      issuer: "Universitas",
-      year: "2025",
-      description: "Sertifikasi kelulusan mata kuliah Pemrograman Mobile 1.",
-      image: "/mobile1.png",
-      type: "academic",
-      rotationClass: "rotate-2",
-    },
-    {
-      title: "Organisasi Komputer",
-      issuer: "Universitas",
-      year: "2024",
-      description: "Sertifikasi kelulusan mata kuliah Organisasi Komputer (Orkom).",
-      image: "/orkom.png",
-      type: "academic",
-      rotationClass: "-rotate-1",
-    },
-    {
-      title: "Sistem Operasi",
-      issuer: "Universitas",
-      year: "2025",
-      description: "Sertifikasi kelulusan mata kuliah Sistem Operasi.",
-      image: "/sistemoperasi.png",
-      type: "academic",
-      rotationClass: "rotate-1.5",
-    },
-    {
-      title: "Sistem Paralel",
-      issuer: "Universitas",
-      year: "2025",
-      description: "Sertifikasi kelulusan mata kuliah Sistem Paralel.",
-      image: "/sistemparalel.png",
-      type: "academic",
-      rotationClass: "-rotate-1.5",
-    },
-    {
-      title: "Keamanan Informasi",
-      issuer: "Universitas",
-      year: "2025",
-      description: "Sertifikasi kelulusan mata kuliah Keamanan Informasi.",
-      image: "/keamananinformasi.png",
-      type: "academic",
-      rotationClass: "rotate-1",
-    },
-    {
-      title: "Kalkulus",
-      issuer: "Universitas",
-      year: "2024",
-      description: "Sertifikasi kelulusan mata kuliah Kalkulus.",
-      image: "/kalkulus.png",
-      type: "academic",
-      rotationClass: "-rotate-2",
-    },
-    {
-      title: "Grafika Komputer",
-      issuer: "Universitas",
-      year: "2025",
-      description: "Sertifikasi kelulusan mata kuliah Grafika Komputer.",
-      image: "/grafikakomputer.png",
-      type: "academic",
-      rotationClass: "rotate-2",
-    },
-    {
-      title: "Basic Programmer 1",
-      issuer: "Universitas",
-      year: "2024",
-      description: "Sertifikasi kompetensi dasar Programmer 1.",
-      image: "/programmer1.png",
-      type: "academic",
-      rotationClass: "-rotate-1.5",
-    },
-    {
-      title: "Basic Programmer 2",
-      issuer: "Universitas",
-      year: "2024",
-      description: "Sertifikasi kompetensi lanjutan Programmer 2.",
-      image: "/programmer2.png",
-      type: "academic",
-      rotationClass: "rotate-1",
-    },
-    {
-      title: "Metodologi Penelitian Ilmu Komputer",
-      issuer: "Universitas",
-      year: "2025",
-      description: "Sertifikasi kelulusan mata kuliah Metodologi Penelitian (MPIK).",
-      image: "/mpik.png",
-      type: "academic",
-      rotationClass: "-rotate-2",
-    },
-  ];
-
-  const externalCertificates: CertItem[] = [
     {
       title: "Data Science",
       issuer: "Dicoding Indonesia",
@@ -147,7 +48,8 @@ export function Certificates() {
       description: "Sertifikasi kompetensi pengolahan dan pemodelan data terapan.",
       image: "/datascience_dicoding.png",
       type: "external",
-      rotationClass: "-rotate-1",
+      rotation: -7,
+      offsetY: 16,
     },
     {
       title: "AI Digitalent",
@@ -156,7 +58,118 @@ export function Certificates() {
       description: "Sertifikasi kompetensi Artificial Intelligence Digital Talent Scholarship.",
       image: "/aidigitalent.png",
       type: "external",
-      rotationClass: "rotate-2",
+      rotation: 6,
+      offsetY: -6,
+    },
+    {
+      title: "Matematika Diskrit",
+      issuer: "Universitas",
+      year: "2024",
+      description: "Sertifikasi kelulusan mata kuliah Matematika Diskrit.",
+      image: "/matematikadiskrit.png",
+      type: "academic",
+      rotation: -5,
+      offsetY: 10,
+    },
+    {
+      title: "Pemrograman Mobile 1",
+      issuer: "Universitas",
+      year: "2025",
+      description: "Sertifikasi kelulusan mata kuliah Pemrograman Mobile 1.",
+      image: "/mobile1.png",
+      type: "academic",
+      rotation: 7,
+      offsetY: -14,
+    },
+    {
+      title: "Organisasi Komputer",
+      issuer: "Universitas",
+      year: "2024",
+      description: "Sertifikasi kelulusan mata kuliah Organisasi Komputer (Orkom).",
+      image: "/orkom.png",
+      type: "academic",
+      rotation: -4,
+      offsetY: 6,
+    },
+    {
+      title: "Sistem Operasi",
+      issuer: "Universitas",
+      year: "2025",
+      description: "Sertifikasi kelulusan mata kuliah Sistem Operasi.",
+      image: "/sistemoperasi.png",
+      type: "academic",
+      rotation: 5,
+      offsetY: -8,
+    },
+    {
+      title: "Sistem Paralel",
+      issuer: "Universitas",
+      year: "2025",
+      description: "Sertifikasi kelulusan mata kuliah Sistem Paralel.",
+      image: "/sistemparalel.png",
+      type: "academic",
+      rotation: -8,
+      offsetY: 14,
+    },
+    {
+      title: "Keamanan Informasi",
+      issuer: "Universitas",
+      year: "2025",
+      description: "Sertifikasi kelulusan mata kuliah Keamanan Informasi.",
+      image: "/keamananinformasi.png",
+      type: "academic",
+      rotation: 4,
+      offsetY: -10,
+    },
+    {
+      title: "Kalkulus",
+      issuer: "Universitas",
+      year: "2024",
+      description: "Sertifikasi kelulusan mata kuliah Kalkulus.",
+      image: "/kalkulus.png",
+      type: "academic",
+      rotation: -6,
+      offsetY: 12,
+    },
+    {
+      title: "Grafika Komputer",
+      issuer: "Universitas",
+      year: "2025",
+      description: "Sertifikasi kelulusan mata kuliah Grafika Komputer.",
+      image: "/grafikakomputer.png",
+      type: "academic",
+      rotation: 8,
+      offsetY: -4,
+    },
+    {
+      title: "Basic Programmer 1",
+      issuer: "Universitas",
+      year: "2024",
+      description: "Sertifikasi kompetensi dasar Programmer 1.",
+      image: "/programmer1.png",
+      type: "academic",
+      rotation: -5,
+      offsetY: 16,
+    },
+    {
+      title: "Basic Programmer 2",
+      issuer: "Universitas",
+      year: "2024",
+      description: "Sertifikasi kompetensi lanjutan Programmer 2.",
+      image: "/programmer2.png",
+      type: "academic",
+      rotation: 6,
+      offsetY: -12,
+    },
+    {
+      title: "Metodologi Penelitian Ilmu Komputer",
+      issuer: "Universitas",
+      year: "2025",
+      description: "Sertifikasi kelulusan mata kuliah Metodologi Penelitian (MPIK).",
+      image: "/mpik.png",
+      type: "academic",
+      rotation: -7,
+      offsetY: 8,
     },
     {
       title: "Micro Skill Digitalent",
@@ -165,7 +178,8 @@ export function Certificates() {
       description: "Sertifikasi pelatihan spesialisasi Micro Skill dari Kementerian Komdigi.",
       image: "/microskildigitalent.png",
       type: "external",
-      rotationClass: "-rotate-1.5",
+      rotation: 5,
+      offsetY: -10,
     },
     {
       title: "Junior Web Developer",
@@ -174,7 +188,8 @@ export function Certificates() {
       description: "Standar sertifikasi industri Junior Web Developer resmi Komdigi.",
       image: "/juniorwebdigitalent.png",
       type: "external",
-      rotationClass: "rotate-1.5",
+      rotation: -6,
+      offsetY: 14,
     },
   ];
 
@@ -200,127 +215,97 @@ export function Certificates() {
   }, [selectedCert, handleKeyDown]);
 
   return (
-    <section id="certificates" className="py-24 relative overflow-hidden">
-      <GuitarStringDivider label="BACKSTAGE PASS &amp; TOUR CREDENTIALS" fret={9} />
+    <section
+      id="certificates"
+      className="relative min-h-screen py-24 pl-6 sm:pl-12 lg:pl-28 pr-6 sm:pr-12 select-none overflow-hidden"
+    >
+      <GuitarStringDivider label="BACKSTAGE PASS &bull; CHAOTIC WALL COLLAGE" fret={9} />
 
-      <div className="container mx-auto px-6 md:px-12 pt-8">
+      <div className="pt-8">
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-3">
+        <div className="mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/50 px-3 py-1 rounded border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
             <Ticket className="w-3.5 h-3.5" />
-            <span>OFFICIAL LAMINATES &amp; MERCH STICKERS</span>
+            <span>BACKSTAGE LAMINATES WALL</span>
           </div>
           <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-wider text-white font-[family-name:var(--font-bebas)]">
-            Backstage Pass &amp; Sertifikat
+            Sticker Wall &amp; Credentials
           </h2>
-          <p className="max-w-2xl mx-auto text-zinc-400 text-sm sm:text-base font-sans">
-            Kumpulan bukti verifikasi kelulusan uji kompetensi akademik dan industri resmi yang disajikan seperti dinding koleksi pass panggung tur konser.
+          <p className="max-w-xl text-zinc-400 text-sm sm:text-base font-sans">
+            Kolase laminates pass tur dan stiker resmi yang ditempel acak di dinding ruang ganti panggung. Arahkan kursor untuk mengangkat pass.
           </p>
         </div>
 
-        {/* Academic Laminates Wall */}
-        <div className="mb-20">
-          <div className="flex items-center justify-between border-b border-zinc-800 pb-3 mb-8 font-mono text-xs">
-            <h3 className="font-bold uppercase text-white tracking-widest flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-red-500" />
-              <span>{"//"} ACADEMIC PASSES ({matkulCertificates.length} VERIFIED)</span>
-            </h3>
-            <span className="text-zinc-500">KLIK KARTU UNTUK MEMBUKA FOTO</span>
-          </div>
+        {/* Chaotic Wall Collage Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 pt-4 pb-12">
+          {certificates.map((cert) => (
+            <motion.div
+              key={cert.title}
+              style={{
+                rotate: cert.rotation,
+                y: cert.offsetY,
+              }}
+              whileHover={{
+                scale: 1.12,
+                rotate: 0,
+                y: 0,
+                zIndex: 40,
+                boxShadow: "0 25px 50px rgba(255, 42, 59, 0.35)",
+                transition: { type: "spring", stiffness: 350, damping: 20 },
+              }}
+              onClick={() => setSelectedCert(cert)}
+              className={`p-5 rounded-2xl bg-[#13101b]/95 border-2 transition-colors cursor-pointer relative overflow-hidden backdrop-blur-md shadow-2xl flex flex-col justify-between ${
+                cert.type === "external"
+                  ? "border-red-500/70 hover:border-red-400"
+                  : "border-zinc-800 hover:border-red-500"
+              }`}
+            >
+              {/* Lanyard Clip Hole */}
+              <div className="w-8 h-2 bg-black border border-zinc-700 rounded-full mx-auto mb-3" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {matkulCertificates.map((cert) => (
-              <motion.div
-                key={cert.title}
-                whileHover={{ scale: 1.05, rotate: 0, zIndex: 20 }}
-                transition={{ type: "spring", stiffness: 320, damping: 20 }}
-                onClick={() => setSelectedCert(cert)}
-                className={`group bg-[#13111a] border-2 border-zinc-800 hover:border-red-500 p-5 rounded-2xl shadow-xl cursor-pointer relative overflow-hidden transition-all duration-300 transform ${cert.rotationClass}`}
-              >
-                {/* Lanyard Clip Hole */}
-                <div className="w-8 h-2 bg-black border border-zinc-700 rounded-full mx-auto mb-4" />
+              {/* Holographic Verification Stamp */}
+              {cert.type === "external" && (
+                <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded bg-red-950/80 border border-red-700/80 text-[8px] font-mono text-red-300">
+                  <Sparkles className="w-2.5 h-2.5 text-amber-400" />
+                  VERIFIED
+                </div>
+              )}
 
+              <div>
                 <div className="flex items-center justify-between mb-3 font-mono">
-                  <div className="w-8 h-8 rounded-lg bg-red-950/80 border border-red-800 flex items-center justify-center text-red-400 group-hover:scale-110 transition-transform">
-                    <Award className="w-4 h-4" />
+                  <div className="w-8 h-8 rounded-lg bg-red-950/80 border border-red-800/80 flex items-center justify-center text-red-400">
+                    {cert.type === "external" ? (
+                      <ShieldCheck className="w-4 h-4" />
+                    ) : (
+                      <Award className="w-4 h-4" />
+                    )}
                   </div>
-                  <span className="text-[10px] font-black text-red-400 bg-red-950/60 px-2.5 py-0.5 rounded border border-red-900/60">
+                  <span className="text-[10px] font-bold text-red-400 bg-red-950/60 px-2 py-0.5 rounded border border-red-900/60">
                     {cert.year}
                   </span>
                 </div>
 
-                <h4 className="text-base font-bold font-mono text-white group-hover:text-red-400 transition-colors line-clamp-2 mb-2">
+                <h4 className="text-base font-black font-mono text-white line-clamp-2 mb-2 leading-tight">
                   {cert.title}
                 </h4>
 
-                <p className="text-xs text-zinc-400 font-sans line-clamp-2 mb-4">
+                <p className="text-xs text-zinc-400 font-sans line-clamp-2 mb-3">
                   {cert.description}
                 </p>
+              </div>
 
-                <div className="pt-3 border-t border-zinc-800 flex items-center justify-between font-mono text-[10px]">
-                  <span className="text-zinc-500 uppercase">{cert.issuer}</span>
-                  <span className="text-red-400 group-hover:underline flex items-center gap-1 font-bold">
-                    INSPECT ↵
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* National & Industry Honors Wall */}
-        <div>
-          <div className="flex items-center justify-between border-b border-zinc-800 pb-3 mb-8 font-mono text-xs">
-            <h3 className="font-bold uppercase text-white tracking-widest flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-amber-400" />
-              <span>{"//"} NATIONAL &amp; INDUSTRY HONORS</span>
-            </h3>
-            <span className="text-zinc-500">KOMDIGI &amp; DICODING ACCREDITED</span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {externalCertificates.map((cert) => (
-              <motion.div
-                key={cert.title}
-                whileHover={{ scale: 1.05, rotate: 0, zIndex: 20 }}
-                transition={{ type: "spring", stiffness: 320, damping: 20 }}
-                onClick={() => setSelectedCert(cert)}
-                className={`group bg-[#161220] border-2 border-red-950/70 hover:border-red-500 p-6 rounded-2xl shadow-xl cursor-pointer relative overflow-hidden transition-all duration-300 transform ${cert.rotationClass}`}
-              >
-                {/* Hologram Stamp */}
-                <div className="absolute top-4 right-4 flex items-center gap-1 px-2.5 py-0.5 rounded bg-red-950 border border-red-700/80 text-[9px] font-mono text-red-300 shadow-md">
-                  <Sparkles className="w-3 h-3 text-amber-400" />
-                  VERIFIED
-                </div>
-
-                <div className="w-10 h-10 rounded-xl bg-red-950 border border-red-700 flex items-center justify-center text-red-400 mb-5">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-
-                <h4 className="text-lg font-bold font-mono text-white group-hover:text-red-400 transition-colors mb-2">
-                  {cert.title}
-                </h4>
-
-                <div className="flex items-center justify-between text-xs font-mono text-zinc-400 mb-3">
-                  <span>{cert.issuer}</span>
-                  <span className="text-red-400 font-bold">{cert.year}</span>
-                </div>
-
-                <p className="text-xs text-zinc-400 font-sans line-clamp-3 mb-5">
-                  {cert.description}
-                </p>
-
-                <div className="text-xs font-mono text-red-400 flex items-center gap-1 font-bold">
-                  <span>VIEW CERTIFICATE</span>
-                  <span>→</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+              <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px]">
+                <span className="text-zinc-500 uppercase">{cert.issuer}</span>
+                <span className="text-red-400 font-bold flex items-center gap-1">
+                  INSPECT ↵
+                </span>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
-      {/* Accessible Fullscreen Modal Popup */}
+      {/* Accessible Fullscreen Modal */}
       <AnimatePresence>
         {selectedCert && (
           <motion.div

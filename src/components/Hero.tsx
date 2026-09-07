@@ -1,203 +1,170 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { Github, Linkedin, Mail, ArrowRight, Disc3, Flame, Radio } from "lucide-react";
+import { useRef, useEffect } from "react";
+import { ArrowRight, ChevronDown, Flame } from "lucide-react";
 import { motion } from "framer-motion";
-import { AudioWaveVisualizer } from "./AudioWaveVisualizer";
-
-// Lazy-load 3D stage guitar with zero SSR overhead
-const ThreeStageGuitar = dynamic(() => import("./ThreeStageGuitar"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="relative w-48 h-48 rounded-full border border-red-500/20 flex items-center justify-center animate-pulse">
-        <Disc3 className="w-16 h-16 text-red-500/40 animate-spin-slow" />
-      </div>
-    </div>
-  ),
-});
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function Hero() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const headlineRef = useRef<HTMLHeadingElement | null>(null);
+  const bottomBoxRef = useRef<HTMLDivElement | null>(null);
+
   const headline = "FERY DWI RAMADHI";
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !containerRef.current || !headlineRef.current) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    const chars = headlineRef.current.querySelectorAll(".hero-char");
+
+    // GSAP ScrollTrigger timeline: as user scrolls down, headline characters scatter and parallax away!
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "+=120%",
+          scrub: 1.2,
+          pin: false,
+        },
+      });
+
+      tl.to(chars, {
+        x: (i) => (i % 2 === 0 ? -120 - i * 15 : 120 + i * 15),
+        y: (i) => -60 - i * 12,
+        opacity: 0.15,
+        stagger: 0.02,
+        ease: "power2.out",
+      });
+
+      if (bottomBoxRef.current) {
+        tl.to(
+          bottomBoxRef.current,
+          {
+            y: 80,
+            opacity: 0,
+            ease: "power2.out",
+          },
+          0
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
+      ref={containerRef}
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16 lg:py-28"
+      className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden pt-28 pb-12 px-6 sm:px-12 lg:pl-28 lg:pr-16 select-none"
     >
-      {/* Concert Spotlight Beam Backgrounds */}
-      <div className="absolute top-0 left-1/4 -translate-x-1/2 w-[700px] h-[700px] bg-red-600/18 rounded-full blur-[150px] -z-10 pointer-events-none" />
-      <div className="absolute top-1/4 right-10 w-[600px] h-[600px] bg-amber-500/12 rounded-full blur-[140px] -z-10 pointer-events-none" />
-      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-full h-[300px] bg-gradient-to-t from-[#08080c] via-transparent to-transparent -z-10 pointer-events-none" />
+      {/* Top Banner Tag */}
+      <div className="relative z-20 pt-4">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-500/50 bg-[#110e19]/90 text-red-400 text-xs font-mono uppercase tracking-widest backdrop-blur-md shadow-[0_0_20px_rgba(255,42,59,0.3)]">
+          <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+          <Flame className="w-3.5 h-3.5 text-red-500" />
+          <span className="font-bold">LIVE STAGE 2026</span>
+          <span className="text-zinc-600">|</span>
+          <span className="text-zinc-300">INDONESIA</span>
+        </div>
+      </div>
 
-      <div className="container mx-auto px-6 md:px-12 flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-8 relative z-10">
-        {/* Main Stage Poster Content */}
-        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 max-w-2xl">
-          {/* Concert Marquee Tour Banner */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-red-500/50 bg-[#140f1a]/80 text-red-400 text-xs font-mono uppercase tracking-widest backdrop-blur-md shadow-[0_0_20px_rgba(255,42,59,0.3)]">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-            <Flame className="w-3.5 h-3.5 text-red-500" />
-            <span className="font-bold">LIVE WORLD TOUR 2026</span>
-            <span className="text-zinc-600">|</span>
-            <span className="text-zinc-300">INDONESIA STAGE</span>
-          </div>
-
-          {/* Huge Staggered Concert Headline */}
-          <div className="space-y-1">
-            <div className="text-xs font-mono uppercase tracking-[0.35em] text-red-500 flex items-center justify-center lg:justify-start gap-2">
-              <Radio className="w-3 h-3 animate-pulse" />
-              <span>{"//"} LEAD DEVELOPER &amp; GUITARIST</span>
-            </div>
-
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight text-white uppercase font-[family-name:var(--font-bebas)] leading-[0.9] text-glow-crimson">
-              {headline.split("").map((char, index) => (
-                <motion.span
-                  key={index}
-                  initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.08 + index * 0.035,
-                    ease: [0.215, 0.61, 0.355, 1],
-                  }}
-                  className={`inline-block ${
-                    char === " " ? "w-4 sm:w-6" : ""
-                  } hover:text-red-500 hover:scale-105 transition-all duration-150 cursor-default`}
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </h1>
-
-            {/* Sub-identity Banner */}
-            <div className="flex items-center justify-center lg:justify-start gap-3 pt-2">
-              <h2 className="text-lg sm:text-2xl font-bold tracking-wider uppercase text-zinc-300 font-mono flex items-center gap-2">
-                <span>Fullstack Developer</span>
-                <span className="text-red-500 font-black text-xl">⚡</span>
-                <span className="text-amber-400">Band Guitarist</span>
-              </h2>
-            </div>
-          </div>
-
-          {/* Lead Bio Description */}
-          <p className="max-w-xl text-base sm:text-lg text-zinc-300 leading-relaxed font-sans">
-            Menulis kode sepresisi ritme metronom, menyusun arsitektur sistem sekuat distorsi panggung. Mengubah kompleksitas masalah menjadi solusi digital yang cepat, tangguh, dan berenergi tinggi.
-          </p>
-
-          {/* Interactive Live Audio Waveform Console */}
-          <div className="w-full max-w-lg pt-1">
-            <AudioWaveVisualizer />
-          </div>
-
-          {/* Concert Ticket CTA Section with Barcode */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 w-full sm:w-auto">
-            {/* VIP Pass Ticket Button */}
-            <a
-              href="#projects"
-              className="relative w-full sm:w-auto px-8 py-4 bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black transition-all shadow-[0_0_30px_rgba(255,42,59,0.5)] flex items-center justify-center gap-3 group border-y-2 border-red-400"
-              style={{
-                clipPath:
-                  "polygon(12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px)",
-              }}
+      {/* Massive Full-Bleed Left-Aligned Headline (Overlapping 3D Musician) */}
+      <div className="relative z-10 w-full my-auto">
+        <h1
+          ref={headlineRef}
+          className="text-[14vw] sm:text-[13vw] lg:text-[12.5vw] font-black tracking-tighter text-white uppercase font-[family-name:var(--font-bebas)] leading-[0.82] select-none text-glow-crimson -ml-2 sm:-ml-4 drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)] max-w-full overflow-visible"
+        >
+          {headline.split("").map((char, index) => (
+            <span
+              key={index}
+              className={`hero-char inline-block ${
+                char === " " ? "w-[4vw]" : ""
+              } hover:text-red-500 transition-colors duration-200 cursor-default`}
             >
-              <div className="flex items-center gap-2">
-                <span>EXPLORE DISCOGRAPHY</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-              </div>
-            </a>
-
-            {/* Concert Booking Stub */}
-            <a
-              href="#contact"
-              className="relative w-full sm:w-auto px-7 py-4 bg-[#14111d] hover:bg-[#1e192c] border border-zinc-700 hover:border-red-500 font-mono text-xs uppercase tracking-widest font-bold text-zinc-200 hover:text-white transition-all flex items-center justify-center gap-2 group shadow-lg"
-              style={{
-                clipPath:
-                  "polygon(12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px)",
-              }}
-            >
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-              <span>BOOK THE SHOW</span>
-            </a>
-          </div>
-
-          {/* Stage Direct Frequencies */}
-          <div className="flex items-center gap-4 pt-3">
-            <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-widest">
-              CHANNEL FREQUENCIES:
+              {char}
             </span>
-            <div className="flex items-center gap-2">
-              <a
-                href="https://github.com/ferydwi-stack"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-lg bg-[#14111d] border border-zinc-800 text-zinc-400 hover:text-white hover:border-red-500 hover:shadow-[0_0_15px_rgba(255,42,59,0.5)] transition-all"
-                aria-label="GitHub"
-              >
-                <Github className="w-4 h-4" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/fery-dwi-575204313"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-lg bg-[#14111d] border border-zinc-800 text-zinc-400 hover:text-white hover:border-red-500 hover:shadow-[0_0_15px_rgba(255,42,59,0.5)] transition-all"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-4 h-4" />
-              </a>
-              <a
-                href="mailto:ferydwir27@gmail.com"
-                className="p-2.5 rounded-lg bg-[#14111d] border border-zinc-800 text-zinc-400 hover:text-white hover:border-red-500 hover:shadow-[0_0_15px_rgba(255,42,59,0.5)] transition-all"
-                aria-label="Email"
-              >
-                <Mail className="w-4 h-4" />
-              </a>
-            </div>
+          ))}
+        </h1>
+
+        <div className="text-xs sm:text-sm font-mono tracking-[0.4em] uppercase text-red-500 mt-3 flex items-center gap-3">
+          <span className="w-6 h-0.5 bg-red-500" />
+          <span>DEVELOPER BY DAY {"//"} GUITARIST BY NIGHT</span>
+        </div>
+      </div>
+
+      {/* Subheading & Concert Ticket CTA in Bottom-Right Corner */}
+      <div
+        ref={bottomBoxRef}
+        className="relative z-20 flex flex-col sm:flex-row sm:items-end justify-between gap-8 pt-6 border-t border-zinc-800/80"
+      >
+        {/* Left Subtext */}
+        <div className="max-w-md space-y-2">
+          <p className="text-sm sm:text-base text-zinc-300 font-sans leading-relaxed">
+            Menulis baris kode sepresisi metronom studio, membangun arsitektur panggung digital sekuat distorsi amplifier.
+          </p>
+          <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+            <span>FREQUENCY: 48kHz</span>
+            <span>•</span>
+            <span className="text-red-400">DROP-D TUNING</span>
           </div>
         </div>
 
-        {/* 3D Guitar Stage Canvas & Floating Amps */}
-        <div className="flex-1 w-full flex justify-center lg:justify-end items-center relative">
-          <div className="relative w-full max-w-[520px] h-[420px] sm:h-[520px] lg:h-[620px]">
-            {/* Ambient Concert Glow Halo */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-red-600/35 via-red-950/20 to-amber-500/25 rounded-full blur-[110px] pointer-events-none" />
-
-            {/* Low-Poly 3D Electric Guitar Scene */}
-            <ThreeStageGuitar />
-
-            {/* Floating Soundboard Gear Badges */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="absolute top-2 right-2 sm:right-6 bg-[#16121f]/95 border-2 border-red-500/50 px-4 py-2.5 rounded-xl shadow-2xl backdrop-blur-md flex items-center gap-3 transform rotate-6 hover:rotate-0 transition-transform cursor-pointer"
+        {/* Right Corner CTA & Bouncing Pick Scroll Indicator */}
+        <div className="flex flex-col sm:items-end gap-5">
+          <div className="flex flex-wrap items-center gap-4">
+            {/* Ticket CTA */}
+            <a
+              href="#projects"
+              className="relative px-8 py-4 bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black transition-all shadow-[0_0_30px_rgba(255,42,59,0.5)] flex items-center justify-center gap-3 group border-y-2 border-red-400 cursor-pointer"
+              style={{
+                clipPath:
+                  "polygon(10px 0%, calc(100% - 10px) 0%, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0% calc(100% - 10px), 0% 10px)",
+              }}
             >
-              <span className="text-red-500 text-xl">🎸</span>
-              <div className="text-left font-mono">
-                <div className="text-[9px] text-zinc-400 uppercase tracking-widest">
-                  GUITAR TUNING
-                </div>
-                <div className="text-xs font-black text-white">
-                  DROP-D / DISTORTION
-                </div>
-              </div>
-            </motion.div>
+              <span>SEE DISCOGRAPHY</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+            </a>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
-              className="absolute bottom-4 left-2 sm:left-4 bg-[#16121f]/95 border-2 border-amber-500/50 px-4 py-2.5 rounded-xl shadow-2xl backdrop-blur-md flex items-center gap-3 transform -rotate-6 hover:rotate-0 transition-transform cursor-pointer"
+            <a
+              href="#contact"
+              className="relative px-7 py-4 bg-[#14111d] hover:bg-zinc-900 border border-zinc-700 hover:border-red-500 font-mono text-xs uppercase tracking-widest font-bold text-zinc-200 hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+              style={{
+                clipPath:
+                  "polygon(10px 0%, calc(100% - 10px) 0%, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0% calc(100% - 10px), 0% 10px)",
+              }}
             >
-              <span className="text-amber-400 text-xl">⚡</span>
-              <div className="text-left font-mono">
-                <div className="text-[9px] text-zinc-400 uppercase tracking-widest">
-                  TECH STACK
-                </div>
-                <div className="text-xs font-black text-white">
-                  FULLSTACK ENGINE
-                </div>
-              </div>
+              <span>BOOK GIG</span>
+              <span className="text-red-500">⚡</span>
+            </a>
+          </div>
+
+          {/* Bouncing Guitar Pick Scroll Indicator */}
+          <div className="flex items-center gap-2.5 font-mono text-[10px] text-zinc-400">
+            <span className="tracking-widest uppercase">SCROLL TO ENTER VENUE</span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+              className="w-5 h-6 flex items-center justify-center"
+            >
+              {/* Guitar Pick Shape */}
+              <svg width="18" height="22" viewBox="0 0 24 28" fill="none" className="text-red-500">
+                <path
+                  d="M12 26C8 20 2 12 2 6C2 2.5 6 1 12 1C18 1 22 2.5 22 6C22 12 16 20 12 26Z"
+                  fill="#ff2a3b"
+                  stroke="#ffffff"
+                  strokeWidth="1.5"
+                />
+                <circle cx="12" cy="8" r="2" fill="#ffffff" />
+              </svg>
             </motion.div>
+            <ChevronDown className="w-3.5 h-3.5 text-red-500" />
           </div>
         </div>
       </div>
