@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Mail, MessageSquare, Send, Linkedin, CheckCircle2, Radio } from "lucide-react";
+import { Mail, MessageSquare, Send, Linkedin, CheckCircle2, Radio, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PERSONAL_INFO } from "@/lib/data/portfolioData";
 import { useContactTimeline } from "@/animations/useContactTimeline";
@@ -29,14 +29,34 @@ export function Contact() {
     setIsSubmitting(true);
     playStompClick();
 
+    // Construct formatted WhatsApp message
+    const formattedMessage = [
+      `*PESAN PORTOFOLIO WEBSITE*`,
+      `*Nama:* ${formState.name}`,
+      `*Email:* ${formState.email}`,
+      `*Subjek:* ${formState.subject}`,
+      ``,
+      `*Detail Pesan:*`,
+      `${formState.message}`,
+    ].join("\n");
+
+    const waUrl = `https://wa.me/6282183458754?text=${encodeURIComponent(formattedMessage)}`;
+
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
       playGuitarChord(164.81); // Bright triumph rock chord
+
+      // Open WhatsApp directly in new window
+      if (typeof window !== "undefined") {
+        window.open(waUrl, "_blank", "noopener,noreferrer");
+      }
+
       setFormState({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setIsSubmitted(false), 4500);
-    }, 1000);
+    }, 800);
   };
+
 
   return (
     <section
@@ -141,15 +161,17 @@ export function Contact() {
           >
             <div className="border-b border-zinc-800 pb-4 flex items-center justify-between font-mono">
               <div>
-                <h3 className="text-xl font-bold uppercase text-white tracking-wide">
-                  KIRIM PESAN &amp; KONSULTASI
+                <h3 className="text-xl font-bold uppercase text-white tracking-wide flex items-center gap-2">
+                  <span>KIRIM PESAN &amp; KONSULTASI</span>
+                  <span className="text-emerald-400 text-xs px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-600/50">WA</span>
                 </h3>
-                <p className="text-xs text-zinc-500">
-                  Isi formulir di bawah untuk memulai diskusi proyek Anda.
+                <p className="text-xs text-zinc-400 mt-0.5">
+                  Isi formulir di bawah, pesan akan otomatis terformat &amp; diteruskan ke WhatsApp resmi.
                 </p>
               </div>
-              <span className="text-xs text-red-400 font-bold bg-red-950/60 px-2.5 py-1 rounded border border-red-900">
-                FORMULIR KONTAK
+              <span className="text-xs text-emerald-400 font-bold bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-600/60 flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span>WHATSAPP DIRECT</span>
               </span>
             </div>
 
@@ -168,7 +190,7 @@ export function Contact() {
                   required
                   value={formState.name}
                   onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                  className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-red-500 text-white font-sans text-base placeholder:text-zinc-600 transition-colors"
+                  className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-emerald-500 text-white font-sans text-base placeholder:text-zinc-600 transition-colors"
                   placeholder="John Doe"
                 />
               </div>
@@ -187,7 +209,7 @@ export function Contact() {
                   required
                   value={formState.email}
                   onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                  className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-red-500 text-white font-sans text-base placeholder:text-zinc-600 transition-colors"
+                  className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-emerald-500 text-white font-sans text-base placeholder:text-zinc-600 transition-colors"
                   placeholder="name@company.com"
                 />
               </div>
@@ -207,7 +229,7 @@ export function Contact() {
                 required
                 value={formState.subject}
                 onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
-                className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-red-500 text-white font-sans text-base placeholder:text-zinc-600 transition-colors"
+                className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-emerald-500 text-white font-sans text-base placeholder:text-zinc-600 transition-colors"
                 placeholder="Tawaran Proyek / Diskusi Teknis"
               />
             </div>
@@ -226,7 +248,7 @@ export function Contact() {
                 required
                 value={formState.message}
                 onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-red-500 text-white font-sans text-base placeholder:text-zinc-600 resize-none transition-colors"
+                className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-emerald-500 text-white font-sans text-base placeholder:text-zinc-600 resize-none transition-colors"
                 placeholder="Tuliskan spesifikasi sistem, ruang lingkup proyek, target waktu, atau pertanyaan teknis Anda..."
               />
             </div>
@@ -235,23 +257,25 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting || isSubmitted}
-                className="relative w-full py-4 bg-red-600 hover:bg-red-500 text-white rounded-xl font-mono text-xs uppercase tracking-widest font-black transition-all flex items-center justify-center gap-2 group disabled:opacity-75 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(255,42,59,0.5)] cursor-pointer overflow-hidden"
-                data-cursor-text="KIRIM"
+                className="relative w-full py-4 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-600 hover:from-emerald-500 hover:to-green-500 text-white rounded-xl font-mono text-xs uppercase tracking-widest font-black transition-all flex items-center justify-center gap-2.5 group disabled:opacity-75 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(16,185,129,0.5)] cursor-pointer overflow-hidden border border-emerald-400/40 active:scale-95"
+                data-cursor-text="WHATSAPP"
               >
                 {isSubmitting ? (
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : isSubmitted ? (
                   <>
-                    <CheckCircle2 className="w-4 h-4 text-emerald-300" />
-                    <span className="text-emerald-200">PESAN BERHASIL TERKIRIM // TERIMA KASIH</span>
+                    <CheckCircle2 className="w-4 h-4 text-white" />
+                    <span className="text-white font-bold">MEMBUKA WHATSAPP // PESAN DITERUSKAN</span>
                   </>
                 ) : (
                   <>
-                    <span>KIRIM PESAN SEKARANG</span>
+                    <MessageCircle className="w-4 h-4 text-emerald-100 group-hover:scale-110 transition-transform" />
+                    <span>KIRIM PESAN KE WHATSAPP</span>
                     <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </>
                 )}
               </button>
+
 
               {/* Spark Burst Confirmation Micro-interaction */}
               <AnimatePresence>
