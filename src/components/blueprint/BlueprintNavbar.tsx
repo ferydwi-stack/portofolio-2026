@@ -81,15 +81,21 @@ export function BlueprintNavbar() {
             </div>
           </button>
 
-          {/* Sound Toggle Button */}
+          {/* Sound Toggle Button with Equalizer */}
           <button
             onClick={handleToggleSound}
             onMouseEnter={playHoverTick}
-            className="p-1.5 rounded-full bg-slate-800 hover:bg-cyan-950 text-slate-400 hover:text-cyan-300 transition-colors border border-slate-700 cursor-pointer ml-1"
+            className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-slate-800 hover:bg-cyan-950 text-slate-400 hover:text-cyan-300 transition-colors border border-slate-700 cursor-pointer ml-1"
             title={isMuted ? "Aktifkan Efek Suara" : "Bisukan Efek Suara"}
             aria-label="Toggle Sound"
           >
             {isMuted ? <VolumeX className="w-3.5 h-3.5 text-red-400" /> : <Volume2 className="w-3.5 h-3.5 text-cyan-400" />}
+            <div className="flex items-end gap-0.5 h-3">
+              <span className={`w-0.5 rounded-full bg-cyan-400 transition-all duration-200 ${!isMuted ? 'h-2.5 animate-pulse' : 'h-0.5 opacity-30'}`} />
+              <span className={`w-0.5 rounded-full bg-teal-400 transition-all duration-200 ${!isMuted ? 'h-3 animate-pulse delay-75' : 'h-0.5 opacity-30'}`} />
+              <span className={`w-0.5 rounded-full bg-sky-400 transition-all duration-200 ${!isMuted ? 'h-2 animate-pulse delay-150' : 'h-0.5 opacity-30'}`} />
+              <span className={`w-0.5 rounded-full bg-emerald-400 transition-all duration-200 ${!isMuted ? 'h-2.5 animate-pulse delay-100' : 'h-0.5 opacity-30'}`} />
+            </div>
           </button>
         </div>
       </header>

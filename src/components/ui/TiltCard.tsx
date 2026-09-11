@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { motion, useSpring, useMotionValue, useTransform } from "framer-motion";
+import { playHoverTick } from "@/lib/sound/cyberSound";
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -48,6 +49,7 @@ export function TiltCard({
 
   const handleMouseEnter = () => {
     setIsHovered(true);
+    playHoverTick();
   };
 
   const handleMouseLeave = () => {
