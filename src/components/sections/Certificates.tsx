@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Award, ShieldCheck, X, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CERTIFICATES, Certificate } from "@/lib/data/portfolioData";
+import { TiltCard } from "@/components/ui/TiltCard";
 
 export function Certificates() {
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
@@ -42,58 +43,61 @@ export function Certificates() {
           </div>
         </div>
 
-        {/* Curated Gallery Grid */}
+        {/* 3D Curated Gallery Grid with TiltCards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-12">
           {CERTIFICATES.map((cert) => {
             return (
-              <div
+              <TiltCard
                 key={cert.id}
+                tiltMaxAngle={9}
                 onClick={() => handleInspectCert(cert)}
-                className="group relative p-5 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between cursor-pointer transform hover:-translate-y-1 backdrop-blur-xs hover:shadow-[0_8px_30px_rgba(79,209,197,0.08)]"
+                className="h-full cursor-pointer group"
               >
-                {/* Tech node dot indicator */}
-                <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-800/80 font-mono text-[10px] text-slate-500">
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                    CERT-{(cert.id).toUpperCase()}
-                  </span>
-                  <span className="px-2 py-0.5 rounded bg-cyan-950/40 text-cyan-300 border border-cyan-500/20 font-bold">
-                    {cert.year}
-                  </span>
-                </div>
-
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-9 h-9 rounded-xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-cyan-400 group-hover:border-cyan-500/40 transition-colors">
-                      {cert.type === "external" ? (
-                        <ShieldCheck className="w-4 h-4" />
-                      ) : (
-                        <Award className="w-4 h-4" />
-                      )}
-                    </div>
-                    <span className="text-[11px] font-mono text-slate-400 uppercase truncate">
-                      {cert.issuer}
+                <div className="h-full p-5 rounded-2xl bg-slate-900/60 border border-slate-800/90 hover:border-cyan-500/50 transition-colors duration-300 flex flex-col justify-between backdrop-blur-md shadow-lg shadow-black/40">
+                  {/* Tech node dot indicator */}
+                  <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-800/80 font-mono text-[10px] text-slate-500">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                      CERT-{(cert.id).toUpperCase()}
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-cyan-950/40 text-cyan-300 border border-cyan-500/20 font-bold">
+                      {cert.year}
                     </span>
                   </div>
 
-                  <h3 className="text-sm font-bold text-white line-clamp-2 mb-1.5 leading-snug group-hover:text-cyan-300 transition-colors">
-                    {cert.title}
-                  </h3>
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-9 h-9 rounded-xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-cyan-400 group-hover:border-cyan-500/40 transition-colors">
+                        {cert.type === "external" ? (
+                          <ShieldCheck className="w-4 h-4" />
+                        ) : (
+                          <Award className="w-4 h-4" />
+                        )}
+                      </div>
+                      <span className="text-[11px] font-mono text-slate-400 uppercase truncate">
+                        {cert.issuer}
+                      </span>
+                    </div>
 
-                  <p className="text-xs text-slate-400 line-clamp-2 mb-4 leading-relaxed">
-                    {cert.description}
-                  </p>
-                </div>
+                    <h3 className="text-sm font-bold text-white line-clamp-2 mb-1.5 leading-snug group-hover:text-cyan-300 transition-colors">
+                      {cert.title}
+                    </h3>
 
-                <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between font-mono text-[11px]">
-                  <span className="text-emerald-400 flex items-center gap-1 text-[10px]">
-                    <CheckCircle className="w-3 h-3" /> VERIFIED
-                  </span>
-                  <span className="text-cyan-400 font-bold group-hover:text-cyan-300 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                    LIHAT &rarr;
-                  </span>
+                    <p className="text-xs text-slate-400 line-clamp-2 mb-4 leading-relaxed">
+                      {cert.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between font-mono text-[11px]">
+                    <span className="text-emerald-400 flex items-center gap-1 text-[10px]">
+                      <CheckCircle className="w-3 h-3" /> VERIFIED
+                    </span>
+                    <span className="text-cyan-400 font-bold group-hover:text-cyan-300 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                      LIHAT &rarr;
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </TiltCard>
             );
           })}
         </div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { BlueprintNavbar } from "@/components/blueprint/BlueprintNavbar";
 import { SkipToContent } from "@/components/ui/SkipToContent";
+import { ClientSceneWrapper } from "@/components/blueprint/ClientSceneWrapper";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -41,6 +42,9 @@ export default function RootLayout({
       >
         {/* Skip Link for Accessibility */}
         <SkipToContent />
+
+        {/* Global 3D Space Scene & Tech Cursor */}
+        <ClientSceneWrapper />
 
         <SmoothScrollProvider>
           {/* Blueprint Navigation */}

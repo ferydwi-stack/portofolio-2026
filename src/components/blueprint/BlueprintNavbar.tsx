@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, User, Cpu, FolderGit2, Award, Send, Menu, X } from "lucide-react";
+import { Terminal, User, Cpu, FolderGit2, Award, Send, Menu, X, Volume2, VolumeX } from "lucide-react";
 import { useLenis } from "@/hooks/useLenis";
+import { playHoverTick, playCyberClick, toggleMuteSound } from "@/lib/sound/cyberSound";
 
 const NAV_ITEMS = [
   { id: "hero", label: "Beranda", icon: Terminal },
@@ -18,6 +19,7 @@ export function BlueprintNavbar() {
   const { scrollTo } = useLenis();
   const [activeSection, setActiveSection] = useState("hero");
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -44,32 +46,52 @@ export function BlueprintNavbar() {
   }, []);
 
   const handleNavClick = (id: string) => {
+    playCyberClick();
     setIsMobileOpen(false);
     scrollTo(`#${id}`, { duration: 1.1 });
   };
 
+  const handleToggleSound = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const muted = toggleMuteSound();
+    setIsMuted(muted);
+  };
+
   return (
     <>
-      {/* Top Left Compile Header Badge */}
-      <header className="fixed top-4 left-4 sm:left-8 z-50 flex items-center gap-3 select-none pointer-events-auto bg-[#111827]/90 backdrop-blur-xl px-3.5 py-1.5 rounded-full border border-[#1E293B] shadow-lg shadow-black/20">
-        <button
-          onClick={() => handleNavClick("hero")}
-          className="flex items-center gap-2.5 cursor-pointer text-left group"
-          aria-label="Kembali ke atas"
-        >
-          {/* Compile Logo Icon */}
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#4FD1C5] to-[#38BDF8] flex items-center justify-center shadow-md shadow-[#4FD1C5]/20">
-            <Terminal className="w-4 h-4 text-[#0A0F1A]" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-[11px] sm:text-xs font-mono font-black text-[#E2E8F0] tracking-wider uppercase">
-              FERY DWI RAMADHI
-            </span>
-            <span className="text-[9px] font-mono text-[#4FD1C5] font-bold tracking-tight">
-              v2.0 // FULLSTACK DEVELOPER
-            </span>
-          </div>
-        </button>
+      {/* Top Left Compile Header Badge with Audio Toggle */}
+      <header className="fixed top-4 left-4 sm:left-8 z-50 flex items-center gap-2 select-none pointer-events-auto">
+        <div className="flex items-center gap-3 bg-[#111827]/90 backdrop-blur-xl px-3.5 py-1.5 rounded-full border border-[#1E293B] shadow-lg shadow-black/20">
+          <button
+            onClick={() => handleNavClick("hero")}
+            className="flex items-center gap-2.5 cursor-pointer text-left group"
+            aria-label="Kembali ke atas"
+          >
+            {/* Compile Logo Icon */}
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#4FD1C5] to-[#38BDF8] flex items-center justify-center shadow-md shadow-[#4FD1C5]/20">
+              <Terminal className="w-4 h-4 text-[#0A0F1A]" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[11px] sm:text-xs font-mono font-black text-[#E2E8F0] tracking-wider uppercase">
+                FERY DWI RAMADHI
+              </span>
+              <span className="text-[9px] font-mono text-[#4FD1C5] font-bold tracking-tight">
+                v2.0 // FULLSTACK DEVELOPER
+              </span>
+            </div>
+          </button>
+
+          {/* Sound Toggle Button */}
+          <button
+            onClick={handleToggleSound}
+            onMouseEnter={playHoverTick}
+            className="p-1.5 rounded-full bg-slate-800 hover:bg-cyan-950 text-slate-400 hover:text-cyan-300 transition-colors border border-slate-700 cursor-pointer ml-1"
+            title={isMuted ? "Aktifkan Efek Suara" : "Bisukan Efek Suara"}
+            aria-label="Toggle Sound"
+          >
+            {isMuted ? <VolumeX className="w-3.5 h-3.5 text-red-400" /> : <Volume2 className="w-3.5 h-3.5 text-cyan-400" />}
+          </button>
+        </div>
       </header>
 
       {/* Floating Center-Bottom Navigation Dock */}
@@ -86,6 +108,7 @@ export function BlueprintNavbar() {
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
+                onMouseEnter={playHoverTick}
                 className={`relative px-4 py-2 rounded-full flex items-center gap-2 text-xs font-mono font-medium transition-all duration-300 cursor-pointer ${
                   isActive
                     ? "text-[#0A0F1A] font-bold"
@@ -110,7 +133,10 @@ export function BlueprintNavbar() {
       {/* Mobile Hamburger Floating Button */}
       <div className="md:hidden fixed bottom-6 right-5 z-50">
         <button
-          onClick={() => setIsMobileOpen(!isMobileOpen)}
+          onClick={() => {
+            playCyberClick();
+            setIsMobileOpen(!isMobileOpen);
+          }}
           className="p-3.5 rounded-full bg-[#111827] text-[#4FD1C5] border border-[#1E293B] shadow-2xl shadow-black/30 cursor-pointer"
           aria-label="Toggle Menu"
         >
