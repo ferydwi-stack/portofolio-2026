@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Caveat, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
-import { RetroNavbar } from "@/components/photobooth/RetroNavbar";
+import { BlueprintNavbar } from "@/components/blueprint/BlueprintNavbar";
 import { SkipToContent } from "@/components/ui/SkipToContent";
-import { PhotoboothCursor } from "@/components/photobooth/PhotoboothCursor";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space",
-  display: "swap",
-});
-
-const caveat = Caveat({
-  subsets: ["latin"],
-  variable: "--font-caveat",
   display: "swap",
 });
 
@@ -44,17 +37,14 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${caveat.variable} ${jetbrainsMono.variable} font-sans antialiased bg-[#FAF8F5] text-[#1C1A18] min-h-screen relative selection:bg-[#F5B738] selection:text-[#181615] overflow-x-hidden`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased bg-[#0A0F1A] text-[#E2E8F0] min-h-screen relative overflow-x-hidden`}
       >
         {/* Skip Link for Accessibility */}
         <SkipToContent />
 
-        {/* Custom Photobooth Cursor */}
-        <PhotoboothCursor />
-
         <SmoothScrollProvider>
-          {/* Floating Retro Studio Navigation */}
-          <RetroNavbar />
+          {/* Blueprint Navigation */}
+          <BlueprintNavbar />
 
           <main id="main-content" className="min-h-screen relative z-10">
             {children}

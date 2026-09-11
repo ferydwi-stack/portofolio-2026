@@ -1,5 +1,5 @@
-import { FlashOverlay } from "@/components/photobooth/FlashOverlay";
-import { FilmstripDivider } from "@/components/photobooth/FilmstripDivider";
+import { BootSequence } from "@/components/blueprint/BootSequence";
+import { BlueprintDivider } from "@/components/blueprint/BlueprintDivider";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
@@ -11,38 +11,38 @@ import { Footer } from "@/components/sections/Footer";
 export default function Home() {
   return (
     <>
-      {/* Photobooth Flash Effect on Page Load */}
-      <FlashOverlay duration={0.6} />
+      {/* Terminal Boot Sequence on First Visit */}
+      <BootSequence />
 
-      {/* 1. Hero Studio Section */}
+      {/* 1. Hero Section */}
       <Hero />
 
-      <FilmstripDivider label="PROFIL &bull; PENGALAMAN &bull; REKAYASA" />
+      <BlueprintDivider label="PROFIL // PENGALAMAN // REKAYASA" />
 
-      {/* 2. About Scrapbook Section */}
+      {/* 2. About Section */}
       <About />
 
-      <FilmstripDivider label="KEAHLIAN &bull; STACK &bull; TEKNOLOGI" />
+      <BlueprintDivider label="KEAHLIAN // STACK // TEKNOLOGI" />
 
-      {/* 3. Skills Contact Sheet Section */}
+      {/* 3. Skills Section */}
       <Skills />
 
-      <FilmstripDivider label="PORTOFOLIO &bull; PROYEK &bull; HASIL KARYA" />
+      <BlueprintDivider label="PORTOFOLIO // PROYEK // HASIL KARYA" />
 
-      {/* 4. Projects Filmstrip Section */}
+      {/* 4. Projects Section */}
       <Projects />
 
-      <FilmstripDivider label="SERTIFIKASI &bull; LISENSI RESMI" />
+      <BlueprintDivider label="SERTIFIKASI // LISENSI RESMI" />
 
-      {/* 5. Certificates Pinboard Section */}
+      {/* 5. Certificates Section */}
       <Certificates />
 
-      <FilmstripDivider label="KONTAK &bull; KOLABORASI &bull; DISKUSI" />
+      <BlueprintDivider label="KONTAK // KOLABORASI // DISKUSI" />
 
-      {/* 6. Contact Postcard Section */}
+      {/* 6. Contact Section */}
       <Contact />
 
-      {/* 7. Footer Section with End-of-roll styling */}
+      {/* 7. Footer */}
       <Footer />
     </>
   );
