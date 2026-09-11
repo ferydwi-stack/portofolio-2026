@@ -1,249 +1,155 @@
 "use client";
 
-import { useRef } from "react";
-import { Radio, Flame, Sparkles, Globe, Smartphone } from "lucide-react";
+import { useState } from "react";
+import { Layers, Globe, Smartphone, Check } from "lucide-react";
 import { TECH_DOMAINS, TechDomain, TechCard, TechCardItem } from "@/lib/data/portfolioData";
-import { useSkillsTimeline } from "@/animations/useSkillsTimeline";
-import { playGuitarChord } from "@/lib/sound/guitarSynth";
-import { TechLogo, getTechBrandColor } from "@/components/ui/TechLogos";
-
-// 1/4" Guitar Jack Plug & Vibrating Guitar String Graphic Component
-function GuitarJackPlugString() {
-  return (
-    <div className="flex items-center gap-2" title="Audio Jack & Vibrating Guitar Strings">
-      {/* 1/4" Audio Jack Plug */}
-      <svg width="26" height="13" viewBox="0 0 26 13" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-        <polygon points="1,6.5 5,4 5,9" fill="#e11d2e" />
-        <rect x="5" y="4.5" width="2" height="4" fill="#222" />
-        <rect x="7" y="5" width="4" height="3" fill="#b8bcc2" />
-        <rect x="11" y="2.5" width="10" height="8" rx="1.5" fill="#14101d" stroke="#e11d2e" strokeWidth="1" />
-        <line x1="14" y1="3" x2="14" y2="10" stroke="#444" strokeWidth="0.8" />
-        <line x1="17" y1="3" x2="17" y2="10" stroke="#444" strokeWidth="0.8" />
-        <rect x="21" y="4" width="4" height="5" rx="1" fill="#222" />
-        <line x1="25" y1="6.5" x2="26" y2="6.5" stroke="#e11d2e" strokeWidth="1.5" />
-      </svg>
-
-      {/* 4 Oscillating Vibrating Guitar Strings */}
-      <div className="flex flex-col justify-center gap-[2px] w-12 sm:w-16 h-3.5 overflow-hidden">
-        <span className="w-full h-[1.5px] bg-gradient-to-r from-red-500 to-amber-400 shadow-[0_0_5px_#e11d2e] animate-guitar-string origin-center" style={{ animationDelay: "0s" }} />
-        <span className="w-full h-[1px] bg-zinc-300 shadow-[0_0_3px_#fff] animate-guitar-string origin-center" style={{ animationDelay: "0.08s" }} />
-        <span className="w-full h-[1.5px] bg-red-400 shadow-[0_0_4px_#e11d2e] animate-guitar-string origin-center" style={{ animationDelay: "0.16s" }} />
-        <span className="w-full h-[1px] bg-zinc-400 animate-guitar-string origin-center" style={{ animationDelay: "0.04s" }} />
-      </div>
-    </div>
-  );
-}
+import { TechLogo } from "@/components/ui/TechLogos";
+import { playShutterSound } from "@/lib/sound/shutterSound";
 
 export function Skills() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [activeDomainId, setActiveDomainId] = useState<string>("web-dev");
 
-  // Connect GSAP scroll reveal timeline
-  useSkillsTimeline({ sectionRef });
+  const currentDomain = TECH_DOMAINS.find((d) => d.id === activeDomainId) || TECH_DOMAINS[0];
 
-  const handlePlaySongChord = (index: number) => {
-    const chords = [82.41, 110.0, 98.0, 123.47, 146.83, 164.81, 130.81, 87.31, 174.61, 73.42, 196.0, 220.0];
-    playGuitarChord(chords[index % chords.length]);
+  const handleDomainChange = (id: string) => {
+    playShutterSound();
+    setActiveDomainId(id);
   };
 
   return (
     <section
-      ref={sectionRef}
       id="skills"
-      className="relative w-full py-24 sm:py-32 px-4 sm:px-10 lg:px-20 select-none overflow-hidden"
+      className="relative w-full py-24 sm:py-32 px-5 sm:px-10 lg:px-16 paper-grain select-none overflow-hidden"
     >
-      {/* Background Section Watermark */}
-      <div
-        className="absolute left-6 top-1/4 -translate-y-1/2 font-[family-name:var(--font-bebas)] text-[18vw] font-black text-white/[0.02] pointer-events-none select-none tracking-widest leading-none"
-        aria-hidden="true"
-      >
-        STACK
-      </div>
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <div className="pb-12 sm:pb-16 flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-[#E5DFC8]">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F3EFE6] border border-[#E5DFC8] text-xs font-mono text-[#1C1A18]">
+              <Layers className="w-3.5 h-3.5 text-[#F5B738]" />
+              <span className="font-bold uppercase tracking-wider">KEAHLIAN TEKNIS // TECH ECOSYSTEM</span>
+            </div>
 
-      {/* Header Bar */}
-      <div className="pb-12 sm:pb-16 flex flex-col sm:flex-row sm:items-end justify-between gap-6 relative z-10">
-        <div className="space-y-3">
-          {/* Label with Guitar Plug & Vibrating Guitar Strings */}
-          <div className="inline-flex items-center gap-2.5 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3.5 py-1.5 rounded-lg border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
-            <GuitarJackPlugString />
-            <span>PENGUASAAN TEKNOLOGI &amp; TOOLS</span>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#1C1A18] tracking-tight uppercase">
+              Keahlian &amp; Ekosistem Teknologi.
+            </h2>
+            <p className="text-sm sm:text-base text-[#5A554E] max-w-2xl leading-relaxed">
+              Bahasa pemrograman, kerangka kerja, basis data, dan perangkat pendukung rekayasa perangkat lunak yang saya kuasai untuk membangun solusi skala produksi.
+            </p>
           </div>
 
-          <h2 className="headline-section text-3xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-wider text-white leading-tight">
-            Klasifikasi Stack &amp; Perangkat Kerja
-          </h2>
-          <p className="text-xs sm:text-base font-sans text-zinc-400 max-w-2xl leading-relaxed">
-            Struktur penguasaan teknologi terbagi menjadi dua ranah utama: Website Development (Frontend, Backend &amp; Database, Tools &amp; Deployment) serta Mobile Development (Bahasa &amp; Framework, Backend &amp; Database).
+          {/* Film Roll Switcher Tabs */}
+          <div className="flex items-center gap-2 p-1.5 rounded-xl bg-[#181615] border border-[#383531] text-xs font-mono">
+            {TECH_DOMAINS.map((domain: TechDomain) => {
+              const isActive = activeDomainId === domain.id;
+              return (
+                <button
+                  key={domain.id}
+                  onClick={() => handleDomainChange(domain.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition-all cursor-pointer ${
+                    isActive
+                      ? "bg-[#F5B738] text-[#181615] shadow-xs"
+                      : "text-[#FAF8F5]/70 hover:text-white"
+                  }`}
+                >
+                  {domain.id === "web-dev" ? (
+                    <Globe className="w-3.5 h-3.5" />
+                  ) : (
+                    <Smartphone className="w-3.5 h-3.5" />
+                  )}
+                  <span>{domain.id === "web-dev" ? "WEB ENGINEERING" : "MOBILE APPS"}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Active Domain Info Bar */}
+        <div className="py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono text-[#7A7568]">
+          <div>
+            <span className="text-[#E24332] font-bold uppercase">{currentDomain.tag}</span>
+            <h3 className="text-lg sm:text-xl font-black text-[#1C1A18] uppercase mt-0.5">
+              {currentDomain.title}
+            </h3>
+          </div>
+          <p className="max-w-md text-right sm:text-right text-[11px]">
+            {currentDomain.subtitle}
           </p>
         </div>
 
-        <div className="text-xs font-mono text-zinc-500 flex items-center gap-2 self-start sm:self-end">
-          <span className="text-red-400 font-bold bg-red-950/60 px-3.5 py-1.5 rounded-lg border border-red-900/60 tracking-wider">
-            5 KATEGORI TERSTRUKTUR
-          </span>
-        </div>
-      </div>
-
-      {/* Sub-Judul & Card Groups */}
-      <div className="space-y-16 sm:space-y-20 relative z-10">
-        {TECH_DOMAINS.map((domain: TechDomain, domainIdx: number) => {
-          const isWeb = domain.id === "web-dev";
-
-          return (
-            <div key={domain.id} className="tech-domain-group space-y-6 sm:space-y-8">
-              {/* Domain Sub-Judul Header */}
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 border-b border-zinc-800/80 pb-4">
-                <div className="space-y-1.5">
-                  <div className="inline-flex items-center gap-2 text-[11px] font-mono font-bold tracking-widest text-red-400 uppercase">
-                    {isWeb ? <Globe className="w-3.5 h-3.5" /> : <Smartphone className="w-3.5 h-3.5" />}
-                    <span>{domain.tag}</span>
+        {/* Contact Sheet Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+          {currentDomain.cards.map((card: TechCard, idx: number) => {
+            return (
+              <div
+                key={card.id}
+                onClick={playShutterSound}
+                className="group relative p-5 rounded-2xl bg-white border border-[#E5DFC8] hover:border-[#F5B738] polaroid-card-shadow transition-all duration-300 flex flex-col justify-between cursor-pointer transform hover:-translate-y-1"
+                data-cursor-text="CEKREK"
+              >
+                {/* Sprocket Holes Deco Strip on Top of Card */}
+                <div className="flex items-center justify-between pb-3 border-b border-[#ECE7D8] text-[10px] font-mono">
+                  <div className="flex items-center gap-1.5 font-bold text-[#1C1A18]">
+                    <span className="w-4 h-4 rounded-full bg-[#181615] text-[#F5B738] flex items-center justify-center text-[9px]">
+                      {idx + 1}
+                    </span>
+                    <span className="uppercase tracking-wider">{card.title}</span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-wide text-white font-sans">
-                    {domain.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-zinc-400 font-sans">
-                    {domain.subtitle}
-                  </p>
+                  <span className="px-2 py-0.5 rounded bg-[#FAF8F5] border border-[#E5DFC8] text-[#E24332] font-semibold">
+                    {card.badge}
+                  </span>
                 </div>
 
-                <span className="font-mono text-xs text-zinc-500 bg-zinc-900/90 px-3 py-1 rounded-md border border-zinc-800 self-start md:self-auto">
-                  {domain.cards.length} CARD EQUAL DIMENSION // 0{domainIdx + 1}
-                </span>
-              </div>
+                {/* Subtitle / Role */}
+                <p className="text-xs text-[#7A7568] font-mono py-2 line-clamp-1">
+                  {card.role}
+                </p>
 
-              {/* Symmetrical Cards Grid: 3 columns for Web, 2 balanced columns for Mobile */}
-              <div
-                className={`grid gap-6 items-stretch ${
-                  isWeb
-                    ? "grid-cols-1 md:grid-cols-3"
-                    : "grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto"
-                }`}
-              >
-                {domain.cards.map((card: TechCard, cardIdx: number) => {
-                  return (
+                {/* Items List */}
+                <div className="space-y-2 py-2">
+                  {card.items.map((item: TechCardItem) => (
                     <div
-                      key={card.id}
-                      className={`tech-card relative rounded-3xl bg-[#0e0b16]/95 border-2 border-zinc-800 hover:border-red-500/60 p-5 sm:p-6 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] flex flex-col justify-between h-full transition-all duration-300 group ${
-                        isWeb ? "min-h-[520px] sm:min-h-[560px]" : "min-h-[440px] sm:min-h-[480px]"
-                      }`}
+                      key={item.name}
+                      className="flex items-center justify-between p-2.5 rounded-xl bg-[#FAF8F5] group-hover:bg-white border border-[#E5DFC8] transition-colors"
                     >
-                      {/* Giant Faint Side Watermark in Background */}
-                      <div
-                        className="absolute right-5 bottom-4 font-[family-name:var(--font-bebas)] text-6xl sm:text-7xl font-normal text-white/[0.025] pointer-events-none select-none leading-none tracking-wider"
-                        aria-hidden="true"
-                      >
-                        {card.watermark}
-                      </div>
-
-                      {/* Card Header */}
-                      <div className="relative z-10 border-b border-zinc-800/90 pb-3 mb-3">
-                        <div className="flex items-center justify-between gap-2 mb-1.5">
-                          <span className="text-[11px] font-mono font-bold text-red-500 tracking-wider uppercase bg-red-950/40 px-2.5 py-0.5 rounded border border-red-900/40">
-                            {card.badge}
-                          </span>
-                          <div className="w-6 h-6 rounded-full border border-zinc-700 flex items-center justify-center font-mono text-[10px] text-zinc-400 font-bold">
-                            {card.number}
-                          </div>
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-white border border-[#DDD5C5] shadow-xs">
+                          <TechLogo name={item.name} size={16} />
                         </div>
-
-                        <h4 className="text-lg sm:text-xl font-bold text-white tracking-wide font-sans group-hover:text-red-400 transition-colors">
-                          {card.title}
-                        </h4>
-                        <p className="text-[11px] font-mono text-zinc-400 mt-1 line-clamp-1">
-                          {card.role}
-                        </p>
-                      </div>
-
-                      {/* Interactive Track Items */}
-                      <div className="relative z-10 flex flex-col divide-y divide-zinc-800/50 flex-1 justify-around gap-1 sm:gap-1.5">
-                        {card.items.map((item: TechCardItem, itemIdx: number) => {
-                          const globalIdx = domainIdx * 20 + cardIdx * 6 + itemIdx;
-                          const brand = getTechBrandColor(item.name);
-
-                          return (
-                            <div
-                              key={item.name}
-                              tabIndex={0}
-                              role="button"
-                              aria-label={`${item.name}, Tingkat ${item.level} dari 5, Kategori ${item.category}`}
-                              onClick={() => handlePlaySongChord(globalIdx)}
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter" || e.key === " ") {
-                                  e.preventDefault();
-                                  handlePlaySongChord(globalIdx);
-                                }
-                              }}
-                              className="group/item py-2 px-2 rounded-xl transition-all duration-200 flex items-center justify-between gap-2.5 cursor-pointer hover:bg-zinc-900/80 focus:outline-none focus:ring-1 focus:ring-red-500"
-                              data-cursor-text="PLAY"
-                            >
-                              {/* Left: Track Number + Official Online Logo Badge */}
-                              <div className="flex items-center gap-2.5 flex-shrink-0">
-                                <span className="font-mono text-[11px] font-bold text-zinc-500 group-hover/item:text-red-400 transition-colors w-4">
-                                  {item.track}
-                                </span>
-
-                                <div
-                                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl ${brand.bg} border ${brand.border} flex items-center justify-center p-1.5 flex-shrink-0 transition-transform duration-300 group-hover/item:scale-110 shadow-sm`}
-                                >
-                                  <TechLogo name={item.name} size={17} />
-                                </div>
-                              </div>
-
-                              {/* Middle: Name + Category */}
-                              <div className="flex flex-col min-w-0 flex-1 pr-2">
-                                <div className="flex items-center gap-1.5 truncate">
-                                  <span className="text-sm sm:text-base font-bold text-white group-hover/item:text-red-400 transition-colors font-sans truncate">
-                                    {item.name}
-                                  </span>
-                                  {item.featured && (
-                                    <Flame className="w-3 h-3 text-red-500 animate-pulse flex-shrink-0" />
-                                  )}
-                                </div>
-                                <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-wider truncate">
-                                  [{item.category}]
-                                </span>
-                              </div>
-
-                              {/* Right: Dot Meter & Percentage */}
-                              <div className="flex items-center gap-2 flex-shrink-0">
-                                <div className="hidden sm:flex items-center gap-1" aria-hidden="true">
-                                  {[1, 2, 3, 4, 5].map((dot) => (
-                                    <span
-                                      key={dot}
-                                      className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
-                                        dot <= item.level
-                                          ? "bg-red-500 shadow-[0_0_5px_#ff2a3b]"
-                                          : "bg-zinc-700/60"
-                                      }`}
-                                    />
-                                  ))}
-                                </div>
-
-                                <span className="font-mono text-xs font-bold text-red-400 bg-red-950/40 px-2 py-0.5 rounded border border-red-900/40 min-w-[38px] text-center">
-                                  {item.proficiency}%
-                                </span>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      {/* Card Footer */}
-                      <div className="relative z-10 pt-3.5 mt-3 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px] text-zinc-500">
-                        <div className="flex items-center gap-1.5">
-                          <Sparkles className="w-3 h-3 text-red-500" />
-                          <span>PRODUCTION-READY</span>
-                        </div>
-                        <span className="text-zinc-400 group-hover:text-red-400 transition-colors">
-                          KLIK NADA ↵
+                        <span className="text-xs font-bold text-[#1C1A18]">
+                          {item.name}
                         </span>
                       </div>
+
+                      {/* Exposure / Proficiency Meter Pill */}
+                      <div className="flex items-center gap-1">
+                        <span className="text-[10px] font-mono text-[#7A7568]">
+                          {item.proficiency}%
+                        </span>
+                        <div className="w-10 h-1.5 rounded-full bg-[#ECE7D8] overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-[#F5B738] to-[#E24332] rounded-full"
+                            style={{ width: `${item.proficiency}%` }}
+                          />
+                        </div>
+                      </div>
                     </div>
-                  );
-                })}
+                  ))}
+                </div>
+
+                {/* Card Footer */}
+                <div className="pt-3.5 mt-2 border-t border-[#ECE7D8] flex items-center justify-between text-[10px] font-mono text-[#8C8678]">
+                  <span className="flex items-center gap-1 text-[#2C6E64] font-bold">
+                    <Check className="w-3.5 h-3.5" /> PRODUCTION READY
+                  </span>
+                  <span className="group-hover:text-[#E24332] transition-colors font-semibold">
+                    FRAME #{card.number}
+                  </span>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );

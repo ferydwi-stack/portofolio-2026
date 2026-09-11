@@ -1,112 +1,207 @@
 "use client";
 
-import { useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { Flame, Award } from "lucide-react";
+import { Camera, Award } from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/data/portfolioData";
-import { useAboutTimeline } from "@/animations/useAboutTimeline";
 import { useLenis } from "@/hooks/useLenis";
 
 export function About() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const photoRef = useRef<HTMLDivElement>(null);
-  const bioTextRef = useRef<HTMLDivElement>(null);
-
+  const [activeTab, setActiveTab] = useState<"story" | "specs" | "stats">("story");
   const { scrollTo } = useLenis();
-
-  // Connect GSAP timeline
-  useAboutTimeline({
-    containerRef,
-    photoRef,
-    bioTextRef,
-  });
 
   return (
     <section
-      ref={containerRef}
       id="about"
-      className="relative min-h-screen w-full py-28 px-6 sm:px-12 lg:px-24 overflow-hidden select-none"
+      className="relative min-h-screen w-full py-24 sm:py-32 px-5 sm:px-10 lg:px-16 paper-grain select-none"
     >
-      {/* Background Section Ambient Watermark */}
-      <div className="absolute left-4 top-1/3 -translate-y-1/2 font-[family-name:var(--font-bebas)] text-[18vw] font-black text-white/[0.02] pointer-events-none select-none">
-        PROFIL
-      </div>
-
-      {/* Asymmetric Diagonal Split Container: Photo on Left, Bio on Right */}
-      <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-start justify-between gap-10 lg:gap-12">
-        {/* Left Photo Column: Appears FIRST on mobile, LEFT on desktop */}
-        <div className="w-full lg:w-[36%] flex justify-center lg:justify-start relative">
-          <div
-            ref={photoRef}
-            className="relative p-3.5 sm:p-4 pb-8 sm:pb-10 bg-[#14101d] border-2 border-zinc-700 hover:border-red-500/60 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.95)] max-w-[290px] sm:max-w-sm w-full transform -rotate-2 sm:-rotate-4 hover:rotate-0 transition-all duration-500 group cursor-pointer"
-          >
-            {/* Gaffer Tape Strip */}
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-32 h-7 bg-zinc-600/90 border border-zinc-500/50 rounded-xs transform -rotate-2 shadow-md opacity-90 z-30" />
-
-            {/* Verification Stamp */}
-            <div className="absolute top-6 right-6 z-30 px-3 py-1 bg-red-600 border border-red-400 text-white font-mono text-[10px] font-black uppercase tracking-widest rounded-xs transform rotate-12 shadow-lg">
-              TERVERIFIKASI
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <div className="pb-12 sm:pb-16 flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-[#E5DFC8]">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F3EFE6] border border-[#E5DFC8] text-xs font-mono text-[#E24332]">
+              <Award className="w-3.5 h-3.5" />
+              <span className="font-bold uppercase tracking-wider">PROFIL PROFESIONAL // TENTANG SAYA</span>
             </div>
 
-            {/* Photo Image */}
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-black border border-zinc-800">
-              <Image
-                src={PERSONAL_INFO.profileImage}
-                alt={PERSONAL_INFO.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 400px"
-                className="object-cover object-center filter contrast-110 saturate-95 group-hover:scale-105 transition-transform duration-500"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-red-950/20 pointer-events-none" />
-            </div>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#1C1A18] tracking-tight uppercase">
+              Mengenal Lebih Dekat.
+            </h2>
+            <p className="text-sm sm:text-base text-[#5A554E] max-w-2xl leading-relaxed">
+              Memadukan ketelitian arsitektur rekayasa perangkat lunak dengan keindahan antarmuka web modern yang responsif, terstruktur, dan berpusat pada pengguna.
+            </p>
+          </div>
 
-            {/* Polaroid Bottom Note */}
-            <div className="mt-4 px-2 flex items-center justify-between font-mono">
-              <div>
-                <p className="text-sm font-black text-white tracking-wider">
-                  {PERSONAL_INFO.name}
-                </p>
-                <p className="text-xs text-red-400 font-bold">
-                  {PERSONAL_INFO.major} // FULLSTACK DEVELOPER
-                </p>
-              </div>
-              <span className="text-[10px] font-mono text-zinc-500">INDONESIA // 2026</span>
-            </div>
+          <div className="text-xs font-mono text-[#7A7568] flex items-center gap-2 self-start sm:self-end">
+            <span className="px-3.5 py-1.5 rounded-lg bg-white border border-[#E5DFC8] font-bold text-[#1C1A18] shadow-xs">
+              BIODATA REKAYASA // 2026
+            </span>
           </div>
         </div>
 
-        {/* Right Bio Column */}
-        <div className="w-full lg:w-[60%] space-y-6 sm:space-y-8 relative z-20 p-5 sm:p-10 rounded-3xl bg-[#0a0a0c]/90 border border-zinc-800/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.85)]">
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3 py-1 rounded border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
-              <Flame className="w-4 h-4 text-red-500" />
-              <span>{"//"} PROFIL PROFESIONAL &amp; PENDEKATAN REKAYASA</span>
+        {/* Scrapbook Desk Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 pt-12 items-start">
+          {/* Left Column: Polaroid Portrait & Sticky Note */}
+          <div className="lg:col-span-5 flex flex-col items-center space-y-6">
+            {/* The Polaroid Portrait */}
+            <div className="relative w-full max-w-[340px] p-4 pb-12 bg-white rounded-xl polaroid-card-shadow border border-[#E5DFC8] rotate-[-1.5deg] hover:rotate-0 transition-transform duration-500">
+              {/* Masking Washi Tape */}
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-28 h-6 washi-tape rotate-2 z-20 pointer-events-none" />
+
+              {/* Verified Stamp */}
+              <div className="absolute top-6 right-6 z-20 px-2.5 py-1 rounded bg-[#E24332] text-white text-[9px] font-mono font-black uppercase tracking-wider shadow-md rotate-12 border border-[#F68A7E]">
+                VERIFIED DEV
+              </div>
+
+              {/* Photo */}
+              <div className="relative aspect-[4/5] w-full rounded-lg overflow-hidden bg-[#ECE7D8] border border-[#DDD6C4] photo-gloss">
+                <Image
+                  src={PERSONAL_INFO.profileImage}
+                  alt={PERSONAL_INFO.name}
+                  fill
+                  sizes="340px"
+                  className="object-cover object-center filter contrast-105"
+                  priority
+                />
+              </div>
+
+              {/* Bottom Handwritten Caption */}
+              <div className="pt-4 text-center space-y-0.5">
+                <p className="font-handwriting text-2xl text-[#1C1A18] leading-tight">
+                  {PERSONAL_INFO.name}
+                </p>
+                <p className="font-mono text-[10px] text-[#E24332] font-bold uppercase tracking-wider">
+                  {PERSONAL_INFO.major} &bull; FULLSTACK
+                </p>
+                <span className="block text-[9px] font-mono text-[#968F84] pt-1">
+                  INDONESIA // KELAS INDUSTRI 2026
+                </span>
+              </div>
             </div>
 
-            <h2 className="headline-section text-2xl sm:text-5xl lg:text-6xl font-normal uppercase text-white leading-[1.1] tracking-wide">
-              {PERSONAL_INFO.tagline}
-            </h2>
+            {/* Handwritten Scrapbook Sticky Note */}
+            <div className="relative w-full max-w-[340px] p-5 bg-[#FFF9E6] rounded-xl border border-[#F0E4B8] shadow-sm rotate-[1.5deg]">
+              <div className="absolute -top-3 left-6 w-14 h-5 washi-tape-rose -rotate-3 z-10 pointer-events-none" />
+              <p className="font-handwriting text-xl text-[#3D3520] leading-relaxed">
+                &ldquo;Kode yang hebat bukan hanya yang berjalan tanpa galat, melainkan yang memberi rasa nyaman bagi siapa pun yang berinteraksi dengannya.&rdquo;
+              </p>
+              <span className="block text-right font-mono text-[9px] font-bold text-[#8C7B38] uppercase pt-2">
+                &mdash; Catatan Harian Fery
+              </span>
+            </div>
           </div>
 
-          {/* Staggered Bio Text Paragraphs */}
-          <div ref={bioTextRef} className="space-y-3.5 sm:space-y-4 text-sm sm:text-base lg:text-lg text-zinc-300 font-sans leading-relaxed">
-            {PERSONAL_INFO.bioParagraphs.map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
-          </div>
+          {/* Right Column: Interactive Dossier Tabs & Information */}
+          <div className="lg:col-span-7 space-y-6">
+            {/* Dossier Tabs Bar */}
+            <div className="flex items-center gap-2 p-1 rounded-xl bg-[#F3EFE6] border border-[#E5DFC8] w-fit font-mono text-xs">
+              <button
+                onClick={() => setActiveTab("story")}
+                className={`px-4 py-2 rounded-lg transition-all cursor-pointer font-bold ${
+                  activeTab === "story"
+                    ? "bg-white text-[#1C1A18] shadow-xs"
+                    : "text-[#7A7568] hover:text-[#1C1A18]"
+                }`}
+              >
+                BIOGRAFI &amp; VISI
+              </button>
+              <button
+                onClick={() => setActiveTab("specs")}
+                className={`px-4 py-2 rounded-lg transition-all cursor-pointer font-bold ${
+                  activeTab === "specs"
+                    ? "bg-white text-[#1C1A18] shadow-xs"
+                    : "text-[#7A7568] hover:text-[#1C1A18]"
+                }`}
+              >
+                STANDAR TEKNIS
+              </button>
+              <button
+                onClick={() => setActiveTab("stats")}
+                className={`px-4 py-2 rounded-lg transition-all cursor-pointer font-bold ${
+                  activeTab === "stats"
+                    ? "bg-white text-[#1C1A18] shadow-xs"
+                    : "text-[#7A7568] hover:text-[#1C1A18]"
+                }`}
+              >
+                PENCAPAIAN &amp; METRIK
+              </button>
+            </div>
 
-          {/* Action to Certificates */}
-          <div className="pt-4 sm:pt-6 border-t border-zinc-800/80">
-            <button
-              onClick={() => scrollTo("#certificates", { duration: 1.2 })}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-[#14101e] border border-red-500/50 hover:bg-red-600 hover:text-white text-xs font-mono uppercase tracking-widest font-bold text-red-400 transition-all shadow-lg group cursor-pointer"
-              data-cursor-text="SERTIFIKASI"
-            >
-              <Award className="w-4 h-4" />
-              <span>LIHAT SERTIFIKASI &amp; LISENSI RESMI</span>
-              <span className="group-hover:translate-x-1.5 transition-transform">→</span>
-            </button>
+            {/* Tab 1: Story & Bio */}
+            {activeTab === "story" && (
+              <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#E5DFC8] polaroid-card-shadow space-y-5 animate-fadeIn">
+                <h3 className="text-xl sm:text-2xl font-black uppercase text-[#1C1A18] tracking-tight">
+                  {PERSONAL_INFO.tagline}
+                </h3>
+                <div className="space-y-4 text-sm sm:text-base text-[#5A554E] leading-relaxed">
+                  {PERSONAL_INFO.bioParagraphs.map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Tab 2: Studio Specs */}
+            {activeTab === "specs" && (
+              <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#E5DFC8] polaroid-card-shadow space-y-5 animate-fadeIn">
+                <h3 className="text-xl sm:text-2xl font-black uppercase text-[#1C1A18] tracking-tight">
+                  Spesifikasi &amp; Standar Kerja
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+                  <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8] space-y-1">
+                    <span className="text-[#968F84] uppercase">Bahasa Pemrograman Utama</span>
+                    <p className="font-bold text-[#1C1A18] text-sm">TypeScript, Modern JavaScript (ES6+), PHP, Golang</p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8] space-y-1">
+                    <span className="text-[#968F84] uppercase">Arsitektur &amp; Framework</span>
+                    <p className="font-bold text-[#1C1A18] text-sm">Next.js (App Router), React, Tailwind CSS, Laravel</p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8] space-y-1">
+                    <span className="text-[#968F84] uppercase">Basis Data &amp; Cloud</span>
+                    <p className="font-bold text-[#1C1A18] text-sm">PostgreSQL, MySQL, Supabase, Vercel, Railway</p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8] space-y-1">
+                    <span className="text-[#968F84] uppercase">Interaktivitas &amp; Motion</span>
+                    <p className="font-bold text-[#1C1A18] text-sm">GSAP Motion, Framer Motion, Three.js (WebGL)</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Tab 3: Stats */}
+            {activeTab === "stats" && (
+              <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#E5DFC8] polaroid-card-shadow space-y-5 animate-fadeIn">
+                <h3 className="text-xl sm:text-2xl font-black uppercase text-[#1C1A18] tracking-tight">
+                  Pencapaian &amp; Rekam Jejak
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
+                  <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8]">
+                    <span className="text-3xl sm:text-4xl font-black text-[#E24332] font-mono">3+</span>
+                    <span className="block text-xs font-mono text-[#7A7568] uppercase mt-1">Tahun Rekayasa</span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8]">
+                    <span className="text-3xl sm:text-4xl font-black text-[#F5B738] font-mono">15+</span>
+                    <span className="block text-xs font-mono text-[#7A7568] uppercase mt-1">Proyek Tuntas</span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8] col-span-2 sm:col-span-1">
+                    <span className="text-3xl sm:text-4xl font-black text-[#7FA99B] font-mono">100%</span>
+                    <span className="block text-xs font-mono text-[#7A7568] uppercase mt-1">Komitmen Hasil</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Bottom Quick Jump Link */}
+            <div className="pt-2 flex items-center justify-between">
+              <button
+                onClick={() => scrollTo("#certificates", { duration: 1.2 })}
+                className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#1C1A18] hover:text-[#E24332] transition-colors cursor-pointer group"
+              >
+                <Award className="w-4 h-4 text-[#F5B738]" />
+                <span>LIHAT DOKUMEN &amp; LISENSI RESMI</span>
+                <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

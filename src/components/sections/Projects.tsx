@@ -1,258 +1,270 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { Github, ExternalLink, Disc3, Radio, Play, Pause, Terminal, Code2 } from "lucide-react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { Film, Github, ExternalLink, Code2, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { PROJECTS, Project } from "@/lib/data/portfolioData";
-import { VinylRecord } from "@/components/three/VinylRecord";
-import { useProjectsTimeline } from "@/animations/useProjectsTimeline";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { playGuitarChord } from "@/lib/sound/guitarSynth";
-
-function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
-  const [isPlayingRiff, setIsPlayingRiff] = useState(false);
-  const [imgError, setImgError] = useState(false);
-
-  // Mouse tilt tracking with framer-motion
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const rotateX = useTransform(mouseY, [-150, 150], [6, -6]);
-  const rotateY = useTransform(mouseX, [-250, 250], [-6, 6]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (prefersReducedMotion || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    mouseX.set(e.clientX - centerX);
-    mouseY.set(e.clientY - centerY);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
-  const handlePlayRiff = () => {
-    setIsPlayingRiff(true);
-    const chords = [82.41, 110.0, 98.0, 123.47];
-    playGuitarChord(chords[index % chords.length]);
-    setTimeout(() => {
-      setIsPlayingRiff(false);
-    }, 1200);
-  };
-
-  const hasValidImage = Boolean(project.image && !imgError);
-
-  return (
-    <motion.div
-      ref={cardRef}
-      tabIndex={0}
-      role="article"
-      aria-label={`Album 0${index + 1}: ${project.title}`}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          handlePlayRiff();
-        }
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX: prefersReducedMotion ? 0 : rotateX,
-        rotateY: prefersReducedMotion ? 0 : rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      className="flex-none w-[88vw] sm:w-[84vw] max-w-[1100px] h-[520px] sm:h-[580px] rounded-3xl bg-[#0f0c18]/95 border-2 border-zinc-800 hover:border-red-500/80 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 shadow-[0_25px_60px_rgba(0,0,0,0.95)] backdrop-blur-2xl relative transition-colors duration-300 group overflow-hidden"
-    >
-      {/* 3D Vinyl Record Sliding Out on Hover */}
-      <div className="absolute -top-6 right-2 sm:right-12 z-30 pointer-events-none filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)] transform group-hover:translate-x-6 group-hover:-translate-y-2 transition-transform duration-500 scale-75 sm:scale-100 hidden xs:block">
-        <VinylRecord albumIndex={index} />
-      </div>
-
-      {/* Background: Either Authentic Image OR Clean Blueprint Code Grid (NO broken image icon) */}
-      <div className="absolute inset-0 z-0">
-        {hasValidImage ? (
-          <>
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              sizes="(max-width: 1200px) 100vw, 1200px"
-              onError={() => setImgError(true)}
-              className="object-cover object-center group-hover:scale-105 transition-transform duration-700 filter brightness-60 contrast-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a080f] via-[#0a080f]/80 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0a080f] via-[#0a080f]/50 to-transparent" />
-          </>
-        ) : (
-          <div className="absolute inset-0 bg-[#0c0a15] flex items-center justify-center overflow-hidden">
-            {/* Architectural Matrix Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#2a183520_1px,transparent_1px),linear-gradient(to_bottom,#2a183520_1px,transparent_1px)] bg-[size:32px_32px]" />
-            <div className="absolute inset-0 bg-radial from-red-950/20 via-[#0a080f]/90 to-[#0a080f]" />
-            {/* Clean Blueprint Watermark */}
-            <div className="relative z-10 flex flex-col items-center justify-center text-center p-6 sm:p-8 opacity-40 group-hover:opacity-60 transition-opacity">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-zinc-900/80 border border-zinc-700 flex items-center justify-center mb-3 text-red-400">
-                <Code2 className="w-7 h-7 sm:w-8 sm:h-8" />
-              </div>
-              <span className="font-mono text-[11px] sm:text-xs tracking-widest text-zinc-400 uppercase font-bold">
-                {"//"} BACKEND MICROSERVICE &amp; API ARCHITECTURE
-              </span>
-              <span className="font-mono text-[9px] sm:text-[10px] text-zinc-500 mt-1">
-                Layanan headless / backend service — kode sumber &amp; skema tersedia di GitHub
-              </span>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Top Header Information Bar */}
-      <div className="relative z-10 p-4 sm:p-6 lg:p-8 flex items-center justify-between font-mono text-xs border-b border-zinc-800/80">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded bg-red-600 text-white font-black tracking-wider text-[10px] sm:text-xs">
-            PROYEK 0{index + 1}
-          </span>
-          <span className="text-zinc-300 font-bold text-[10px] sm:text-xs hidden xs:inline">
-            {project.catalogNo}
-          </span>
-        </div>
-        <div className="flex items-center gap-2 sm:gap-4 mr-2 sm:mr-36">
-          <span className="text-red-400 font-bold bg-red-950/80 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded border border-red-900/80 text-[10px] sm:text-xs">
-            {project.rpm}
-          </span>
-          <span className="text-zinc-500 hidden md:inline text-xs">{project.year}</span>
-        </div>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="relative z-10 p-4 sm:p-8 lg:p-10 flex flex-col justify-end h-[calc(100%-65px)] sm:h-[calc(100%-75px)] space-y-2.5 sm:space-y-4 max-w-2xl">
-        <div className="space-y-1">
-          <span className="text-[9px] sm:text-[10px] font-mono text-red-400 font-bold uppercase tracking-widest">
-            {project.side}
-          </span>
-          <h3 className="headline-section text-xl sm:text-3xl lg:text-5xl font-normal uppercase tracking-wide text-white drop-shadow-md leading-tight">
-            {project.title}
-          </h3>
-        </div>
-
-        <p className="text-[11px] sm:text-sm text-zinc-300 font-sans line-clamp-2 sm:line-clamp-3 leading-relaxed">
-          {project.description}
-        </p>
-
-        {/* Tech Stack Pills */}
-        <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-1 sm:pt-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-[9px] sm:text-[10px] font-mono text-zinc-300 bg-[#161220]/90 px-2 sm:px-3 py-0.5 sm:py-1 rounded-md border border-zinc-700/80 shadow-sm"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Action Links & Preview Soundboard */}
-        <div className="pt-2 sm:pt-3 border-t border-zinc-800/80 flex flex-wrap items-center gap-2.5 sm:gap-4">
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 bg-red-600 hover:bg-red-500 text-white font-mono text-[11px] sm:text-xs uppercase tracking-widest font-black rounded-xl transition-all shadow-[0_0_20px_rgba(255,42,59,0.5)] cursor-pointer active:scale-95"
-            data-cursor-text="KODE"
-          >
-            <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>KODE SUMBER</span>
-          </a>
-
-          <a
-            href={project.demoUrl || project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] sm:text-xs font-mono text-zinc-300 hover:text-red-400 flex items-center gap-1 sm:gap-1.5 transition-colors cursor-pointer"
-            data-cursor-text="DEMO"
-          >
-            <span>LIHAT DEMO</span>
-            <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-          </a>
-
-          {/* Interactive Riff Preview Button */}
-          <button
-            onClick={handlePlayRiff}
-            className={`ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono transition-all cursor-pointer ${
-              isPlayingRiff
-                ? "bg-red-600 text-white border-red-500 animate-pulse shadow-[0_0_15px_rgba(255,42,59,0.5)]"
-                : "bg-black/60 text-zinc-400 hover:text-white border-zinc-700 hover:border-red-500"
-            }`}
-            data-cursor-text="SUARA"
-          >
-            {isPlayingRiff ? <Pause className="w-3.5 h-3.5 text-white" /> : <Play className="w-3.5 h-3.5 text-red-400" />}
-            <span className="text-[10px] font-bold">PETIK RIFF</span>
-          </button>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+import { playShutterSound } from "@/lib/sound/shutterSound";
 
 export function Projects() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activeFilter, setActiveFilter] = useState<string>("ALL");
 
-  // Connect full-bleed horizontal scroll timeline
-  useProjectsTimeline({ sectionRef, galleryRef });
+  const categories = ["ALL", "FULLSTACK", "WEB", "MOBILE"];
+
+  const filteredProjects = PROJECTS.filter((project) => {
+    if (activeFilter === "ALL") return true;
+    if (activeFilter === "FULLSTACK") {
+      return project.tags.some((t) => ["Next.js", "Express", "Fullstack", "Laravel"].includes(t));
+    }
+    if (activeFilter === "WEB") {
+      return project.tags.some((t) => ["React", "Tailwind", "GSAP", "TypeScript"].includes(t));
+    }
+    if (activeFilter === "MOBILE") {
+      return project.tags.some((t) => ["Flutter", "Dart", "Mobile", "Android"].includes(t));
+    }
+    return true;
+  });
+
+  const handleOpenDetail = (project: Project) => {
+    playShutterSound();
+    setSelectedProject(project);
+  };
 
   return (
     <section
-      ref={sectionRef}
       id="projects"
-      className={`relative w-full flex flex-col justify-center overflow-hidden px-6 sm:px-12 lg:px-24 select-none ${
-        prefersReducedMotion ? "py-24" : "min-h-screen"
-      }`}
-      data-cursor-drag="true"
+      className="relative w-full py-24 sm:py-32 px-5 sm:px-10 lg:px-16 paper-grain select-none"
     >
-      {/* Header */}
-      <div className="pt-6 pb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 z-20">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 text-xs font-mono text-red-500 uppercase tracking-widest bg-red-950/60 px-3 py-1 rounded border border-red-900/60 shadow-[0_0_15px_rgba(255,42,59,0.2)]">
-            <Radio className="w-3.5 h-3.5 animate-pulse" />
-            <span>PORTOFOLIO SISTEM &amp; APLIKASI</span>
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <div className="pb-12 sm:pb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E5DFC8]">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F3EFE6] border border-[#E5DFC8] text-xs font-mono text-[#1C1A18]">
+              <Film className="w-3.5 h-3.5 text-[#E24332]" />
+              <span className="font-bold uppercase tracking-wider">PORTOFOLIO // PROYEK UNGGULAN</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-5xl font-black text-[#1C1A18] tracking-tight uppercase">
+              Portofolio Proyek Terpilih.
+            </h2>
+            <p className="text-sm sm:text-base text-[#5A554E] max-w-2xl leading-relaxed">
+              Koleksi proyek nyata mencakup platform web fullstack, sistem responsif modern, dan aplikasi interaktif yang dirancang dengan performa optimal.
+            </p>
           </div>
-          <h2 className="headline-section text-3xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-wider text-white leading-none">
-            Portofolio Proyek Terpilih
-          </h2>
-          <p className="text-xs sm:text-sm font-sans text-zinc-400">
-            {prefersReducedMotion
-              ? "Koleksi proyek perangkat lunak dan aplikasi web yang telah dibangun."
-              : "Geser horizontal untuk menjelajahi rincian sistem dan implementasi teknologi."}
-          </p>
+
+          {/* Category Filter Pills */}
+          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#F3EFE6] border border-[#E5DFC8] text-xs font-mono">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => {
+                  playShutterSound();
+                  setActiveFilter(cat);
+                }}
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                  activeFilter === cat
+                    ? "bg-[#1C1A18] text-white shadow-xs"
+                    : "text-[#7A7568] hover:text-[#1C1A18]"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="text-xs font-mono text-zinc-500 flex items-center gap-2">
-          <span className="text-red-400 font-bold bg-red-950/60 px-3 py-1 rounded border border-red-900/60 tracking-wider">
-            {PROJECTS.length} PROYEK UTAMA
-          </span>
+        {/* Gallery Grid (Curated Lightbox Proofs) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-8 pt-10">
+          {filteredProjects.map((project, idx) => {
+            return (
+              <div
+                key={project.title}
+                className="group relative p-4 pb-5 rounded-2xl bg-white border border-[#E5DFC8] hover:border-[#F5B738] polaroid-card-shadow transition-all duration-300 flex flex-col justify-between"
+              >
+                {/* Photo Proof Frame */}
+                <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-[#ECE7D8] border border-[#DDD6C4] photo-gloss mb-4">
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 400px"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500 filter contrast-105"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#201E1B] text-[#968F84]">
+                      <Code2 className="w-10 h-10 text-[#F5B738] mb-2" />
+                      <span className="text-xs font-mono font-bold">SOURCE CODE ARCHITECTURE</span>
+                    </div>
+                  )}
+
+                  {/* Stamp Tag on Photo */}
+                  <div className="absolute top-3 left-3 px-2.5 py-1 rounded bg-[#1C1A18]/80 backdrop-blur-xs text-white text-[10px] font-mono font-bold">
+                    FRAME 0{idx + 1} &bull; {project.year}
+                  </div>
+                </div>
+
+                {/* Project Details */}
+                <div className="space-y-2 flex-grow">
+                  <h3 className="text-xl font-black text-[#1C1A18] uppercase tracking-tight group-hover:text-[#E24332] transition-colors line-clamp-1">
+                    {project.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#5A554E] leading-relaxed line-clamp-2">
+                    {project.description}
+                  </p>
+
+                  {/* Tech Tags */}
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {project.tags.slice(0, 4).map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 rounded-md bg-[#FAF8F5] border border-[#E5DFC8] text-[10px] font-mono font-semibold text-[#1C1A18]"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Action Buttons Row */}
+                <div className="pt-4 mt-4 border-t border-[#ECE7D8] flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-lg bg-[#FAF8F5] hover:bg-[#1C1A18] text-[#1C1A18] hover:text-white border border-[#E5DFC8] transition-colors cursor-pointer"
+                        title="Lihat Kode di GitHub"
+                      >
+                        <Github className="w-4 h-4" />
+                      </a>
+                    )}
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-lg bg-[#FAF8F5] hover:bg-[#E24332] text-[#1C1A18] hover:text-white border border-[#E5DFC8] transition-colors cursor-pointer"
+                        title="Buka Demo Langsung"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+
+                  <button
+                    onClick={() => handleOpenDetail(project)}
+                    className="px-3.5 py-1.5 rounded-lg bg-[#F5B738] hover:bg-[#FFC955] text-[#1C1A18] font-mono text-[11px] font-bold tracking-wider uppercase transition-colors cursor-pointer"
+                  >
+                    RINCIAN &rarr;
+                  </button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Full-Bleed Horizontal Gallery */}
-      <div className="relative w-full overflow-visible py-4 z-10">
-        <div
-          ref={galleryRef}
-          className={`${
-            prefersReducedMotion
-              ? "flex flex-col gap-10"
-              : "flex items-center gap-10 sm:gap-14 will-change-transform"
-          }`}
-        >
-          {PROJECTS.map((project, idx) => (
-            <ProjectCard key={project.title} project={project} index={idx} />
-          ))}
-        </div>
-      </div>
+      {/* Project Lightbox Inspection Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedProject(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 sm:p-8 cursor-zoom-out"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-3xl w-full bg-white rounded-2xl border border-[#E5DFC8] polaroid-card-shadow p-6 sm:p-8 cursor-default max-h-[90vh] overflow-y-auto"
+            >
+              {/* Modal Close Button */}
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-5 right-5 p-2 rounded-full bg-[#FAF8F5] hover:bg-[#1C1A18] hover:text-white border border-[#E5DFC8] text-[#1C1A18] transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-xs font-mono text-[#E24332] font-bold uppercase">
+                  <span>FRAME PROYEK</span>
+                  <span>&bull;</span>
+                  <span>TAHUN {selectedProject.year}</span>
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-black text-[#1C1A18] uppercase">
+                  {selectedProject.title}
+                </h3>
+
+                {/* Modal Large Photo View */}
+                {selectedProject.image && (
+                  <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden bg-[#ECE7D8] border border-[#DDD6C4]">
+                    <Image
+                      src={selectedProject.image}
+                      alt={selectedProject.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+
+                <p className="text-sm sm:text-base text-[#5A554E] leading-relaxed">
+                  {selectedProject.description}
+                </p>
+
+                {/* Tech Stack Pills */}
+                <div className="space-y-1.5 pt-2">
+                  <span className="text-xs font-mono font-bold text-[#1C1A18] uppercase">Teknologi yang Digunakan:</span>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedProject.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1 rounded-md bg-[#FAF8F5] border border-[#E5DFC8] text-xs font-mono font-semibold text-[#1C1A18]"
+                      >
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Action Links */}
+                <div className="pt-4 flex flex-wrap gap-3">
+                  {selectedProject.githubUrl && (
+                    <a
+                      href={selectedProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1C1A18] text-white hover:bg-[#33302B] font-mono text-xs font-bold uppercase transition-colors"
+                    >
+                      <Github className="w-4 h-4" />
+                      <span>KODE SUMBER GITHUB</span>
+                    </a>
+                  )}
+                  {selectedProject.demoUrl && (
+                    <a
+                      href={selectedProject.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#F5B738] text-[#1C1A18] hover:bg-[#FFC955] font-mono text-xs font-bold uppercase transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>KUNJUNGI LIVE DEMO</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -1,5 +1,5 @@
-import { CurtainIntro } from "@/components/ui/CurtainIntro";
-import { DiagonalDivider } from "@/components/ui/DiagonalDivider";
+import { FlashOverlay } from "@/components/photobooth/FlashOverlay";
+import { FilmstripDivider } from "@/components/photobooth/FilmstripDivider";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
@@ -11,38 +11,38 @@ import { Footer } from "@/components/sections/Footer";
 export default function Home() {
   return (
     <>
-      {/* Curtain Intro on First Page Load */}
-      <CurtainIntro />
+      {/* Photobooth Flash Effect on Page Load */}
+      <FlashOverlay duration={0.6} />
 
-      {/* 1. Hero Section */}
+      {/* 1. Hero Studio Section */}
       <Hero />
 
-      <DiagonalDivider direction="tilt-right" fretNumber={3} label="PROFIL &bull; TENTANG SAYA" />
+      <FilmstripDivider label="PROFIL &bull; PENGALAMAN &bull; REKAYASA" />
 
-      {/* 2. About Section */}
+      {/* 2. About Scrapbook Section */}
       <About />
 
-      <DiagonalDivider direction="tilt-left" fretNumber={5} label="KEAHLIAN &bull; TEKNOLOGI" />
+      <FilmstripDivider label="KEAHLIAN &bull; STACK &bull; TEKNOLOGI" />
 
-      {/* 3. Skills Section */}
+      {/* 3. Skills Contact Sheet Section */}
       <Skills />
 
-      <DiagonalDivider direction="tilt-right" fretNumber={7} label="PORTOFOLIO &bull; PROYEK PILIHAN" />
+      <FilmstripDivider label="PORTOFOLIO &bull; PROYEK &bull; HASIL KARYA" />
 
-      {/* 4. Projects Section */}
+      {/* 4. Projects Filmstrip Section */}
       <Projects />
 
-      <DiagonalDivider direction="tilt-left" fretNumber={9} label="SERTIFIKASI &bull; LISENSI RESMI" />
+      <FilmstripDivider label="SERTIFIKASI &bull; LISENSI RESMI" />
 
-      {/* 5. Certificates Section */}
+      {/* 5. Certificates Pinboard Section */}
       <Certificates />
 
-      <DiagonalDivider direction="tilt-right" fretNumber={12} label="KONTAK &bull; KONSULTASI" />
+      <FilmstripDivider label="KONTAK &bull; KOLABORASI &bull; DISKUSI" />
 
-      {/* 6. Contact Section */}
+      {/* 6. Contact Postcard Section */}
       <Contact />
 
-      {/* 7. Footer Section (Slender with vibrating guitar string divider) */}
+      {/* 7. Footer Section with End-of-roll styling */}
       <Footer />
     </>
   );

@@ -1,234 +1,156 @@
 "use client";
 
-import { useRef } from "react";
-import { ArrowDownRight, Flame, Zap } from "lucide-react";
+import { ArrowDown, Code2, Sparkles, FolderGit2, Mail, ExternalLink, Github, Linkedin } from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/data/portfolioData";
-import { useHeroTimeline } from "@/animations/useHeroTimeline";
 import { useLenis } from "@/hooks/useLenis";
-import { InteractiveGuitarString } from "@/components/ui/InteractiveGuitarString";
-import { playGuitarChord, playStringPluck } from "@/lib/sound/guitarSynth";
+import { PhotoStrip4Cut } from "@/components/photobooth/PhotoStrip4Cut";
 
 export function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subheadingRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const pickIndicatorRef = useRef<HTMLDivElement>(null);
-
   const { scrollTo } = useLenis();
-
-  // Connect custom GSAP hero timeline with stable headlineRef
-  useHeroTimeline({
-    containerRef,
-    headlineRef,
-    subheadingRef,
-    ctaRef,
-    pickIndicatorRef,
-  });
-
-  const handleHeroStrum = () => {
-    playGuitarChord(82.41);
-  };
 
   return (
     <section
-      ref={containerRef}
       id="hero"
-      className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden px-4 sm:px-12 lg:px-24 pt-24 sm:pt-28 pb-8 sm:pb-12 select-none"
+      className="relative min-h-screen w-full flex flex-col justify-between px-5 sm:px-10 lg:px-16 pt-24 sm:pt-28 pb-14 overflow-hidden paper-grain select-none"
     >
-      {/* Top Meta Line */}
-      <div className="relative z-20 flex flex-col sm:flex-row items-start sm:items-center justify-between font-mono text-xs uppercase tracking-widest text-zinc-400 border-b border-zinc-800/80 pb-3 sm:pb-4 gap-2 sm:gap-0">
-        <div className="flex items-center gap-2 text-red-500 font-bold text-[11px] sm:text-xs">
-          <Flame className="w-4 h-4 text-red-500 animate-pulse flex-shrink-0" />
-          <span>PORTOFOLIO PENGEMBANG WEB // TAHUN 2026</span>
+      {/* Top Professional Status Strip */}
+      <div className="max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-[#E5DFC8] text-xs font-mono gap-2 sm:gap-0">
+        <div className="flex items-center gap-2 text-[#1C1A18] font-bold">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#34A853] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#34A853]"></span>
+          </span>
+          <span className="tracking-wider">STATUS: TERSEDIA UNTUK PEKERJAAN &amp; KOLABORASI</span>
         </div>
-        <div className="flex items-center gap-3 sm:gap-4 text-zinc-400 text-[10px] sm:text-xs">
-          <button
-            onClick={handleHeroStrum}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-red-950/80 border border-red-800 text-red-400 hover:bg-red-600 hover:text-white transition-all cursor-pointer shadow-sm font-mono"
-            data-cursor-text="SUARA"
-          >
-            <Zap className="w-3 h-3" />
-            <span>AKORD GITAR</span>
-          </button>
-          <span className="hidden sm:inline">&bull;</span>
-          <span className="hidden sm:inline">REKAYASA WEB MODERN</span>
+
+        <div className="flex items-center gap-4 text-[#7A7568] text-[11px]">
+          <span className="hidden md:inline">INFORMATIKA &bull; WEB &amp; MOBILE &bull; INDONESIA</span>
+          <span className="px-2.5 py-0.5 rounded-full bg-white border border-[#E5DFC8] text-[#1C1A18] font-bold shadow-xs">
+            TAHUN 2026
+          </span>
         </div>
       </div>
 
-      {/* Responsive Headline (Left-aligned, wrapping cleanly on mobile and tablets) */}
-      <div className="relative z-10 my-auto py-6 sm:py-8 w-full pl-1 sm:pl-4 lg:pl-10">
-        {/* Stage Shadow & Ambient Glow behind Headline */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent pointer-events-none -z-10 rounded-3xl" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none -z-10" />
-        <div className="absolute -inset-x-8 -inset-y-10 bg-gradient-to-r from-red-600/15 via-red-500/10 to-transparent rounded-full blur-3xl pointer-events-none animate-hero-aura -z-10" />
+      {/* Main Hero Showcase */}
+      <div className="max-w-7xl mx-auto w-full my-auto py-8 sm:py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+        {/* Left Developer Bio & Value Proposition */}
+        <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
+          {/* Professional Role Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E5DFC8] text-xs font-mono text-[#1C1A18] shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#E24332]" />
+            <span className="font-bold tracking-wide">FULLSTACK DEVELOPER &bull; SOFTWARE ENGINEER</span>
+          </div>
 
-        <h1
-          ref={headlineRef}
-          className="headline-hero text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] font-normal uppercase tracking-wider select-none drop-shadow-2xl flex flex-wrap items-baseline gap-x-3 sm:gap-x-5 gap-y-1"
-          aria-label={PERSONAL_INFO.name}
-        >
-          {/* FERY */}
-          <span
-            className="inline-flex items-center cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95 title-animated-shimmer"
-            onClick={() => playStringPluck(0)}
-            data-cursor-text="PETIK"
-          >
-            {"FERY".split("").map((char, cIdx) => (
-              <span
-                key={cIdx}
-                className="inline-block transition-transform duration-150 hover:-translate-y-2 hover:text-red-400 select-none"
-                onMouseEnter={() => playStringPluck(cIdx % 6)}
-              >
-                {char}
+          {/* Main Headline */}
+          <div className="space-y-2">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#1C1A18] tracking-tight leading-[1.06] uppercase">
+              Membangun Solusi Web Modern &amp; <br />
+              <span className="text-[#E24332]">Berkinerja Tinggi.</span>
+            </h1>
+            <p className="font-mono text-sm sm:text-base font-bold text-[#7A7568] tracking-wider uppercase pt-1">
+              {PERSONAL_INFO.name} &mdash; Mahasiswa Informatika &amp; Web Developer
+            </p>
+          </div>
+
+          <p className="text-base sm:text-lg text-[#5A554E] leading-relaxed max-w-xl">
+            Selamat datang di portofolio saya. Saya merancang dan mengembangkan aplikasi web serta mobile dengan arsitektur kode yang tangguh, antarmuka responsif, dan performa tinggi yang siap untuk skala produksi.
+          </p>
+
+          {/* Professional Highlights in Photobooth Card Aesthetic */}
+          <div className="grid grid-cols-3 gap-3 w-full max-w-xl pt-1">
+            <div className="p-3.5 rounded-xl bg-white border border-[#E5DFC8] polaroid-card-shadow text-center">
+              <span className="block font-mono text-xl sm:text-2xl font-black text-[#1C1A18]">10+</span>
+              <span className="block text-[10px] sm:text-xs font-mono text-[#7A7568] uppercase font-bold pt-0.5">
+                Proyek Selesai
               </span>
-            ))}
-          </span>
-
-          {/* DWI */}
-          <span
-            className="inline-flex items-center cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95 title-animated-shimmer"
-            onClick={() => playStringPluck(2)}
-            data-cursor-text="PETIK"
-          >
-            {"DWI".split("").map((char, cIdx) => (
-              <span
-                key={cIdx}
-                className="inline-block transition-transform duration-150 hover:-translate-y-2 hover:text-red-400 select-none"
-                onMouseEnter={() => playStringPluck((cIdx + 2) % 6)}
-              >
-                {char}
-              </span>
-            ))}
-          </span>
-
-          {/* RAMADHI with electric concert glow */}
-          <span
-            className="inline-flex items-center cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95 title-ramadhi-glow"
-            onClick={() => playStringPluck(4)}
-            data-cursor-text="DISTORSI"
-          >
-            {"RAMADHI".split("").map((char, cIdx) => (
-              <span
-                key={cIdx}
-                className="inline-block transition-transform duration-150 hover:-translate-y-2 hover:text-white select-none"
-                onMouseEnter={() => playStringPluck((cIdx + 3) % 6)}
-              >
-                {char}
-              </span>
-            ))}
-          </span>
-        </h1>
-
-        {/* Dynamic Interactive Badges */}
-        <div className="mt-3 sm:mt-5 flex flex-wrap items-center gap-2 sm:gap-3">
-          {/* Live EQ Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-red-950/80 border border-red-500/60 shadow-[0_0_20px_rgba(255,42,59,0.5)]">
-            <div className="flex items-center gap-0.5 h-3">
-              <span className="w-0.5 bg-red-400 rounded-full eq-bar-1" />
-              <span className="w-0.5 bg-white rounded-full eq-bar-3" />
-              <span className="w-0.5 bg-red-300 rounded-full eq-bar-2" />
-              <span className="w-0.5 bg-white rounded-full eq-bar-5" />
             </div>
-            <span className="font-mono text-[10px] sm:text-xs uppercase font-black tracking-widest text-white">
-              FULLSTACK DEVELOPER
-            </span>
+
+            <div className="p-3.5 rounded-xl bg-white border border-[#E5DFC8] polaroid-card-shadow text-center">
+              <span className="block font-mono text-xl sm:text-2xl font-black text-[#E24332]">Fullstack</span>
+              <span className="block text-[10px] sm:text-xs font-mono text-[#7A7568] uppercase font-bold pt-0.5">
+                Next.js &bull; Node &bull; DB
+              </span>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-white border border-[#E5DFC8] polaroid-card-shadow text-center">
+              <span className="block font-mono text-xl sm:text-2xl font-black text-[#F5B738]">4+</span>
+              <span className="block text-[10px] sm:text-xs font-mono text-[#7A7568] uppercase font-bold pt-0.5">
+                Sertifikasi Resmi
+              </span>
+            </div>
           </div>
 
-          {/* Live Status Subtitle */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#100d17]/80 border border-zinc-800">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500" />
-            </span>
-            <span className="text-[11px] sm:text-xs font-mono text-zinc-300 uppercase tracking-widest">
-              {PERSONAL_INFO.role}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Interactive 6-String Guitar Fretboard Bar */}
-      <div className="relative z-20 my-2 sm:my-4 p-2.5 sm:p-3 rounded-2xl bg-[#100d17]/80 border border-zinc-800/80 backdrop-blur-md">
-        <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-zinc-500 mb-1 px-1">
-          <span>FITUR INTERAKTIF: SENTUH / ARAHKAN KURSOR PADA SENAR UNTUK MEMETIK</span>
-          <span className="text-red-400 font-bold hidden sm:inline">NADA SENAR: E A D G B E</span>
-        </div>
-        <div className="space-y-0.5">
-          {["E2 (82Hz)", "A2 (110Hz)", "D3 (147Hz)", "G3 (196Hz)", "B3 (247Hz)", "E4 (330Hz)"].map((label, idx) => (
-            <InteractiveGuitarString
-              key={idx}
-              stringIndex={idx}
-              label={label}
-              gauge={3.2 - idx * 0.4}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Asymmetric Subheading & CTA */}
-      <div className="relative z-20 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 sm:gap-8 pt-4 sm:pt-6 border-t border-zinc-800/80">
-        <div className="max-w-md space-y-1.5 text-left">
-          <p className="text-[10px] sm:text-xs font-mono text-red-400 font-bold uppercase tracking-wider">
-            {"//"} RINGKASAN PROFESIONAL
-          </p>
-          <p className="text-xs sm:text-base text-zinc-300 font-sans leading-relaxed">
-            Mengembangkan aplikasi web modern dan sistem perangkat lunak yang berkinerja tinggi, responsif, serta berarsitektur kokoh dan terstruktur rapi.
-          </p>
-        </div>
-
-        <div className="flex flex-col items-start sm:items-end gap-3 sm:gap-5 w-full sm:w-auto">
-          <div ref={subheadingRef} className="text-left sm:text-right w-full sm:w-auto">
-            <span className="text-[10px] sm:text-xs font-mono text-zinc-500 uppercase tracking-widest block">
-              TERSEDIA UNTUK PEKERJAAN KONTRAK &amp; FULL-TIME
-            </span>
-            <span className="text-xs sm:text-sm font-mono font-bold text-white tracking-wider">
-              REMOTE // HYBRID // FULL-TIME
-            </span>
-          </div>
-
-          <div ref={ctaRef} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+          {/* Action CTAs */}
+          <div className="flex flex-wrap items-center gap-4 pt-2">
             <button
-              onClick={() => {
-                handleHeroStrum();
-                scrollTo("#projects", { duration: 1.2 });
-              }}
-              className="px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs uppercase tracking-widest font-black transition-all shadow-[0_0_25px_rgba(255,42,59,0.5)] flex items-center justify-center gap-2 group cursor-pointer active:scale-95"
+              onClick={() => scrollTo("#projects", { duration: 1.2 })}
+              className="px-6 py-3.5 rounded-xl bg-[#1C1A18] hover:bg-[#33302B] text-white font-mono text-xs font-bold tracking-wider uppercase transition-all cursor-pointer shadow-md flex items-center gap-2 transform active:scale-95"
               data-cursor-text="PROYEK"
             >
-              <span>LIHAT PORTOFOLIO PROYEK</span>
-              <ArrowDownRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />
+              <FolderGit2 className="w-4 h-4 text-[#F5B738]" />
+              <span>JELAJAHI PORTOFOLIO PROYEK</span>
             </button>
 
             <button
-              onClick={() => scrollTo("#contact", { duration: 1.4 })}
-              className="px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-[#14101e] border border-zinc-700 hover:border-red-500 text-white font-mono text-xs uppercase tracking-widest font-bold transition-all cursor-pointer text-center"
+              onClick={() => scrollTo("#contact", { duration: 1.2 })}
+              className="px-6 py-3.5 rounded-xl bg-white hover:bg-[#F3EFE6] text-[#1C1A18] border border-[#E5DFC8] font-mono text-xs font-bold tracking-wider uppercase transition-all cursor-pointer shadow-xs flex items-center gap-2"
               data-cursor-text="KONTAK"
             >
-              HUBUNGI SAYA
+              <Mail className="w-4 h-4 text-[#E24332]" />
+              <span>HUBUNGI SAYA</span>
             </button>
+
+            {/* Social quick pills */}
+            <div className="flex items-center gap-2 pl-1">
+              <a
+                href={PERSONAL_INFO.contacts.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-xl bg-white hover:bg-[#F3EFE6] text-[#1C1A18] border border-[#E5DFC8] transition-colors shadow-xs"
+                title="GitHub Profile"
+                aria-label="GitHub Profile"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+              <a
+                href={PERSONAL_INFO.contacts.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-xl bg-white hover:bg-[#F3EFE6] text-[#1C1A18] border border-[#E5DFC8] transition-colors shadow-xs"
+                title="LinkedIn Profile"
+                aria-label="LinkedIn Profile"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Iconic 4-Cut Strip Showcase (Creative Developer Identity) */}
+        <div className="lg:col-span-5 flex justify-center items-center">
+          <div className="relative">
+            {/* Background Scrapbook Glow / Accent Board */}
+            <div className="absolute -inset-6 bg-[#F3EFE6] rounded-3xl border border-[#E5DFC8] -rotate-2 -z-10 shadow-xs" />
+            
+            {/* The Signature 4-Cut Photobooth Strip */}
+            <PhotoStrip4Cut theme="classic-white" />
           </div>
         </div>
       </div>
 
-      {/* Custom Guitar Pick Scroll Indicator (Bottom Right) */}
+      {/* Bottom Scroll Cue */}
       <div
-        ref={pickIndicatorRef}
-        onClick={() => scrollTo("#about", { duration: 1.2 })}
-        className="absolute bottom-4 right-4 hidden md:flex flex-col items-center gap-1 cursor-pointer group z-30"
-        title="Gulir ke Bawah ke Bagian Profil"
-        data-cursor-text="GULIR"
+        className="max-w-7xl mx-auto w-full flex items-center justify-between pt-4 border-t border-[#E5DFC8] text-xs font-mono text-[#7A7568] cursor-pointer"
+        onClick={() => scrollTo("#about", { duration: 1.0 })}
       >
-        <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest group-hover:text-red-400 transition-colors">
-          Gulir ke bawah
+        <span className="flex items-center gap-2 uppercase tracking-widest text-[11px]">
+          <Code2 className="w-3.5 h-3.5 text-[#E24332]" />
+          GULIR KE BAWAH UNTUK MELIHAT PROFIL &amp; KEAHLIAN
         </span>
-        <svg
-          className="w-5 h-6 text-red-500 group-hover:text-red-400 transition-colors filter drop-shadow-[0_0_6px_rgba(255,42,59,0.6)]"
-          viewBox="0 0 24 28"
-          fill="currentColor"
-        >
-          <path d="M12 28 C4 20, 0 14, 0 6 C0 2, 4 0, 12 0 C20 0, 24 2, 24 6 C24 14, 20 20, 12 28 Z" />
-        </svg>
+        <div className="flex items-center gap-1 font-bold text-[#1C1A18]">
+          <span>GULIR</span>
+          <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
+        </div>
       </div>
     </section>
   );

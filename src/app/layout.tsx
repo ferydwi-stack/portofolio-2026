@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Caveat, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
-import { NavbarDock } from "@/components/ui/NavbarDock";
+import { RetroNavbar } from "@/components/photobooth/RetroNavbar";
 import { SkipToContent } from "@/components/ui/SkipToContent";
 import { PhotoboothCursor } from "@/components/photobooth/PhotoboothCursor";
 
@@ -27,11 +27,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Fery Dwi Ramadhi | Fullstack Developer & Software Engineer",
   description:
-    "Portofolio profesional Fery Dwi Ramadhi — Fullstack Developer & Software Engineer yang berfokus pada arsitektur web modern, performa tinggi, dan solusi digital terintegrasi.",
+    "Portofolio resmi Fery Dwi Ramadhi — Fullstack Developer & Mahasiswa Informatika. Arsitektur web modern, performa tinggi, dan pengalaman digital berkarakter.",
   openGraph: {
     title: "Fery Dwi Ramadhi | Fullstack Developer & Software Engineer",
     description:
-      "Fullstack Developer & Software Engineer. Mengembangkan aplikasi web interaktif, performa optimal, dan sistem digital terukur.",
+      "Fullstack Developer & Software Engineer. Portofolio profesional dengan pengalaman visual interaktif.",
     type: "website",
   },
 };
@@ -44,24 +44,21 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${caveat.variable} ${jetbrainsMono.variable} font-sans antialiased bg-[#F5F0E6] text-[#1A1A1A] min-h-screen relative selection:bg-[#E8B84B] selection:text-[#1A1A1A] overflow-x-hidden`}
+        className={`${spaceGrotesk.variable} ${caveat.variable} ${jetbrainsMono.variable} font-sans antialiased bg-[#FAF8F5] text-[#1C1A18] min-h-screen relative selection:bg-[#F5B738] selection:text-[#181615] overflow-x-hidden`}
       >
         {/* Skip Link for Accessibility */}
         <SkipToContent />
 
-        {/* Custom Cursor — camera lens / shutter style */}
+        {/* Custom Photobooth Cursor */}
         <PhotoboothCursor />
 
-        {/* Warm Ambient Gradient Background */}
-        <div className="fixed inset-0 pointer-events-none warm-ambient-gradient -z-20" aria-hidden="true" />
-
-        {/* Film Grain Texture Overlay */}
-        <div className="fixed inset-0 pointer-events-none film-grain-overlay z-10 opacity-30" aria-hidden="true" />
-
         <SmoothScrollProvider>
-          {/* Navigation Dock */}
-          <NavbarDock />
-          <main id="main-content" className="min-h-screen relative z-20">{children}</main>
+          {/* Floating Retro Studio Navigation */}
+          <RetroNavbar />
+
+          <main id="main-content" className="min-h-screen relative z-10">
+            {children}
+          </main>
         </SmoothScrollProvider>
       </body>
     </html>

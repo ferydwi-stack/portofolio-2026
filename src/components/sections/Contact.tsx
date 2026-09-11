@@ -1,43 +1,34 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { Mail, MessageSquare, Send, Linkedin, CheckCircle2, Radio, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { Mail, Send, Linkedin, MessageCircle, MapPin, CheckCircle2, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PERSONAL_INFO } from "@/lib/data/portfolioData";
-import { useContactTimeline } from "@/animations/useContactTimeline";
-import { playStompClick, playGuitarChord } from "@/lib/sound/guitarSynth";
+import { playShutterSound } from "@/lib/sound/shutterSound";
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formState, setFormState] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
 
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const formRef = useRef<HTMLDivElement>(null);
-
-  // Connect GSAP timeline
-  useContactTimeline({ sectionRef, contentRef, formRef });
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    playStompClick();
+    playShutterSound();
 
-    // Construct formatted WhatsApp message
     const formattedMessage = [
-      `*PESAN PORTOFOLIO WEBSITE*`,
-      `*Nama:* ${formState.name}`,
-      `*Email:* ${formState.email}`,
-      `*Subjek:* ${formState.subject}`,
+      `*PESAN MASUK DARI PORTOFOLIO CEKREK*`,
+      `*Nama:* ${formData.name}`,
+      `*Email:* ${formData.email}`,
+      `*Subjek:* ${formData.subject}`,
       ``,
-      `*Detail Pesan:*`,
-      `${formState.message}`,
+      `*Isi Pesan:*`,
+      `${formData.message}`,
     ].join("\n");
 
     const waUrl = `https://wa.me/6282183458754?text=${encodeURIComponent(formattedMessage)}`;
@@ -45,266 +36,230 @@ export function Contact() {
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      playGuitarChord(164.81); // Bright triumph rock chord
 
-      // Open WhatsApp directly in new window
       if (typeof window !== "undefined") {
         window.open(waUrl, "_blank", "noopener,noreferrer");
       }
 
-      setFormState({ name: "", email: "", subject: "", message: "" });
+      setFormData({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setIsSubmitted(false), 4500);
-    }, 800);
+    }, 600);
   };
-
 
   return (
     <section
-      ref={sectionRef}
       id="contact"
-      className="relative min-h-screen py-28 px-6 sm:px-12 lg:px-24 flex flex-col justify-center overflow-hidden select-none"
+      className="relative min-h-screen w-full py-24 sm:py-32 px-5 sm:px-10 lg:px-16 paper-grain select-none flex flex-col justify-center"
     >
-      {/* Background Section Ambient Watermark */}
-      <div className="absolute left-6 bottom-12 font-[family-name:var(--font-bebas)] text-[18vw] font-black text-white/[0.02] pointer-events-none select-none">
-        KONTAK
-      </div>
-
-      {/* Asymmetric Split: Open Left for 3D Stage Lights, Shifted Right Form Console */}
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
-        {/* Left Side: Headline & Direct Channels */}
-        <div ref={contentRef} className="lg:col-span-6 space-y-8">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-500/50 bg-[#140f1a]/90 text-red-400 text-xs font-mono uppercase tracking-widest backdrop-blur-md shadow-[0_0_20px_rgba(255,42,59,0.3)]">
-              <Radio className="w-3.5 h-3.5 animate-pulse" />
-              <span>SALURAN KOMUNIKASI RESMI</span>
+      <div className="max-w-7xl mx-auto w-full">
+        {/* Section Header */}
+        <div className="pb-12 sm:pb-16 flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-[#E5DFC8]">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F3EFE6] border border-[#E5DFC8] text-xs font-mono text-[#E24332]">
+              <Mail className="w-3.5 h-3.5" />
+              <span className="font-bold uppercase tracking-wider">HUBUNGI SAYA // MULAI KOLABORASI</span>
             </div>
 
-            <h2 className="headline-section text-5xl sm:text-7xl lg:text-8xl font-normal uppercase text-white leading-[0.95]">
-              Siap Berkolaborasi? <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-red-600">
-                Mari Terhubung
-              </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#1C1A18] tracking-tight uppercase">
+              Mari Berkolaborasi.
             </h2>
-
-            <p className="text-base sm:text-lg text-zinc-300 font-sans leading-relaxed max-w-xl">
-              Terbuka untuk tawaran proyek pengembangan perangkat lunak, kolaborasi tim teknik, maupun konsultasi arsitektur web modern.
+            <p className="text-sm sm:text-base text-[#5A554E] max-w-2xl leading-relaxed">
+              Punya ide produk digital, membutuhkan rekayasa web skala penuh, atau tertarik untuk berdiskusi peluang kerja sama? Saya selalu siap berdiskusi.
             </p>
           </div>
 
-          {/* Direct Access Channels */}
-          <div className="space-y-3 max-w-lg">
-            <a
-              href={`mailto:${PERSONAL_INFO.contacts.email}`}
-              className="flex items-center gap-4 p-4 rounded-2xl bg-[#120f1a]/90 border border-zinc-800 hover:border-red-500 group transition-all backdrop-blur-md shadow-xl"
-              data-cursor-text="EMAIL"
-            >
-              <div className="w-12 h-12 rounded-xl bg-red-950/80 border border-red-800 flex items-center justify-center text-red-400 group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all">
-                <Mail className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block">
-                  EMAIL RESMI
-                </span>
-                <span className="text-sm sm:text-base font-mono font-bold text-white group-hover:text-red-400 transition-colors">
-                  {PERSONAL_INFO.contacts.email}
-                </span>
-              </div>
-            </a>
-
-            <a
-              href={PERSONAL_INFO.contacts.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 p-4 rounded-2xl bg-[#120f1a]/90 border border-zinc-800 hover:border-emerald-500 group transition-all backdrop-blur-md shadow-xl"
-              data-cursor-text="CHAT"
-            >
-              <div className="w-12 h-12 rounded-xl bg-emerald-950/80 border border-emerald-800 flex items-center justify-center text-emerald-400 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                <MessageSquare className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block">
-                  WHATSAPP CHAT
-                </span>
-                <span className="text-sm sm:text-base font-mono font-bold text-white group-hover:text-emerald-400 transition-colors">
-                  {PERSONAL_INFO.contacts.whatsapp}
-                </span>
-              </div>
-            </a>
-
-            <a
-              href={PERSONAL_INFO.contacts.linkedinUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 p-4 rounded-2xl bg-[#120f1a]/90 border border-zinc-800 hover:border-blue-500 group transition-all backdrop-blur-md shadow-xl"
-              data-cursor-text="LINKEDIN"
-            >
-              <div className="w-12 h-12 rounded-xl bg-blue-950/80 border border-blue-800 flex items-center justify-center text-blue-400 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                <Linkedin className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block">
-                  PROFIL LINKEDIN
-                </span>
-                <span className="text-sm sm:text-base font-mono font-bold text-white group-hover:text-blue-400 transition-colors">
-                  {PERSONAL_INFO.contacts.linkedin}
-                </span>
-              </div>
-            </a>
+          <div className="text-xs font-mono text-[#7A7568] flex items-center gap-2 self-start sm:self-end">
+            <span className="px-3.5 py-1.5 rounded-lg bg-white border border-[#E5DFC8] font-bold text-[#1C1A18] shadow-xs">
+              RESPON CEPAT &lt; 24 JAM
+            </span>
           </div>
         </div>
 
-        {/* Right Side: Minimalist Stage Rider Form (Underline styled inputs) */}
-        <div ref={formRef} className="lg:col-span-6">
-          <form
-            onSubmit={handleSubmit}
-            className="bg-[#110e19]/95 p-6 sm:p-10 rounded-3xl border-2 border-zinc-800 hover:border-red-500/70 shadow-[0_20px_50px_rgba(0,0,0,0.9)] backdrop-blur-2xl space-y-6"
-          >
-            <div className="border-b border-zinc-800 pb-4 flex items-center justify-between font-mono">
-              <div>
-                <h3 className="text-xl font-bold uppercase text-white tracking-wide flex items-center gap-2">
-                  <span>KIRIM PESAN &amp; KONSULTASI</span>
-                  <span className="text-emerald-400 text-xs px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-600/50">WA</span>
-                </h3>
-                <p className="text-xs text-zinc-400 mt-0.5">
-                  Isi formulir di bawah, pesan akan otomatis terformat &amp; diteruskan ke WhatsApp resmi.
-                </p>
-              </div>
-              <span className="text-xs text-emerald-400 font-bold bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-600/60 flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                <span>WHATSAPP DIRECT</span>
-              </span>
-            </div>
+        {/* Postcard Container Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 pt-12 items-start">
+          {/* Left Column: Direct Access Stamps */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="p-6 rounded-2xl bg-white border border-[#E5DFC8] polaroid-card-shadow space-y-4">
+              <h3 className="text-lg font-black text-[#1C1A18] uppercase tracking-tight">
+                Saluran Kontak Langsung
+              </h3>
+              <p className="text-xs text-[#5A554E] leading-relaxed">
+                Pilih metode komunikasi yang paling nyaman bagi Anda untuk memulai pembicaraan:
+              </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {/* Underline Minimalist Input: Name */}
-              <div className="space-y-2 relative">
-                <label
-                  htmlFor="contact-name"
-                  className="text-xs font-mono uppercase tracking-wider text-zinc-400 block"
+              <div className="space-y-3 pt-2">
+                <a
+                  href={`mailto:${PERSONAL_INFO.contacts.email}`}
+                  className="flex items-center gap-3.5 p-3.5 rounded-xl bg-[#FAF8F5] hover:bg-white border border-[#E5DFC8] hover:border-[#F5B738] transition-all cursor-pointer group"
+                  data-cursor-text="EMAIL"
                 >
-                  NAMA LENGKAP *
-                </label>
-                <input
-                  type="text"
-                  id="contact-name"
-                  required
-                  value={formState.name}
-                  onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                  className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-emerald-500 text-white font-sans text-base placeholder:text-zinc-600 transition-colors"
-                  placeholder="John Doe"
-                />
-              </div>
-
-              {/* Underline Minimalist Input: Email */}
-              <div className="space-y-2 relative">
-                <label
-                  htmlFor="contact-email"
-                  className="text-xs font-mono uppercase tracking-wider text-zinc-400 block"
-                >
-                  ALAMAT EMAIL *
-                </label>
-                <input
-                  type="email"
-                  id="contact-email"
-                  required
-                  value={formState.email}
-                  onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                  className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-emerald-500 text-white font-sans text-base placeholder:text-zinc-600 transition-colors"
-                  placeholder="name@company.com"
-                />
-              </div>
-            </div>
-
-            {/* Underline Minimalist Input: Subject */}
-            <div className="space-y-2 relative">
-              <label
-                htmlFor="contact-subject"
-                className="text-xs font-mono uppercase tracking-wider text-zinc-400 block"
-              >
-                SUBJEK PESAN *
-              </label>
-              <input
-                type="text"
-                id="contact-subject"
-                required
-                value={formState.subject}
-                onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
-                className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-emerald-500 text-white font-sans text-base placeholder:text-zinc-600 transition-colors"
-                placeholder="Tawaran Proyek / Diskusi Teknis"
-              />
-            </div>
-
-            {/* Underline Minimalist Input: Message */}
-            <div className="space-y-2 relative">
-              <label
-                htmlFor="contact-message"
-                className="text-xs font-mono uppercase tracking-wider text-zinc-400 block"
-              >
-                DETAIL PESAN ATAU KEBUTUHAN PROYEK *
-              </label>
-              <textarea
-                id="contact-message"
-                rows={4}
-                required
-                value={formState.message}
-                onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                className="w-full py-2.5 px-0 bg-transparent border-b-2 border-zinc-700 focus:outline-none focus:border-emerald-500 text-white font-sans text-base placeholder:text-zinc-600 resize-none transition-colors"
-                placeholder="Tuliskan spesifikasi sistem, ruang lingkup proyek, target waktu, atau pertanyaan teknis Anda..."
-              />
-            </div>
-
-            <div className="relative">
-              <button
-                type="submit"
-                disabled={isSubmitting || isSubmitted}
-                className="relative w-full py-4 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-600 hover:from-emerald-500 hover:to-green-500 text-white rounded-xl font-mono text-xs uppercase tracking-widest font-black transition-all flex items-center justify-center gap-2.5 group disabled:opacity-75 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(16,185,129,0.5)] cursor-pointer overflow-hidden border border-emerald-400/40 active:scale-95"
-                data-cursor-text="WHATSAPP"
-              >
-                {isSubmitting ? (
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : isSubmitted ? (
-                  <>
-                    <CheckCircle2 className="w-4 h-4 text-white" />
-                    <span className="text-white font-bold">MEMBUKA WHATSAPP // PESAN DITERUSKAN</span>
-                  </>
-                ) : (
-                  <>
-                    <MessageCircle className="w-4 h-4 text-emerald-100 group-hover:scale-110 transition-transform" />
-                    <span>KIRIM PESAN KE WHATSAPP</span>
-                    <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                  </>
-                )}
-              </button>
-
-
-              {/* Spark Burst Confirmation Micro-interaction */}
-              <AnimatePresence>
-                {isSubmitted && (
-                  <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-visible">
-                    {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, idx) => {
-                      const rad = (angle * Math.PI) / 180;
-                      const dist = 70 + (idx % 2) * 20;
-                      return (
-                        <motion.div
-                          key={angle}
-                          initial={{ opacity: 1, scale: 0, x: 0, y: 0 }}
-                          animate={{
-                            opacity: 0,
-                            scale: [0, 1.5, 0.4],
-                            x: Math.cos(rad) * dist,
-                            y: Math.sin(rad) * dist,
-                          }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.65, ease: "easeOut" }}
-                          className="absolute w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_12px_#ff6b35]"
-                        />
-                      );
-                    })}
+                  <div className="w-9 h-9 rounded-lg bg-[#FAF2DE] border border-[#F5B738]/60 flex items-center justify-center text-[#996D14]">
+                    <Mail className="w-4 h-4" />
                   </div>
-                )}
-              </AnimatePresence>
+                  <div>
+                    <span className="block text-[10px] font-mono text-[#968F84] uppercase">Alamat Email</span>
+                    <span className="text-xs font-bold text-[#1C1A18] group-hover:text-[#E24332] transition-colors">
+                      {PERSONAL_INFO.contacts.email}
+                    </span>
+                  </div>
+                </a>
+
+                <a
+                  href={PERSONAL_INFO.contacts.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3.5 p-3.5 rounded-xl bg-[#FAF8F5] hover:bg-white border border-[#E5DFC8] hover:border-[#2C6E64] transition-all cursor-pointer group"
+                  data-cursor-text="WHATSAPP"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-[#E6F4F1] border border-[#7FA99B] flex items-center justify-center text-[#2C6E64]">
+                    <MessageCircle className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-mono text-[#968F84] uppercase">WhatsApp Chat</span>
+                    <span className="text-xs font-bold text-[#1C1A18] group-hover:text-[#2C6E64] transition-colors">
+                      Chat Instan dengan Fery &rarr;
+                    </span>
+                  </div>
+                </a>
+
+                <a
+                  href={PERSONAL_INFO.contacts.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3.5 p-3.5 rounded-xl bg-[#FAF8F5] hover:bg-white border border-[#E5DFC8] hover:border-[#0077B5] transition-all cursor-pointer group"
+                  data-cursor-text="LINKEDIN"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-[#E8F4F9] border border-[#81D4FA] flex items-center justify-center text-[#0288D1]">
+                    <Linkedin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-mono text-[#968F84] uppercase">Profil LinkedIn</span>
+                    <span className="text-xs font-bold text-[#1C1A18] group-hover:text-[#0288D1] transition-colors">
+                      Koneksi Profesional
+                    </span>
+                  </div>
+                </a>
+              </div>
             </div>
-          </form>
+
+            <div className="flex items-center gap-2 text-xs font-mono text-[#7A7568] px-2">
+              <MapPin className="w-4 h-4 text-[#E24332]" />
+              <span>INDONESIA &bull; TERSEDIA SECARA REMOTE ATAU ONSITE</span>
+            </div>
+          </div>
+
+          {/* Right Column: Airmail Postcard Form */}
+          <div className="lg:col-span-7">
+            <div className="relative p-6 sm:p-8 rounded-2xl bg-white border border-[#E5DFC8] polaroid-card-shadow">
+              {/* Postcard Top Strip with Stamp */}
+              <div className="flex items-center justify-between border-b border-[#ECE7D8] pb-4 mb-6">
+                <div>
+                  <span className="text-xs font-mono font-bold text-[#1C1A18] uppercase tracking-wider">
+                    LEMBAR KARTU POS STUDIO // INQUIRY
+                  </span>
+                  <p className="text-[10px] font-mono text-[#7A7568]">
+                    Tuliskan pesan Anda di bawah ini
+                  </p>
+                </div>
+
+                {/* Postage Stamp Box */}
+                <div className="w-12 h-14 rounded border-2 border-dashed border-[#E24332] flex flex-col items-center justify-center text-[8px] font-mono font-black text-[#E24332] bg-[#FFF5F5]">
+                  <span>POST</span>
+                  <Heart className="w-3 h-3 fill-current my-0.5" />
+                  <span>2026</span>
+                </div>
+              </div>
+
+              {/* Inquiry Form */}
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-mono font-bold text-[#1C1A18] uppercase">
+                      Nama Pengirim *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="Nama lengkap Anda"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8] text-[#1C1A18] placeholder-[#968F84] text-xs font-sans focus:outline-none focus:border-[#F5B738] transition-colors"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-mono font-bold text-[#1C1A18] uppercase">
+                      Alamat Email *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="email@perusahaan.com"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8] text-[#1C1A18] placeholder-[#968F84] text-xs font-sans focus:outline-none focus:border-[#F5B738] transition-colors"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-mono font-bold text-[#1C1A18] uppercase">
+                    Subjek Diskusi *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.subject}
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    placeholder="Contoh: Diskusi Proyek Web / Penawaran Kerja Sama"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8] text-[#1C1A18] placeholder-[#968F84] text-xs font-sans focus:outline-none focus:border-[#F5B738] transition-colors"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-mono font-bold text-[#1C1A18] uppercase">
+                    Rincian Pesan *
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    placeholder="Tuliskan kebutuhan proyek, estimasi waktu, atau pertanyaan Anda..."
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFC8] text-[#1C1A18] placeholder-[#968F84] text-xs font-sans focus:outline-none focus:border-[#F5B738] transition-colors resize-none"
+                  />
+                </div>
+
+                {/* Submit Shutter Button */}
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 px-6 rounded-xl bg-[#1C1A18] hover:bg-[#33302B] text-white font-mono text-xs font-bold tracking-wider uppercase transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                    data-cursor-text="KIRIM"
+                  >
+                    <Send className="w-4 h-4 text-[#F5B738]" />
+                    <span>{isSubmitting ? "MEMPROSES PENGIRIMAN..." : "KIRIM VIA WHATSAPP (INSTAN)"}</span>
+                  </button>
+                </div>
+
+                {/* Success Notification */}
+                <AnimatePresence>
+                  {isSubmitted && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="p-3 rounded-xl bg-[#E6F4F1] border border-[#7FA99B] text-[#2C6E64] text-xs font-mono font-semibold flex items-center gap-2"
+                    >
+                      <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+                      <span>Pesan siap! Mengalihkan ke WhatsApp untuk konfirmasi instan.</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </section>

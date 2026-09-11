@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { useConfettiFlash } from "./ConfettiFlash";
+import { playShutterSound } from "@/lib/sound/shutterSound";
 
 interface ShutterButtonProps {
   children: React.ReactNode;
@@ -9,13 +10,14 @@ interface ShutterButtonProps {
   className?: string;
   type?: "button" | "submit";
   disabled?: boolean;
+  sound?: boolean;
   "data-cursor-text"?: string;
 }
 
 /**
  * ShutterButton — CTA button styled like a camera shutter release.
  * Scale-down micro-interaction on click, brief white flash on the button
- * area, and optional confetti burst.
+ * area, realistic shutter audio click, and optional confetti burst.
  */
 export function ShutterButton({
   children,
@@ -23,12 +25,14 @@ export function ShutterButton({
   className = "",
   type = "button",
   disabled = false,
+  sound = true,
   ...props
 }: ShutterButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { fire: fireConfetti } = useConfettiFlash({ triggerRef: buttonRef });
 
   const handleClick = () => {
+    if (sound) playShutterSound();
     fireConfetti();
     onClick?.();
   };

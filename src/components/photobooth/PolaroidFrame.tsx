@@ -31,11 +31,15 @@ export function PolaroidFrame({
   priority = false,
   children,
 }: PolaroidFrameProps) {
-  // Random subtle rotation between -3° and 3° (deterministic per-render)
+  // Deterministic subtle rotation between -3° and 3° based on alt string
   const rotation = useMemo(() => {
     if (rotate !== undefined) return rotate;
-    return (Math.random() * 6 - 3);
-  }, [rotate]);
+    let hash = 0;
+    for (let i = 0; i < alt.length; i++) {
+      hash = (hash << 5) - hash + alt.charCodeAt(i);
+    }
+    return (Math.abs(hash) % 7) - 3;
+  }, [rotate, alt]);
 
   return (
     <div

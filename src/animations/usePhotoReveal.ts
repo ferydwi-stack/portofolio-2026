@@ -2,7 +2,6 @@
 
 import { useEffect, RefObject } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { registerGSAP } from "./gsapConfig";
 
 interface PhotoRevealOptions {

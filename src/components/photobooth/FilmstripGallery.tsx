@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useMemo } from "react";
+import { useRef, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { Github, ExternalLink } from "lucide-react";
 import gsap from "gsap";
@@ -11,7 +11,7 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 function FilmstripCard({ project, index }: { project: Project; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const [imgError, setImgError] = React.useState(false);
+  const [imgError, setImgError] = useState(false);
 
   // Deterministic rotation per card
   const rotation = useMemo(() => {
@@ -127,8 +127,6 @@ function FilmstripCard({ project, index }: { project: Project; index: number }) 
     </div>
   );
 }
-
-import React from "react";
 
 /**
  * FilmstripGallery — Horizontal scrollable gallery (desktop) / vertical (mobile)
