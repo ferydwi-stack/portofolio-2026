@@ -1,45 +1,49 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @theme {
-  --font-bebas: var(--font-bebas), "Bebas Neue", sans-serif;
-  --font-anton: var(--font-anton), "Anton", impact, sans-serif;
-  --font-display: var(--font-bebas), "Bebas Neue", sans-serif;
+  /* Photobooth / Instant Camera Retro — Core Font Families */
+  --font-space: var(--font-space), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-caveat: var(--font-caveat), "Caveat", cursive;
   --font-sans: var(--font-space), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
-  
-  --color-stage-black: #0a0a0c;
-  --color-stage-charcoal: #1a1a1e;
-  --color-spotlight-white: #f5f5f0;
-  --color-stage-red: #e11d2e;
-  --color-chrome-silver: #b8bcc2;
-  --color-stage-violet: #8b3ff2;
-  --color-stage-cyan: #17e0c9;
+
+  /* Photobooth Color Tokens */
+  --color-cream: #F5F0E6;
+  --color-cream-dark: #EDE7D9;
+  --color-cream-light: #FAF7F0;
+  --color-film-black: #1A1A1A;
+  --color-film-charcoal: #2D2D2D;
+  --color-film-gray: #6B6560;
+  --color-film-border: #D4CFC5;
+  --color-flash-yellow: #E8B84B;
+  --color-flash-yellow-light: #F2D078;
+  --color-flash-red: #D9483A;
+  --color-flash-red-light: #E8685C;
+  --color-dusty-pink: #E8C4C4;
+  --color-mint: #B8D8D0;
+  --color-mint-light: #D0EAE4;
+  --color-polaroid-white: #FFFFFF;
+  --color-shutter-black: #0A0A0A;
 }
 
 :root {
-  --background: #0a0a0c;
-  --foreground: #f5f5f0;
-  --card: #1a1a1e;
-  --card-foreground: #f5f5f0;
-  --border: #262130;
-  
-  --stage-black: #0a0a0c;
-  --stage-charcoal: #1a1a1e;
-  --spotlight-white: #f5f5f0;
-  --stage-red: #e11d2e;
-  --chrome-silver: #b8bcc2;
-  --stage-violet: #8b3ff2;
-  --stage-cyan: #17e0c9;
-}
+  --background: #F5F0E6;
+  --foreground: #1A1A1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --border: #D4CFC5;
 
-.dark {
-  --background: #0a0a0c;
-  --foreground: #f5f5f0;
-  --card: #1a1a1e;
-  --card-foreground: #f5f5f0;
-  --border: #262130;
+  /* Photobooth palette aliases */
+  --cream: #F5F0E6;
+  --cream-dark: #EDE7D9;
+  --film-black: #1A1A1A;
+  --film-charcoal: #2D2D2D;
+  --film-gray: #6B6560;
+  --film-border: #D4CFC5;
+  --flash-yellow: #E8B84B;
+  --flash-red: #D9483A;
+  --dusty-pink: #E8C4C4;
+  --mint: #B8D8D0;
 }
 
 body {
@@ -53,197 +57,220 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Subtle Stage Film Grain Overlay */
-.stage-noise {
-  background-image: radial-gradient(rgba(225, 29, 46, 0.04) 1px, transparent 0);
-  background-size: 24px 24px;
+/* ──────────────────────────────────────────────── */
+/* Film Grain Overlay — authentic analog texture    */
+/* ──────────────────────────────────────────────── */
+.film-grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
 }
 
-/* Concert Ticket Angled Stub Border */
-.ticket-border {
-  position: relative;
-  background: linear-gradient(135deg, #1a1a1e 0%, #0a0a0c 100%);
-  border: 1px dashed rgba(225, 29, 46, 0.4);
+/* ──────────────────────────────────────────────── */
+/* Warm Ambient Gradient Background                 */
+/* ──────────────────────────────────────────────── */
+@keyframes warm-ambient-drift {
+  0% { transform: scale(1) translate(0%, 0%); opacity: 0.5; }
+  50% { transform: scale(1.08) translate(2%, -1%); opacity: 0.65; }
+  100% { transform: scale(1) translate(0%, 0%); opacity: 0.5; }
 }
 
-/* Equalizer Bars Animation */
-@keyframes eq-dance-1 {
-  0%, 100% { height: 18%; }
-  50% { height: 95%; }
-}
-@keyframes eq-dance-2 {
-  0%, 100% { height: 85%; }
-  50% { height: 25%; }
-}
-@keyframes eq-dance-3 {
-  0%, 100% { height: 40%; }
-  50% { height: 100%; }
-}
-@keyframes eq-dance-4 {
-  0%, 100% { height: 90%; }
-  50% { height: 35%; }
-}
-@keyframes eq-dance-5 {
-  0%, 100% { height: 30%; }
-  50% { height: 80%; }
-}
-
-.eq-bar-1 { animation: eq-dance-1 0.75s ease-in-out infinite; }
-.eq-bar-2 { animation: eq-dance-2 0.65s ease-in-out infinite 0.1s; }
-.eq-bar-3 { animation: eq-dance-3 0.85s ease-in-out infinite 0.2s; }
-.eq-bar-4 { animation: eq-dance-4 0.6s ease-in-out infinite 0.15s; }
-.eq-bar-5 { animation: eq-dance-5 0.9s ease-in-out infinite 0.25s; }
-
-/* Neon Stage Glow */
-.glow-crimson {
-  box-shadow: 0 0 25px rgba(225, 29, 46, 0.35);
-}
-
-.glow-violet {
-  box-shadow: 0 0 25px rgba(139, 63, 242, 0.35);
-}
-
-.glow-cyan {
-  box-shadow: 0 0 25px rgba(23, 224, 201, 0.35);
-}
-
-.text-glow-crimson {
-  text-shadow: 0 0 16px rgba(225, 29, 46, 0.65);
-}
-
-/* Vinyl record spin */
-@keyframes spin-vinyl {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.animate-spin-slow {
-  animation: spin-vinyl 12s linear infinite;
-}
-
-/* Animated Concert Aurora Stage Gradient Background (§4.10d) */
-@keyframes stage-ambient-drift {
-  0% { transform: scale(1) translate(0%, 0%) rotate(0deg); opacity: 0.22; }
-  33% { transform: scale(1.15) translate(4%, -3%) rotate(12deg); opacity: 0.32; }
-  66% { transform: scale(0.92) translate(-3%, 4%) rotate(-8deg); opacity: 0.20; }
-  100% { transform: scale(1) translate(0%, 0%) rotate(0deg); opacity: 0.22; }
-}
-
-.stage-ambient-gradient {
-  background: radial-gradient(circle at 20% 30%, rgba(139, 63, 242, 0.25) 0%, transparent 50%),
-              radial-gradient(circle at 80% 40%, rgba(225, 29, 46, 0.25) 0%, transparent 55%),
-              radial-gradient(circle at 50% 80%, rgba(139, 63, 242, 0.18) 0%, transparent 60%),
-              radial-gradient(circle at 70% 85%, rgba(23, 224, 201, 0.20) 0%, transparent 50%);
-  filter: blur(60px);
-  animation: stage-ambient-drift 24s ease-in-out infinite alternate;
+.warm-ambient-gradient {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(232, 184, 75, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 75% 50%, rgba(232, 196, 196, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 85%, rgba(184, 216, 208, 0.08) 0%, transparent 55%);
+  filter: blur(80px);
+  animation: warm-ambient-drift 20s ease-in-out infinite alternate;
   will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage-ambient-gradient {
+  .warm-ambient-gradient {
     animation: none;
-    opacity: 0.2;
+    opacity: 0.4;
   }
 }
 
-/* V4 Typography hierarchy (§3.2) */
+/* ──────────────────────────────────────────────── */
+/* Polaroid Styling Utilities                       */
+/* ──────────────────────────────────────────────── */
+.polaroid-shadow {
+  box-shadow: 4px 6px 16px rgba(0, 0, 0, 0.12), 2px 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.polaroid-shadow-hover {
+  box-shadow: 8px 12px 28px rgba(0, 0, 0, 0.18), 4px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ──────────────────────────────────────────────── */
+/* Filmstrip Border — sprocket holes                */
+/* ──────────────────────────────────────────────── */
+.filmstrip-border {
+  position: relative;
+  background: var(--film-black);
+}
+
+.filmstrip-border::before,
+.filmstrip-border::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 16px,
+    var(--film-black) 16px,
+    var(--film-black) 20px,
+    transparent 20px,
+    transparent 28px,
+    rgba(245, 240, 230, 0.15) 28px,
+    rgba(245, 240, 230, 0.15) 36px,
+    transparent 36px,
+    transparent 44px
+  );
+}
+
+.filmstrip-border::before {
+  top: 0;
+}
+
+.filmstrip-border::after {
+  bottom: 0;
+}
+
+/* ──────────────────────────────────────────────── */
+/* Typography Hierarchy                             */
+/* ──────────────────────────────────────────────── */
 .headline-hero {
-  font-family: var(--font-anton), "Anton", sans-serif;
-  font-weight: 400;
-  font-size: clamp(3.5rem, 11.5vw, 10.5rem);
-  letter-spacing: 0.02em;
-  line-height: 0.88;
+  font-family: var(--font-space), "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 10vw, 8rem);
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: var(--film-black);
 }
 
 .headline-section {
-  font-family: var(--font-bebas), "Bebas Neue", sans-serif;
-  font-size: clamp(2.5rem, 6.5vw, 5.5rem);
-  letter-spacing: 0.02em;
-  line-height: 0.92;
+  font-family: var(--font-space), "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 5.5vw, 4.5rem);
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: var(--film-black);
 }
 
-/* Tech logo continuous running ticker animation */
-@keyframes tech-marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+.caption-handwriting {
+  font-family: var(--font-caveat), "Caveat", cursive;
+  font-weight: 400;
+  color: var(--film-charcoal);
 }
 
-.animate-tech-marquee {
-  display: flex;
-  width: max-content;
-  animation: tech-marquee 16s linear infinite;
+/* ──────────────────────────────────────────────── */
+/* Handwriting Underline — SVG stroke animation     */
+/* ──────────────────────────────────────────────── */
+.handwriting-underline {
+  position: relative;
+  display: inline-block;
 }
 
-.animate-tech-marquee:hover {
-  animation-play-state: paused;
+.handwriting-underline::after {
+  content: "";
+  position: absolute;
+  left: -4%;
+  bottom: -4px;
+  width: 108%;
+  height: 8px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8'%3E%3Cpath d='M0 6 Q 25 0, 50 5 T 100 4' stroke='%23E8B84B' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center;
+  background-size: 100% 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-/* Guitar string vibration animation */
-@keyframes guitar-string-vibrate {
-  0%, 100% { transform: scaleY(1); }
-  25% { transform: scaleY(2) translateY(-1px); }
-  50% { transform: scaleY(0.6) translateY(1px); }
-  75% { transform: scaleY(1.6) translateY(-0.5px); }
+.handwriting-underline:hover::after,
+.handwriting-underline:focus-visible::after {
+  transform: scaleX(1);
 }
 
-.animate-guitar-string {
-  animation: guitar-string-vibrate 0.25s ease-in-out infinite;
+/* ──────────────────────────────────────────────── */
+/* Shutter Button Micro-interaction                 */
+/* ──────────────────────────────────────────────── */
+.shutter-btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease;
 }
 
-/* Hero Title Dynamic Light Sweep & Shimmer */
-@keyframes title-shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+.shutter-btn:active {
+  transform: scale(0.95);
 }
 
-.title-animated-shimmer {
-  background: linear-gradient(
-    90deg,
-    #eaeaea 0%,
-    #ffffff 25%,
-    #ff4b5c 50%,
-    #ffffff 75%,
-    #eaeaea 100%
-  );
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: title-shimmer 4.5s ease-in-out infinite;
+.shutter-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.1s ease;
 }
 
-.title-ramadhi-glow {
-  background: linear-gradient(
-    90deg,
-    #ff1f35 0%,
-    #ff6070 30%,
-    #ffffff 50%,
-    #ff6070 70%,
-    #e11d2e 100%
-  );
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: title-shimmer 3.2s ease-in-out infinite 0.4s;
-  filter: drop-shadow(0 0 22px rgba(255, 42, 59, 0.7));
+.shutter-btn:active::after {
+  opacity: 0.3;
+  transition: opacity 0s;
 }
 
-@keyframes hero-aura-pulse {
-  0%, 100% {
-    opacity: 0.35;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.65;
-    transform: scale(1.08);
-  }
+/* ──────────────────────────────────────────────── */
+/* Photo Developing Animation (ScrollTrigger driven)*/
+/* ──────────────────────────────────────────────── */
+.photo-developing {
+  filter: blur(10px);
+  opacity: 0;
+  transition: filter 0.7s ease, opacity 0.7s ease;
 }
 
-.animate-hero-aura {
-  animation: hero-aura-pulse 4s ease-in-out infinite;
+.photo-developing.is-revealed {
+  filter: blur(0px);
+  opacity: 1;
 }
 
+/* ──────────────────────────────────────────────── */
+/* Custom Scrollbar (cream theme)                   */
+/* ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
 
+::-webkit-scrollbar-track {
+  background: var(--cream-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--film-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--film-gray);
+}
+
+/* ──────────────────────────────────────────────── */
+/* Focus States — Accessible                        */
+/* ──────────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--flash-yellow);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ──────────────────────────────────────────────── */
+/* Selection                                        */
+/* ──────────────────────────────────────────────── */
+::selection {
+  background: var(--flash-yellow);
+  color: var(--film-black);
+}

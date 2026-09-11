@@ -14,9 +14,16 @@ export function registerGSAP() {
 }
 
 export const EASINGS = {
-  stageIn: "power4.out",
-  stageInOut: "power4.inOut",
-  elasticSlam: "elastic.out(1, 0.4)",
-  smoothTrack: "power2.out",
-  guitarSnap: "back.out(1.7)",
+  /** Shutter closing — snappy in-out */
+  shutterInOut: "power3.inOut",
+  /** Flash fading out */
+  flashOut: "power4.out",
+  /** Photo developing — smooth reveal */
+  developing: "power2.out",
+  /** Snap focus — quick settle with overshoot */
+  snapFocus: "back.out(1.4)",
+  /** Gentle float for polaroid entrance */
+  polaroidDrop: "power2.out",
+  /** Elastic bounce for confetti */
+  confettiBounce: "elastic.out(1, 0.5)",
 };
