@@ -7,7 +7,9 @@ let isMuted = false;
 function getAudioContext(): AudioContext | null {
   if (typeof window === "undefined") return null;
   if (!audioCtx) {
-    const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    const AudioContextClass =
+      window.AudioContext ||
+      (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (AudioContextClass) {
       audioCtx = new AudioContextClass();
     }
@@ -49,7 +51,7 @@ export function playHoverTick() {
     osc.start();
     osc.stop(ctx.currentTime + 0.03);
   } catch {
-    // AudioContext blocked or unsupported
+    // AudioContext blocked
   }
 }
 
@@ -75,7 +77,7 @@ export function playCyberClick() {
     osc.start();
     osc.stop(ctx.currentTime + 0.06);
   } catch {
-    // AudioContext blocked or unsupported
+    // AudioContext blocked
   }
 }
 
@@ -105,7 +107,7 @@ export function playCompileChime() {
       osc.stop(startTime + 0.25);
     });
   } catch {
-    // AudioContext blocked or unsupported
+    // AudioContext blocked
   }
 }
 
@@ -131,6 +133,87 @@ export function playDisassembleSound() {
     osc.start();
     osc.stop(ctx.currentTime + 0.2);
   } catch {
-    // AudioContext blocked or unsupported
+    // AudioContext blocked
+  }
+}
+
+/** Game sound: Gem / Token collection chime */
+export function playGemCollectSound() {
+  if (isMuted) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(987.77, ctx.currentTime); // B5
+    osc.frequency.exponentialRampToValueAtTime(1318.51, ctx.currentTime + 0.1); // E6
+
+    gain.gain.setValueAtTime(0.05, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.1);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.1);
+  } catch {
+    // AudioContext blocked
+  }
+}
+
+/** Game sound: Collision crash */
+export function playCrashSound() {
+  if (isMuted) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(250, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.25);
+
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.25);
+  } catch {
+    // AudioContext blocked
+  }
+}
+
+/** Game sound: Game over fanfare */
+export function playGameOverSound() {
+  if (isMuted) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const notes = [440, 392, 349.23, 293.66]; // A4, G4, F4, D4
+    notes.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const t = ctx.currentTime + idx * 0.12;
+
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(freq, t);
+
+      gain.gain.setValueAtTime(0.04, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(t);
+      osc.stop(t + 0.3);
+    });
+  } catch {
+    // AudioContext blocked
   }
 }

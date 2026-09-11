@@ -4,6 +4,7 @@ import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
+import { Arcade } from "@/components/sections/Arcade";
 import { Certificates } from "@/components/sections/Certificates";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
@@ -32,17 +33,22 @@ export default function Home() {
       {/* 4. Projects Section */}
       <Projects />
 
+      <BlueprintDivider label="LABORATORIUM // MINI-GAME 3D // QUANTUM RUNNER" />
+
+      {/* 5. Arcade 3D Game Section */}
+      <Arcade />
+
       <BlueprintDivider label="SERTIFIKASI // LISENSI RESMI" />
 
-      {/* 5. Certificates Section */}
+      {/* 6. Certificates Section */}
       <Certificates />
 
       <BlueprintDivider label="KONTAK // KOLABORASI // DISKUSI" />
 
-      {/* 6. Contact Section */}
+      {/* 7. Contact Section */}
       <Contact />
 
-      {/* 7. Footer */}
+      {/* 8. Footer */}
       <Footer />
     </>
   );

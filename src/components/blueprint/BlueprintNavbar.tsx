@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, User, Cpu, FolderGit2, Award, Send, Menu, X, Volume2, VolumeX } from "lucide-react";
+import { Terminal, User, Cpu, FolderGit2, Gamepad2, Award, Send, Menu, X, Volume2, VolumeX } from "lucide-react";
 import { useLenis } from "@/hooks/useLenis";
 import { playHoverTick, playCyberClick, toggleMuteSound } from "@/lib/sound/cyberSound";
 
@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { id: "about", label: "Tentang", icon: User },
   { id: "skills", label: "Keahlian", icon: Cpu },
   { id: "projects", label: "Proyek", icon: FolderGit2 },
+  { id: "arcade", label: "Game 3D", icon: Gamepad2 },
   { id: "certificates", label: "Sertifikasi", icon: Award },
   { id: "contact", label: "Kontak", icon: Send },
 ];
@@ -157,7 +158,7 @@ export function BlueprintNavbar() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="md:hidden fixed bottom-20 left-4 right-4 z-50 p-4 rounded-2xl bg-[#111827]/95 border border-[#1E293B] backdrop-blur-2xl shadow-2xl shadow-black/40 grid grid-cols-3 gap-2"
+            className="md:hidden fixed bottom-20 left-4 right-4 z-50 p-4 rounded-2xl bg-[#111827]/95 border border-[#1E293B] backdrop-blur-2xl shadow-2xl shadow-black/40 grid grid-cols-3 sm:grid-cols-4 gap-2"
           >
             {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
